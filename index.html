@@ -1598,16 +1598,41 @@ async function reloadKpiDefaults() {
 }
 
 function getARList() {
-  const ars = [...new Set(magasins.map(m => m.animateur))].sort();
-  return ['Olivier (tout le réseau)', ...ars.filter(a => a !== 'Olivier')];
+  const entries = ['Cécilia (Directrice Inter — tout le réseau)', 'Olivier (tout le réseau)'];
+  // Un directeur pays peut couvrir plusieurs pays (ex. Angleterre + Irlande) —
+  // on regroupe tous les pays trouvés pour son nom, comme côté worker.js.
+  const paysParDirecteur = new Map();
+  magasins.forEach(m => {
+    if (m.directeur_pays && m.pays) {
+      if (!paysParDirecteur.has(m.directeur_pays)) paysParDirecteur.set(m.directeur_pays, new Set());
+      paysParDirecteur.get(m.directeur_pays).add(m.pays);
+    }
+  });
+  [...paysParDirecteur.keys()].sort().forEach(nom => {
+    entries.push(`${nom} (${[...paysParDirecteur.get(nom)].sort().join(' / ')})`);
+  });
+  const ars = [...new Set(magasins.map(m => m.animateur).filter(Boolean))].sort();
+  entries.push(...ars.filter(a => a !== 'Olivier'));
+  return entries;
+}
+
+// Résout la liste des magasins visibles pour une valeur de filtre AR donnée
+// (entrée de getARList) — gère les 3 cas : tout le réseau, directeur pays, animateur.
+function storesForArFilter(ar) {
+  if (!ar || ar.includes('tout le réseau')) return magasins;
+  const directeurMatch = ar.match(/^(.+) \((.+)\)$/);
+  if (directeurMatch && magasins.some(m => m.directeur_pays === directeurMatch[1])) {
+    const paysListe = magasins.filter(m => m.directeur_pays === directeurMatch[1]).map(m => m.pays);
+    return magasins.filter(m => paysListe.includes(m.pays));
+  }
+  return magasins.filter(m => m.animateur === ar);
 }
 
 // Liste des magasins à afficher compte tenu du filtre AR de convenance choisi
 // sur l'écran d'accueil (currentAR). Renvoie tous les magasins si aucun AR
 // n'est sélectionné ou si "tout le réseau" est choisi.
 function getHomeARStores() {
-  if (!currentAR || currentAR.includes('tout le réseau')) return magasins;
-  return magasins.filter(m => m.animateur === currentAR);
+  return storesForArFilter(currentAR);
 }
 
 // Propage le filtre AR de convenance vers les autres onglets déjà initialisés
@@ -1643,7 +1668,7 @@ function onARChange() {
   applyHomeARFilterEverywhere();
   document.getElementById('sec-magasin').style.display = 'flex';
   const sel = document.getElementById('sel-mag');
-  const list = ar.includes('tout le réseau') ? magasins : magasins.filter(m => m.animateur === ar);
+  const list = storesForArFilter(ar);
   sel.innerHTML = '<option value="">Sélectionner un magasin...</option>';
   list.sort((a,b) => a.libelle.localeCompare(b.libelle)).forEach(m => {
     const opt = document.createElement('option');
