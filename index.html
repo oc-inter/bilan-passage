@@ -1096,13 +1096,39 @@ function parseKpiCSV(text) {
     const cols = line.split(sep).map(c => c.trim());
     const obj = {};
     headers.forEach((h, i) => { obj[h] = (cols[i] || '').trim(); });
+    // Colonnes optionnelles obj_<PaysOuRegion> (ex. obj_Allemagne, obj_Quebec, obj_Ontario) :
+    // objectif spécifique à ce pays/région, en repli sur `obj` (objectif par défaut) si absent.
+    const objByScope = {};
+    headers.forEach(h => {
+      if (h.startsWith('obj_') && obj[h]) objByScope[h.slice(4)] = parseFloat(obj[h]);
+    });
     return {
       name: obj.name,
       unit: obj.unit || '',
       obj: obj.obj ? parseFloat(obj.obj) : null,
-      dir: obj.dir || null
+      dir: obj.dir || null,
+      objByScope,
     };
   }).filter(k => k.name);
+}
+
+// Résout l'objectif effectif d'un KPI pour un magasin donné : région > pays > objectif par
+// défaut (obj). Les objectifs par pays/région se règlent dans kpis.csv (colonnes obj_<scope>),
+// pas dans l'écran Paramètres, qui continue d'éditer uniquement l'objectif par défaut.
+function resolveKpiObjective(def, magasin) {
+  if (!def) return null;
+  if (magasin) {
+    if (magasin.region && def.objByScope && def.objByScope[magasin.region] !== undefined) return def.objByScope[magasin.region];
+    if (magasin.pays && def.objByScope && def.objByScope[magasin.pays] !== undefined) return def.objByScope[magasin.pays];
+  }
+  return def.obj;
+}
+
+// Résout la cible de renta salariale effective pour un magasin : valeur propre au magasin
+// (colonne renta_target de magasins_inter.csv) en repli sur le réglage personnel des
+// Paramètres, puis sur 28% par défaut.
+function getRentaTarget(magasin) {
+  return (magasin && magasin.renta_target) || params.rentaTarget || '28';
 }
 
 // ── Auto-réparation des octets MacRoman isolés (copier-coller depuis une app
@@ -1699,7 +1725,7 @@ function onMagChange() {
   document.getElementById('magasin-card').classList.add('visible');
   document.getElementById('sec-passage').style.display = 'flex';
   document.getElementById('btn-start').style.display = 'block';
-  document.getElementById('f-renta-obj').value = (params.rentaTarget || '28') + '%';
+  document.getElementById('f-renta-obj').value = getRentaTarget(currentMag) + '%';
   applyRhEffectifPrefill(code);
 }
 
@@ -1785,7 +1811,7 @@ function startBilan() {
   document.getElementById('saisie-date').textContent = new Date().toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'});
   document.getElementById('header-passage').textContent = `Passage n°${passage}`;
   document.getElementById('header-passage').style.display = 'block';
-  document.getElementById('f-renta-obj').value = (params.rentaTarget || '28') + '%';
+  document.getElementById('f-renta-obj').value = getRentaTarget(currentMag) + '%';
   previousActions = []; previousActionsStatus = {};
   actions = []; kpisAdded = []; photos = [null,null,null]; photoCaptions = ['','',''];
   fortsList = []; diffList = []; entretiens = []; peniches = emptyPeniches();
@@ -1907,10 +1933,11 @@ function addKpi() {
 }
 
 function kpiClass(val, def) {
-  if (!def || def.obj === null) return 'neutral';
+  const objEff = resolveKpiObjective(def, currentMag);
+  if (!def || objEff === null) return 'neutral';
   const num = parseFloat(val.replace('%','').replace(',','.'));
   if (isNaN(num)) return 'neutral';
-  const diff = def.dir === 'gte' ? num - def.obj : def.obj - num;
+  const diff = def.dir === 'gte' ? num - objEff : objEff - num;
   if (diff >= 0) return 'ok';
   if (diff >= -5) return 'warn';
   return 'bad';
@@ -1934,7 +1961,7 @@ function removeKpi(i) { kpisAdded.splice(i,1); renderKpiChips(); }
 // ── RENTA ──
 function updateRentaBadge() {
   const val = parseFloat(document.getElementById('f-renta').value);
-  const obj = parseFloat(params.rentaTarget || 28);
+  const obj = parseFloat(getRentaTarget(currentMag));
   const badge = document.getElementById('renta-badge');
   if (isNaN(val)) { badge.style.display = 'none'; return; }
   badge.style.display = 'inline-flex';
@@ -2324,7 +2351,7 @@ function collectData() {
     ca_mensuel: document.getElementById('f-ca-mensuel').value,
     ca_annuel: document.getElementById('f-ca-annuel').value,
     ca_mensuel_detail: document.getElementById('f-ca-mensuel-detail').value,
-    renta_obj: params.rentaTarget || '28',
+    renta_obj: getRentaTarget(currentMag),
     rh: document.getElementById('f-rh').value,
     formation: document.getElementById('f-formation').value,
     rituels: getAllRituels().filter(r => rituelsChecked[r.id]).map(r => r.label),
