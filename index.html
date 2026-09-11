@@ -608,6 +608,17 @@ input[type=date]{color-scheme:dark}
 <!-- SCREEN 4 : PARAMÈTRES -->
 <div id="screen-params" class="screen">
   <div class="params-section">
+    <div class="params-section-title" data-i18n="params_langue">Langue</div>
+    <select class="select-box" id="p-lang" onchange="setLang(this.value)">
+      <option value="FR">Français</option>
+      <option value="EN">English</option>
+      <option value="ES">Español</option>
+      <option value="NL">Nederlands</option>
+      <option value="HE">עברית</option>
+    </select>
+    <span style="font-size:10px;color:var(--muted)" data-i18n="params_langue_note">Cette langue est aussi appliquée automatiquement selon le magasin sélectionné.</span>
+  </div>
+  <div class="params-section">
     <div class="params-section-title">Objectifs KPI</div>
     <div id="kpi-params-list"></div>
     <span style="font-size:10px;color:var(--muted)">Vert = objectif atteint · Orange = proche · Rouge = éloigné</span>
@@ -849,6 +860,7 @@ const I18N = {
     saisie_entretiens: 'Entretiens individuels', saisie_ent_prenom_ph: 'Prénom du collaborateur', saisie_ent_sujet_ph: 'Sujet abordé (facultatif, peut rester confidentiel)',
     btn_dicter: 'Dicter', btn_ajouter: '+ Ajouter', btn_creer: '+ Créer', btn_ajouter_photo: 'Ajouter', btn_brouillon: '💾 Brouillon', btn_finaliser: 'Finaliser & Envoyer →',
     mail_texte_modifiable: 'Texte du mail (modifiable avant envoi)',
+    params_langue: 'Langue', params_langue_note: 'Cette langue est aussi appliquée automatiquement selon le magasin sélectionné.',
   },
   EN: {
     nav_nouveau: 'New', nav_historique: 'History', nav_analyse: 'Analysis', nav_parametres: 'Settings',
@@ -892,6 +904,7 @@ const I18N = {
     saisie_entretiens: 'One-on-one meetings', saisie_ent_prenom_ph: "Team member's first name", saisie_ent_sujet_ph: 'Topic covered (optional, may remain confidential)',
     btn_dicter: 'Dictate', btn_ajouter: '+ Add', btn_creer: '+ Create', btn_ajouter_photo: 'Add', btn_brouillon: '💾 Draft', btn_finaliser: 'Finalize & Send →',
     mail_texte_modifiable: 'Email text (editable before sending)',
+    params_langue: 'Language', params_langue_note: 'This language is also applied automatically based on the selected store.',
   },
   ES: {
     nav_nouveau: 'Nuevo', nav_historique: 'Historial', nav_analyse: 'Análisis', nav_parametres: 'Ajustes',
@@ -935,6 +948,7 @@ const I18N = {
     saisie_entretiens: 'Entrevistas individuales', saisie_ent_prenom_ph: 'Nombre del colaborador', saisie_ent_sujet_ph: 'Tema tratado (opcional, puede ser confidencial)',
     btn_dicter: 'Dictar', btn_ajouter: '+ Añadir', btn_creer: '+ Crear', btn_ajouter_photo: 'Añadir', btn_brouillon: '💾 Borrador', btn_finaliser: 'Finalizar y enviar →',
     mail_texte_modifiable: 'Texto del correo (editable antes de enviar)',
+    params_langue: 'Idioma', params_langue_note: 'Este idioma también se aplica automáticamente según la tienda seleccionada.',
   },
   HE: {
     nav_nouveau: 'חדש', nav_historique: 'היסטוריה', nav_analyse: 'ניתוח', nav_parametres: 'הגדרות',
@@ -998,6 +1012,7 @@ const I18N = {
     saisie_entretiens: 'Individuele gesprekken', saisie_ent_prenom_ph: 'Voornaam van de medewerker', saisie_ent_sujet_ph: 'Behandeld onderwerp (optioneel, mag vertrouwelijk blijven)',
     btn_dicter: 'Dicteren', btn_ajouter: '+ Toevoegen', btn_creer: '+ Aanmaken', btn_ajouter_photo: 'Toevoegen', btn_brouillon: '💾 Concept', btn_finaliser: 'Afronden & verzenden →',
     mail_texte_modifiable: 'E-mailtekst (bewerkbaar voor verzending)',
+    params_langue: 'Taal', params_langue_note: 'Deze taal wordt ook automatisch toegepast op basis van de geselecteerde winkel.',
   },
 };
 
@@ -1020,7 +1035,8 @@ function applyTranslations() {
 }
 
 function setLang(lang) {
-  currentLang = I18N_LANGS.includes(lang) ? lang : 'FR';
+  const normalized = (lang || '').toUpperCase().split('-')[0]; // ex. 'NL-BE' -> 'NL', 'nl' -> 'NL'
+  currentLang = I18N_LANGS.includes(normalized) ? normalized : 'FR';
   localStorage.setItem('bdp_lang', currentLang);
   applyTranslations();
 }
@@ -1666,6 +1682,8 @@ function populateMyARSelect() {
 }
 
 function initParamsUI() {
+  const langSel = document.getElementById('p-lang');
+  if (langSel) langSel.value = currentLang;
   const list = document.getElementById('kpi-params-list');
   list.innerHTML = '';
   KPI_DEFAULTS.forEach(k => {
@@ -1938,6 +1956,7 @@ function onMagChange() {
   if (!code) { document.getElementById('magasin-card').classList.remove('visible'); return; }
   currentMag = magasins.find(m => m.code === code);
   if (!currentMag) return;
+  if (currentMag.langue) setLang(currentMag.langue);
   document.getElementById('card-title').textContent = currentMag.libelle;
   document.getElementById('fi-manager').value = currentMag.manager || '';
   document.getElementById('fi-email').value = currentMag.email || '';
