@@ -338,31 +338,31 @@ input[type=date]{color-scheme:dark}
       <span class="bloc-head-chevron" id="chev-b2">▼</span>
     </div>
     <div class="bloc-body" id="b2">
-      <div style="font-size:10px;color:var(--red);font-weight:500;margin-bottom:2px">⚠ Champs obligatoires</div>
+      <div style="font-size:10px;color:var(--red);font-weight:500;margin-bottom:2px" data-i18n="saisie_champs_obligatoires">⚠ Champs obligatoires</div>
       <div class="field-row">
-        <div class="field-group"><label>Renta salariale actuelle *</label>
+        <div class="field-group"><label data-i18n="saisie_renta_actuelle">Renta salariale actuelle *</label>
           <input type="text" inputmode="decimal" id="f-renta" placeholder="ex: 31" oninput="updateRentaBadge()" required>
           <div id="renta-badge" class="renta-badge" style="display:none"></div>
         </div>
-        <div class="field-group"><label>Objectif renta (paramétré)</label>
+        <div class="field-group"><label data-i18n="saisie_renta_objectif">Objectif renta (paramétré)</label>
           <input type="text" id="f-renta-obj" placeholder="28%" readonly style="opacity:.5;cursor:not-allowed">
         </div>
       </div>
       <div class="field-row">
-        <div class="field-group"><label>Positionnement CA mensuel (%) *</label>
+        <div class="field-group"><label data-i18n="saisie_ca_mensuel">Positionnement CA mensuel (%) *</label>
           <input type="text" inputmode="decimal" id="f-ca-mensuel" placeholder="ex: 105" required>
         </div>
-        <div class="field-group"><label>Positionnement CA annuel (%) *</label>
+        <div class="field-group"><label data-i18n="saisie_ca_annuel">Positionnement CA annuel (%) *</label>
           <input type="text" inputmode="decimal" id="f-ca-annuel" placeholder="ex: 98">
         </div>
       </div>
-      <div class="field-group"><label>Détail positionnement (facultatif)</label>
+      <div class="field-group"><label data-i18n="saisie_ca_detail">Détail positionnement (facultatif)</label>
         <input type="text" id="f-ca-mensuel-detail" placeholder="ex: optique 108%, audio 92%...">
       </div>
-      <div class="field-group"><div class="field-label-row"><label>Situation RH (recrutement, mutations, licenciements...)</label><button type="button" class="mic-btn" onclick="startMicFor('f-rh')" title="Dicter">🎤</button></div>
-        <textarea id="f-rh" rows="3" placeholder="Décris la situation RH actuelle..."></textarea></div>
-      <div class="field-group"><div class="field-label-row"><label>Formation terrain dispensée</label><button type="button" class="mic-btn" onclick="startMicFor('f-formation')" title="Dicter">🎤</button></div>
-        <textarea id="f-formation" rows="2" placeholder="Thèmes abordés, personnes formées..."></textarea></div>
+      <div class="field-group"><div class="field-label-row"><label data-i18n="saisie_situation_rh">Situation RH (recrutement, mutations, licenciements...)</label><button type="button" class="mic-btn" onclick="startMicFor('f-rh')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
+        <textarea id="f-rh" rows="3" data-i18n-placeholder="saisie_situation_rh_ph" placeholder="Décris la situation RH actuelle..."></textarea></div>
+      <div class="field-group"><div class="field-label-row"><label data-i18n="saisie_formation">Formation terrain dispensée</label><button type="button" class="mic-btn" onclick="startMicFor('f-formation')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
+        <textarea id="f-formation" rows="2" data-i18n-placeholder="saisie_formation_ph" placeholder="Thèmes abordés, personnes formées..."></textarea></div>
     </div>
   </div>
 
@@ -370,19 +370,19 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b3')">
       <div class="bloc-head-icon">🎯</div>
-      <span class="bloc-head-label">Suivi manager</span>
+      <span class="bloc-head-label" data-i18n="saisie_suivi_manager">Suivi manager</span>
       <span class="bloc-head-chevron" id="chev-b3">▼</span>
     </div>
     <div class="bloc-body" id="b3">
-      <div class="field-group"><label>Rituels managériaux observés</label>
+      <div class="field-group"><label data-i18n="saisie_rituels">Rituels managériaux observés</label>
         <div id="rituels-list" style="display:flex;flex-direction:column;gap:6px;margin-top:2px"></div>
         <div style="display:flex;gap:6px;margin-top:8px">
-          <input type="text" id="rituel-new" placeholder="Ajouter un rituel personnalisé..." style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
-          <button class="btn-add" onclick="addRituel()">+ Ajouter</button>
+          <input type="text" id="rituel-new" data-i18n-placeholder="saisie_rituel_ph" placeholder="Ajouter un rituel personnalisé..." style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+          <button class="btn-add" onclick="addRituel()" data-i18n="btn_ajouter">+ Ajouter</button>
         </div>
       </div>
-      <div class="field-group"><div class="field-label-row"><label>Observations sur le management</label><button type="button" class="mic-btn" onclick="startMicFor('f-manager-obs')" title="Dicter">🎤</button></div>
-        <textarea id="f-manager-obs" rows="3" placeholder="Posture, progression, points de vigilance..."></textarea></div>
+      <div class="field-group"><div class="field-label-row"><label data-i18n="saisie_obs_management">Observations sur le management</label><button type="button" class="mic-btn" onclick="startMicFor('f-manager-obs')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
+        <textarea id="f-manager-obs" rows="3" data-i18n-placeholder="saisie_obs_management_ph" placeholder="Posture, progression, points de vigilance..."></textarea></div>
     </div>
   </div>
 
@@ -390,31 +390,31 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b4')">
       <div class="bloc-head-icon">📊</div>
-      <span class="bloc-head-label">Indicateurs clés</span>
+      <span class="bloc-head-label" data-i18n="saisie_indicateurs">Indicateurs clés</span>
       <span class="bloc-head-chevron" id="chev-b4">▼</span>
     </div>
     <div class="bloc-body" id="b4">
       <div class="kpi-add-row">
         <select class="select-box" id="kpi-select" style="flex:1">
-          <option value="">Choisir un indicateur...</option>
+          <option value="" data-i18n="saisie_choisir_indicateur">Choisir un indicateur...</option>
         </select>
         <div style="position:relative;display:flex;align-items:center">
-          <input type="text" inputmode="decimal" id="kpi-val" placeholder="Valeur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px 32px 10px 12px;font-size:14px;color:var(--text);font-family:'Barlow',sans-serif;width:90px">
+          <input type="text" inputmode="decimal" id="kpi-val" data-i18n-placeholder="saisie_valeur" placeholder="Valeur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px 32px 10px 12px;font-size:14px;color:var(--text);font-family:'Barlow',sans-serif;width:90px">
           <button type="button" onclick="toggleSign('kpi-val')" title="Inverser le signe" style="position:absolute;right:2px;width:26px;height:26px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:14px;font-weight:700;line-height:1;cursor:pointer">±</button>
         </div>
-        <button class="btn-add" onclick="addKpi()">+ Ajouter</button>
+        <button class="btn-add" onclick="addKpi()" data-i18n="btn_ajouter">+ Ajouter</button>
       </div>
       <div style="display:flex;gap:8px;margin-top:6px;align-items:center">
-        <input type="text" id="kpi-custom-name" placeholder="Nouvel indicateur..." style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;flex:1">
+        <input type="text" id="kpi-custom-name" data-i18n-placeholder="saisie_nouvel_indicateur" placeholder="Nouvel indicateur..." style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;flex:1">
         <div style="position:relative;display:flex;align-items:center">
-          <input type="text" inputmode="decimal" id="kpi-custom-val" placeholder="Valeur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 28px 8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;width:80px">
+          <input type="text" inputmode="decimal" id="kpi-custom-val" data-i18n-placeholder="saisie_valeur" placeholder="Valeur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 28px 8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;width:80px">
           <button type="button" onclick="toggleSign('kpi-custom-val')" title="Inverser le signe" style="position:absolute;right:2px;width:22px;height:22px;border-radius:5px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:12px;font-weight:700;line-height:1;cursor:pointer">±</button>
         </div>
-        <button class="btn-add" style="font-size:12px;padding:8px 10px" onclick="addKpiCustomInline()">+ Créer</button>
+        <button class="btn-add" style="font-size:12px;padding:8px 10px" onclick="addKpiCustomInline()" data-i18n="btn_creer">+ Créer</button>
       </div>
       <div class="kpi-chips" id="kpi-chips"></div>
-      <div class="field-group" style="margin-top:4px"><div class="field-label-row"><label>Commentaire sur les indicateurs</label><button type="button" class="mic-btn" onclick="startMicFor('f-kpi-comment')" title="Dicter">🎤</button></div>
-        <textarea id="f-kpi-comment" rows="2" placeholder="Tendances, points d'attention..."></textarea></div>
+      <div class="field-group" style="margin-top:4px"><div class="field-label-row"><label data-i18n="saisie_commentaire_kpi">Commentaire sur les indicateurs</label><button type="button" class="mic-btn" onclick="startMicFor('f-kpi-comment')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
+        <textarea id="f-kpi-comment" rows="2" data-i18n-placeholder="saisie_commentaire_kpi_ph" placeholder="Tendances, points d'attention..."></textarea></div>
     </div>
   </div>
 
@@ -422,13 +422,13 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b5')">
       <div class="bloc-head-icon">⚙️</div>
-      <span class="bloc-head-label">Process & Nouveautés</span>
+      <span class="bloc-head-label" data-i18n="saisie_process">Process & Nouveautés</span>
       <span class="bloc-head-chevron" id="chev-b5">▼</span>
     </div>
     <div class="bloc-body" id="b5">
       <div class="field-group">
-        <div class="field-label-row"><label>Process & Nouveautés</label><button type="button" class="mic-btn" onclick="startMicFor('f-process')" title="Dicter">🎤</button></div>
-        <textarea id="f-process" rows="4" placeholder="Déploiements en cours, niveau de mise en place, blocages identifiés, nouveaux outils..."></textarea></div>
+        <div class="field-label-row"><label data-i18n="saisie_process">Process & Nouveautés</label><button type="button" class="mic-btn" onclick="startMicFor('f-process')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
+        <textarea id="f-process" rows="4" data-i18n-placeholder="saisie_process_ph" placeholder="Déploiements en cours, niveau de mise en place, blocages identifiés, nouveaux outils..."></textarea></div>
     </div>
   </div>
 
@@ -436,23 +436,23 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b6')">
       <div class="bloc-head-icon">⚡</div>
-      <span class="bloc-head-label">Points forts & Difficultés</span>
+      <span class="bloc-head-label" data-i18n="saisie_forts_diff">Points forts & Difficultés</span>
       <span class="bloc-head-chevron" id="chev-b6">▼</span>
     </div>
     <div class="bloc-body" id="b6">
       <div class="field-group">
-        <label style="color:var(--green)">+ Points forts</label>
+        <label style="color:var(--green)" data-i18n="saisie_points_forts">+ Points forts</label>
         <div class="action-list" id="forts-list"></div>
         <div style="display:flex;gap:6px;margin-top:4px">
-          <input type="text" id="forts-new" onfocus="setMicTarget('forts-new')" placeholder="Ajouter un point fort...">
+          <input type="text" id="forts-new" onfocus="setMicTarget('forts-new')" data-i18n-placeholder="saisie_point_fort_ph" placeholder="Ajouter un point fort...">
           <button class="btn-add" onclick="addPoint('forts')">+</button>
         </div>
       </div>
       <div class="field-group">
-        <label style="color:var(--red)">− Points d'amélioration</label>
+        <label style="color:var(--red)" data-i18n="saisie_points_amelioration">− Points d'amélioration</label>
         <div class="action-list" id="diff-list"></div>
         <div style="display:flex;gap:6px;margin-top:4px">
-          <input type="text" id="diff-new" onfocus="setMicTarget('diff-new')" placeholder="Ajouter un point d'amélioration...">
+          <input type="text" id="diff-new" onfocus="setMicTarget('diff-new')" data-i18n-placeholder="saisie_point_amelioration_ph" placeholder="Ajouter un point d'amélioration...">
           <button class="btn-add" onclick="addPoint('diff')">+</button>
         </div>
       </div>
@@ -463,11 +463,11 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('bpen')">
       <div class="bloc-head-icon">📁</div>
-      <span class="bloc-head-label">Tour de péniches</span>
+      <span class="bloc-head-label" data-i18n="saisie_tour_peniches">Tour de péniches</span>
       <span class="bloc-head-chevron" id="chev-bpen">▼</span>
     </div>
     <div class="bloc-body" id="bpen">
-      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px" data-i18n="saisie_peniches_desc">
         Contrôlez au moins 5 dossiers clients dans une zone (max 3 zones par passage).
       </div>
       <div id="peniches-list" style="display:flex;flex-direction:column;gap:10px"></div>
@@ -478,21 +478,21 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b7')">
       <div class="bloc-head-icon">📷</div>
-      <span class="bloc-head-label">Photos</span>
+      <span class="bloc-head-label" data-i18n="saisie_photos">Photos</span>
       <span class="bloc-head-chevron" id="chev-b7">▼</span>
     </div>
     <div class="bloc-body" id="b7">
       <div class="photos-grid" id="photos-grid">
         <div class="photo-slot" id="ps0" onclick="triggerPhoto(0)">
-          <span class="photo-icon">📷</span><span class="photo-lbl">Ajouter</span>
+          <span class="photo-icon">📷</span><span class="photo-lbl" data-i18n="btn_ajouter_photo">Ajouter</span>
           <div class="photo-overlay"><span class="photo-overlay-btn" onclick="removePhoto(event,0)">🗑</span></div>
         </div>
         <div class="photo-slot" id="ps1" onclick="triggerPhoto(1)">
-          <span class="photo-icon">📷</span><span class="photo-lbl">Ajouter</span>
+          <span class="photo-icon">📷</span><span class="photo-lbl" data-i18n="btn_ajouter_photo">Ajouter</span>
           <div class="photo-overlay"><span class="photo-overlay-btn" onclick="removePhoto(event,1)">🗑</span></div>
         </div>
         <div class="photo-slot" id="ps2" onclick="triggerPhoto(2)">
-          <span class="photo-icon">📷</span><span class="photo-lbl">Ajouter</span>
+          <span class="photo-icon">📷</span><span class="photo-lbl" data-i18n="btn_ajouter_photo">Ajouter</span>
           <div class="photo-overlay"><span class="photo-overlay-btn" onclick="removePhoto(event,2)">🗑</span></div>
         </div>
       </div>
@@ -507,22 +507,22 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b8')">
       <div class="bloc-head-icon">✅</div>
-      <span class="bloc-head-label">Actions attendues</span>
+      <span class="bloc-head-label" data-i18n="saisie_actions">Actions attendues</span>
       <span class="bloc-head-chevron" id="chev-b8">▼</span>
     </div>
     <div class="bloc-body" id="b8">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-        <span style="font-size:12px;color:var(--muted)">Actions attendues (exactement 3 requises)</span>
+        <span style="font-size:12px;color:var(--muted)" data-i18n="saisie_actions_desc">Actions attendues (exactement 3 requises)</span>
         <span id="action-counter" style="font-size:12px;font-weight:600;color:var(--red)">0 / 3</span>
       </div>
       <div class="action-list" id="action-list"></div>
       <div class="action-add-form" id="action-add-form">
-        <input type="text" id="act-text" onfocus="setMicTarget('act-text')" placeholder="Titre de l'action...">
-        <input type="text" id="act-comment" onfocus="setMicTarget('act-comment')" placeholder="Commentaire / détail (facultatif)">
+        <input type="text" id="act-text" onfocus="setMicTarget('act-text')" data-i18n-placeholder="saisie_action_titre_ph" placeholder="Titre de l'action...">
+        <input type="text" id="act-comment" onfocus="setMicTarget('act-comment')" data-i18n-placeholder="saisie_action_comment_ph" placeholder="Commentaire / détail (facultatif)">
         <div class="action-add-row">
-          <input type="text" id="act-who" placeholder="Responsable">
+          <input type="text" id="act-who" data-i18n-placeholder="saisie_responsable" placeholder="Responsable">
           <input type="date" id="act-date">
-          <button class="btn-add" onclick="addAction()">+ Ajouter</button>
+          <button class="btn-add" onclick="addAction()" data-i18n="btn_ajouter">+ Ajouter</button>
         </div>
       </div>
     </div>
@@ -532,15 +532,15 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b9')">
       <div class="bloc-head-icon">💬</div>
-      <span class="bloc-head-label">Mot pour l'équipe</span>
+      <span class="bloc-head-label" data-i18n="saisie_mot_equipe">Mot pour l'équipe</span>
       <span class="bloc-head-chevron" id="chev-b9">▼</span>
     </div>
     <div class="bloc-body" id="b9">
-      <div class="field-group"><div class="field-label-row"><label>Mot d'introduction (facultatif)</label><button type="button" class="mic-btn" onclick="startMicFor('f-mot-intro')" title="Dicter">🎤</button></div>
-        <textarea id="f-mot-intro" rows="2" placeholder="Un message d'accroche en début de mail..."></textarea></div>
-      <div class="field-group"><div class="field-label-row"><label>Mot de conclusion (facultatif)</label><button type="button" class="mic-btn" onclick="startMicFor('f-mot-conclusion')" title="Dicter">🎤</button></div>
-        <textarea id="f-mot-conclusion" rows="2" placeholder="Un message d'encouragement ou de cadrage en fin de mail..."></textarea></div>
-      <div class="field-group"><label>Date du prochain passage (facultatif)</label>
+      <div class="field-group"><div class="field-label-row"><label data-i18n="saisie_mot_intro">Mot d'introduction (facultatif)</label><button type="button" class="mic-btn" onclick="startMicFor('f-mot-intro')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
+        <textarea id="f-mot-intro" rows="2" data-i18n-placeholder="saisie_mot_intro_ph" placeholder="Un message d'accroche en début de mail..."></textarea></div>
+      <div class="field-group"><div class="field-label-row"><label data-i18n="saisie_mot_conclusion">Mot de conclusion (facultatif)</label><button type="button" class="mic-btn" onclick="startMicFor('f-mot-conclusion')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
+        <textarea id="f-mot-conclusion" rows="2" data-i18n-placeholder="saisie_mot_conclusion_ph" placeholder="Un message d'encouragement ou de cadrage en fin de mail..."></textarea></div>
+      <div class="field-group"><label data-i18n="saisie_prochain_passage">Date du prochain passage (facultatif)</label>
         <input type="date" id="f-prochain-passage"></div>
     </div>
   </div>
@@ -549,12 +549,12 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b10')">
       <div class="bloc-head-icon">📝</div>
-      <span class="bloc-head-label">Remarque libre</span>
+      <span class="bloc-head-label" data-i18n="saisie_remarque_libre">Remarque libre</span>
       <span class="bloc-head-chevron" id="chev-b10">▼</span>
     </div>
     <div class="bloc-body" id="b10">
-      <div class="field-group"><div class="field-label-row"><label>Remarque libre (facultatif)</label><button type="button" class="mic-btn" onclick="startMicFor('f-remarque-libre')" title="Dicter">🎤</button></div>
-        <textarea id="f-remarque-libre" rows="4" placeholder="Tout autre point à noter, sans contrainte de format..."></textarea></div>
+      <div class="field-group"><div class="field-label-row"><label data-i18n="saisie_remarque_libre_label">Remarque libre (facultatif)</label><button type="button" class="mic-btn" onclick="startMicFor('f-remarque-libre')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
+        <textarea id="f-remarque-libre" rows="4" data-i18n-placeholder="saisie_remarque_libre_ph" placeholder="Tout autre point à noter, sans contrainte de format..."></textarea></div>
     </div>
   </div>
 
@@ -562,16 +562,16 @@ input[type=date]{color-scheme:dark}
   <div class="bloc-accordion">
     <div class="bloc-head" onclick="toggleBloc('b11')">
       <div class="bloc-head-icon">🗣️</div>
-      <span class="bloc-head-label">Entretiens individuels</span>
+      <span class="bloc-head-label" data-i18n="saisie_entretiens">Entretiens individuels</span>
       <span class="bloc-head-chevron" id="chev-b11">▼</span>
     </div>
     <div class="bloc-body" id="b11">
       <div class="action-list" id="entretien-list"></div>
       <div class="action-add-form">
-        <input type="text" id="ent-prenom" placeholder="Prénom du collaborateur">
-        <input type="text" id="ent-sujet" onfocus="setMicTarget('ent-sujet')" placeholder="Sujet abordé (facultatif, peut rester confidentiel)">
+        <input type="text" id="ent-prenom" data-i18n-placeholder="saisie_ent_prenom_ph" placeholder="Prénom du collaborateur">
+        <input type="text" id="ent-sujet" onfocus="setMicTarget('ent-sujet')" data-i18n-placeholder="saisie_ent_sujet_ph" placeholder="Sujet abordé (facultatif, peut rester confidentiel)">
         <div class="action-add-row">
-          <button class="btn-add" onclick="addEntretien()" style="flex:1">+ Ajouter</button>
+          <button class="btn-add" onclick="addEntretien()" style="flex:1" data-i18n="btn_ajouter">+ Ajouter</button>
         </div>
       </div>
     </div>
@@ -579,8 +579,8 @@ input[type=date]{color-scheme:dark}
 
   <!-- Barre basse saisie -->
   <div id="bottom-bar" style="display:none">
-    <button class="btn-secondary" style="flex:1" onclick="saveDraft()">💾 Brouillon</button>
-    <button class="btn-primary" style="flex:2" onclick="finalizeBilan()">Finaliser & Envoyer →</button>
+    <button class="btn-secondary" style="flex:1" onclick="saveDraft()" data-i18n="btn_brouillon">💾 Brouillon</button>
+    <button class="btn-primary" style="flex:2" onclick="finalizeBilan()" data-i18n="btn_finaliser">Finaliser & Envoyer →</button>
   </div>
 </div>
 
@@ -724,7 +724,7 @@ input[type=date]{color-scheme:dark}
     <div style="font-size:13px;color:var(--muted);margin-bottom:12px">Le PDF sera envoyé aux destinataires suivants :</div>
     <div id="modal-recipients" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
     <div class="field-group">
-      <div class="field-label-row"><label>Texte du mail (modifiable avant envoi)</label><button type="button" class="mic-btn" onclick="startMicFor('modal-mailbody')" title="Dicter">🎤</button></div>
+      <div class="field-label-row"><label data-i18n="mail_texte_modifiable">Texte du mail (modifiable avant envoi)</label><button type="button" class="mic-btn" onclick="startMicFor('modal-mailbody')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
       <textarea id="modal-mailbody" rows="10" style="font-family:'Barlow',sans-serif;font-size:12.5px;line-height:1.5"></textarea>
       <div style="display:flex;gap:8px;margin-top:6px">
         <button type="button" class="btn-secondary" style="flex:1;font-size:12px;padding:8px" onclick="resetMailBody()">↺ Texte brut</button>
@@ -826,6 +826,29 @@ const I18N = {
     saisie_date_visite: 'Date de visite', saisie_duree: 'Durée (heures)', saisie_duree_ph: 'ex: 4',
     saisie_personnes: 'Personnes présentes', saisie_personnes_ph: 'ex: Manager, 3 vendeurs, stagiaire',
     saisie_rh_equipe: 'RH & Équipe',
+    saisie_champs_obligatoires: '⚠ Champs obligatoires',
+    saisie_renta_actuelle: 'Renta salariale actuelle *', saisie_renta_objectif: 'Objectif renta (paramétré)',
+    saisie_ca_mensuel: 'Positionnement CA mensuel (%) *', saisie_ca_annuel: 'Positionnement CA annuel (%) *',
+    saisie_ca_detail: 'Détail positionnement (facultatif)',
+    saisie_situation_rh: 'Situation RH (recrutement, mutations, licenciements...)', saisie_situation_rh_ph: 'Décris la situation RH actuelle...',
+    saisie_formation: 'Formation terrain dispensée', saisie_formation_ph: 'Thèmes abordés, personnes formées...',
+    saisie_suivi_manager: 'Suivi manager', saisie_rituels: 'Rituels managériaux observés', saisie_rituel_ph: 'Ajouter un rituel personnalisé...',
+    saisie_obs_management: 'Observations sur le management', saisie_obs_management_ph: 'Posture, progression, points de vigilance...',
+    saisie_indicateurs: 'Indicateurs clés', saisie_choisir_indicateur: 'Choisir un indicateur...', saisie_valeur: 'Valeur',
+    saisie_nouvel_indicateur: 'Nouvel indicateur...', saisie_commentaire_kpi: 'Commentaire sur les indicateurs', saisie_commentaire_kpi_ph: "Tendances, points d'attention...",
+    saisie_process: 'Process & Nouveautés', saisie_process_ph: 'Déploiements en cours, niveau de mise en place, blocages identifiés, nouveaux outils...',
+    saisie_forts_diff: 'Points forts & Difficultés', saisie_points_forts: '+ Points forts', saisie_point_fort_ph: 'Ajouter un point fort...',
+    saisie_points_amelioration: "− Points d'amélioration", saisie_point_amelioration_ph: "Ajouter un point d'amélioration...",
+    saisie_tour_peniches: 'Tour de péniches', saisie_peniches_desc: 'Contrôlez au moins 5 dossiers clients dans une zone (max 3 zones par passage).',
+    saisie_photos: 'Photos', saisie_actions: 'Actions attendues', saisie_actions_desc: 'Actions attendues (exactement 3 requises)',
+    saisie_action_titre_ph: "Titre de l'action...", saisie_action_comment_ph: 'Commentaire / détail (facultatif)', saisie_responsable: 'Responsable',
+    saisie_mot_equipe: "Mot pour l'équipe", saisie_mot_intro: "Mot d'introduction (facultatif)", saisie_mot_intro_ph: "Un message d'accroche en début de mail...",
+    saisie_mot_conclusion: 'Mot de conclusion (facultatif)', saisie_mot_conclusion_ph: "Un message d'encouragement ou de cadrage en fin de mail...",
+    saisie_prochain_passage: 'Date du prochain passage (facultatif)',
+    saisie_remarque_libre: 'Remarque libre', saisie_remarque_libre_label: 'Remarque libre (facultatif)', saisie_remarque_libre_ph: 'Tout autre point à noter, sans contrainte de format...',
+    saisie_entretiens: 'Entretiens individuels', saisie_ent_prenom_ph: 'Prénom du collaborateur', saisie_ent_sujet_ph: 'Sujet abordé (facultatif, peut rester confidentiel)',
+    btn_dicter: 'Dicter', btn_ajouter: '+ Ajouter', btn_creer: '+ Créer', btn_ajouter_photo: 'Ajouter', btn_brouillon: '💾 Brouillon', btn_finaliser: 'Finaliser & Envoyer →',
+    mail_texte_modifiable: 'Texte du mail (modifiable avant envoi)',
   },
   EN: {
     nav_nouveau: 'New', nav_historique: 'History', nav_analyse: 'Analysis', nav_parametres: 'Settings',
@@ -846,6 +869,29 @@ const I18N = {
     saisie_date_visite: 'Visit date', saisie_duree: 'Duration (hours)', saisie_duree_ph: 'e.g. 4',
     saisie_personnes: 'People present', saisie_personnes_ph: 'e.g. Manager, 3 salespeople, trainee',
     saisie_rh_equipe: 'HR & Team',
+    saisie_champs_obligatoires: '⚠ Required fields',
+    saisie_renta_actuelle: 'Current payroll ratio *', saisie_renta_objectif: 'Target ratio (configured)',
+    saisie_ca_mensuel: 'Monthly sales achievement (%) *', saisie_ca_annuel: 'Annual sales achievement (%) *',
+    saisie_ca_detail: 'Breakdown (optional)',
+    saisie_situation_rh: 'HR situation (hiring, transfers, terminations...)', saisie_situation_rh_ph: 'Describe the current HR situation...',
+    saisie_formation: 'On-site training delivered', saisie_formation_ph: 'Topics covered, people trained...',
+    saisie_suivi_manager: 'Manager follow-up', saisie_rituels: 'Observed management rituals', saisie_rituel_ph: 'Add a custom ritual...',
+    saisie_obs_management: 'Management observations', saisie_obs_management_ph: 'Posture, progress, points of concern...',
+    saisie_indicateurs: 'Key indicators', saisie_choisir_indicateur: 'Choose an indicator...', saisie_valeur: 'Value',
+    saisie_nouvel_indicateur: 'New indicator...', saisie_commentaire_kpi: 'Comment on the indicators', saisie_commentaire_kpi_ph: 'Trends, points of attention...',
+    saisie_process: 'Process & New rollouts', saisie_process_ph: 'Ongoing rollouts, level of adoption, identified blockers, new tools...',
+    saisie_forts_diff: 'Strengths & Improvement areas', saisie_points_forts: '+ Strengths', saisie_point_fort_ph: 'Add a strength...',
+    saisie_points_amelioration: '− Improvement areas', saisie_point_amelioration_ph: 'Add an improvement area...',
+    saisie_tour_peniches: 'Client file review', saisie_peniches_desc: 'Check at least 5 customer files in one zone (max 3 zones per visit).',
+    saisie_photos: 'Photos', saisie_actions: 'Expected actions', saisie_actions_desc: 'Expected actions (exactly 3 required)',
+    saisie_action_titre_ph: 'Action title...', saisie_action_comment_ph: 'Comment / detail (optional)', saisie_responsable: 'Owner',
+    saisie_mot_equipe: 'Message for the team', saisie_mot_intro: 'Opening message (optional)', saisie_mot_intro_ph: 'An opening message for the email...',
+    saisie_mot_conclusion: 'Closing message (optional)', saisie_mot_conclusion_ph: 'A closing or encouragement message for the email...',
+    saisie_prochain_passage: 'Next visit date (optional)',
+    saisie_remarque_libre: 'Free note', saisie_remarque_libre_label: 'Free note (optional)', saisie_remarque_libre_ph: 'Any other point to note, no format constraints...',
+    saisie_entretiens: 'One-on-one meetings', saisie_ent_prenom_ph: "Team member's first name", saisie_ent_sujet_ph: 'Topic covered (optional, may remain confidential)',
+    btn_dicter: 'Dictate', btn_ajouter: '+ Add', btn_creer: '+ Create', btn_ajouter_photo: 'Add', btn_brouillon: '💾 Draft', btn_finaliser: 'Finalize & Send →',
+    mail_texte_modifiable: 'Email text (editable before sending)',
   },
   ES: {
     nav_nouveau: 'Nuevo', nav_historique: 'Historial', nav_analyse: 'Análisis', nav_parametres: 'Ajustes',
@@ -866,6 +912,29 @@ const I18N = {
     saisie_date_visite: 'Fecha de la visita', saisie_duree: 'Duración (horas)', saisie_duree_ph: 'ej: 4',
     saisie_personnes: 'Personas presentes', saisie_personnes_ph: 'ej: Encargado, 3 vendedores, becario',
     saisie_rh_equipe: 'RR. HH. y equipo',
+    saisie_champs_obligatoires: '⚠ Campos obligatorios',
+    saisie_renta_actuelle: 'Renta salarial actual *', saisie_renta_objectif: 'Objetivo de renta (configurado)',
+    saisie_ca_mensuel: 'Posicionamiento de ventas mensual (%) *', saisie_ca_annuel: 'Posicionamiento de ventas anual (%) *',
+    saisie_ca_detail: 'Detalle del posicionamiento (opcional)',
+    saisie_situation_rh: 'Situación de RR. HH. (contrataciones, traslados, bajas...)', saisie_situation_rh_ph: 'Describe la situación actual de RR. HH....',
+    saisie_formation: 'Formación en tienda impartida', saisie_formation_ph: 'Temas tratados, personas formadas...',
+    saisie_suivi_manager: 'Seguimiento del encargado', saisie_rituels: 'Rituales de gestión observados', saisie_rituel_ph: 'Añadir un ritual personalizado...',
+    saisie_obs_management: 'Observaciones sobre la gestión', saisie_obs_management_ph: 'Actitud, progreso, puntos de atención...',
+    saisie_indicateurs: 'Indicadores clave', saisie_choisir_indicateur: 'Elegir un indicador...', saisie_valeur: 'Valor',
+    saisie_nouvel_indicateur: 'Nuevo indicador...', saisie_commentaire_kpi: 'Comentario sobre los indicadores', saisie_commentaire_kpi_ph: 'Tendencias, puntos de atención...',
+    saisie_process: 'Procesos y novedades', saisie_process_ph: 'Despliegues en curso, nivel de implementación, bloqueos identificados, nuevas herramientas...',
+    saisie_forts_diff: 'Puntos fuertes y dificultades', saisie_points_forts: '+ Puntos fuertes', saisie_point_fort_ph: 'Añadir un punto fuerte...',
+    saisie_points_amelioration: '− Puntos de mejora', saisie_point_amelioration_ph: 'Añadir un punto de mejora...',
+    saisie_tour_peniches: 'Revisión de expedientes', saisie_peniches_desc: 'Revisa al menos 5 expedientes de clientes en una zona (máx. 3 zonas por visita).',
+    saisie_photos: 'Fotos', saisie_actions: 'Acciones esperadas', saisie_actions_desc: 'Acciones esperadas (exactamente 3 requeridas)',
+    saisie_action_titre_ph: 'Título de la acción...', saisie_action_comment_ph: 'Comentario / detalle (opcional)', saisie_responsable: 'Responsable',
+    saisie_mot_equipe: 'Mensaje para el equipo', saisie_mot_intro: 'Mensaje de apertura (opcional)', saisie_mot_intro_ph: 'Un mensaje de apertura para el correo...',
+    saisie_mot_conclusion: 'Mensaje de cierre (opcional)', saisie_mot_conclusion_ph: 'Un mensaje de ánimo o cierre para el correo...',
+    saisie_prochain_passage: 'Fecha de la próxima visita (opcional)',
+    saisie_remarque_libre: 'Observación libre', saisie_remarque_libre_label: 'Observación libre (opcional)', saisie_remarque_libre_ph: 'Cualquier otro punto a anotar, sin formato específico...',
+    saisie_entretiens: 'Entrevistas individuales', saisie_ent_prenom_ph: 'Nombre del colaborador', saisie_ent_sujet_ph: 'Tema tratado (opcional, puede ser confidencial)',
+    btn_dicter: 'Dictar', btn_ajouter: '+ Añadir', btn_creer: '+ Crear', btn_ajouter_photo: 'Añadir', btn_brouillon: '💾 Borrador', btn_finaliser: 'Finalizar y enviar →',
+    mail_texte_modifiable: 'Texto del correo (editable antes de enviar)',
   },
   HE: {
     nav_nouveau: 'חדש', nav_historique: 'היסטוריה', nav_analyse: 'ניתוח', nav_parametres: 'הגדרות',
@@ -906,6 +975,29 @@ const I18N = {
     saisie_date_visite: 'Bezoekdatum', saisie_duree: 'Duur (uren)', saisie_duree_ph: 'bv: 4',
     saisie_personnes: 'Aanwezige personen', saisie_personnes_ph: 'bv: Manager, 3 verkopers, stagiair',
     saisie_rh_equipe: 'HR & Team',
+    saisie_champs_obligatoires: '⚠ Verplichte velden',
+    saisie_renta_actuelle: 'Huidige loonratio *', saisie_renta_objectif: 'Doelratio (ingesteld)',
+    saisie_ca_mensuel: 'Maandelijkse omzetrealisatie (%) *', saisie_ca_annuel: 'Jaarlijkse omzetrealisatie (%) *',
+    saisie_ca_detail: 'Detail (optioneel)',
+    saisie_situation_rh: 'HR-situatie (aanwervingen, overplaatsingen, ontslagen...)', saisie_situation_rh_ph: 'Beschrijf de huidige HR-situatie...',
+    saisie_formation: 'Gegeven training op de winkelvloer', saisie_formation_ph: 'Behandelde onderwerpen, opgeleide personen...',
+    saisie_suivi_manager: 'Opvolging manager', saisie_rituels: 'Waargenomen managementrituelen', saisie_rituel_ph: 'Voeg een aangepast ritueel toe...',
+    saisie_obs_management: 'Observaties over het management', saisie_obs_management_ph: 'Houding, vooruitgang, aandachtspunten...',
+    saisie_indicateurs: 'Kernindicatoren', saisie_choisir_indicateur: 'Kies een indicator...', saisie_valeur: 'Waarde',
+    saisie_nouvel_indicateur: 'Nieuwe indicator...', saisie_commentaire_kpi: 'Opmerking bij de indicatoren', saisie_commentaire_kpi_ph: 'Trends, aandachtspunten...',
+    saisie_process: 'Processen & Nieuwigheden', saisie_process_ph: 'Lopende uitrollen, adoptieniveau, geïdentificeerde blokkades, nieuwe tools...',
+    saisie_forts_diff: 'Sterke punten & verbeterpunten', saisie_points_forts: '+ Sterke punten', saisie_point_fort_ph: 'Voeg een sterk punt toe...',
+    saisie_points_amelioration: '− Verbeterpunten', saisie_point_amelioration_ph: 'Voeg een verbeterpunt toe...',
+    saisie_tour_peniches: 'Dossiercontrole', saisie_peniches_desc: 'Controleer minstens 5 klantendossiers in één zone (max. 3 zones per bezoek).',
+    saisie_photos: "Foto's", saisie_actions: 'Verwachte acties', saisie_actions_desc: 'Verwachte acties (precies 3 vereist)',
+    saisie_action_titre_ph: 'Titel van de actie...', saisie_action_comment_ph: 'Opmerking / detail (optioneel)', saisie_responsable: 'Verantwoordelijke',
+    saisie_mot_equipe: 'Boodschap voor het team', saisie_mot_intro: 'Openingsboodschap (optioneel)', saisie_mot_intro_ph: 'Een openingsboodschap voor de e-mail...',
+    saisie_mot_conclusion: 'Afsluitende boodschap (optioneel)', saisie_mot_conclusion_ph: 'Een afsluitende of bemoedigende boodschap voor de e-mail...',
+    saisie_prochain_passage: 'Datum volgend bezoek (optioneel)',
+    saisie_remarque_libre: 'Vrije opmerking', saisie_remarque_libre_label: 'Vrije opmerking (optioneel)', saisie_remarque_libre_ph: 'Elk ander te noteren punt, zonder vaste vorm...',
+    saisie_entretiens: 'Individuele gesprekken', saisie_ent_prenom_ph: 'Voornaam van de medewerker', saisie_ent_sujet_ph: 'Behandeld onderwerp (optioneel, mag vertrouwelijk blijven)',
+    btn_dicter: 'Dicteren', btn_ajouter: '+ Toevoegen', btn_creer: '+ Aanmaken', btn_ajouter_photo: 'Toevoegen', btn_brouillon: '💾 Concept', btn_finaliser: 'Afronden & verzenden →',
+    mail_texte_modifiable: 'E-mailtekst (bewerkbaar voor verzending)',
   },
 };
 
@@ -921,6 +1013,7 @@ function applyTranslations() {
   document.documentElement.dir = currentLang === 'HE' ? 'rtl' : 'ltr';
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.getAttribute('data-i18n')); });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.getAttribute('data-i18n-placeholder')); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.getAttribute('data-i18n-title')); });
   // Les <option> de premier choix des <select> générés en JS ne portent pas d'attribut data-i18n
   // (recréés dynamiquement) — on les retraduit ici plutôt que de dupliquer la logique ailleurs.
   populateARSelect();
@@ -2425,7 +2518,7 @@ function removePhoto(e, i) {
   e.stopPropagation();
   photos[i] = null; photoCaptions[i] = '';
   const slot = document.getElementById(`ps${i}`);
-  slot.innerHTML = `<span class="photo-icon">📷</span><span class="photo-lbl">Ajouter</span>
+  slot.innerHTML = `<span class="photo-icon">📷</span><span class="photo-lbl" data-i18n="btn_ajouter_photo">Ajouter</span>
     <div class="photo-overlay"><span class="photo-overlay-btn" onclick="removePhoto(event,${i})">🗑</span></div>`;
   slot.onclick = () => triggerPhoto(i);
   renderCaptions();
