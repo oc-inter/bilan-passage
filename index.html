@@ -811,7 +811,7 @@ function loadLogo() {
 }
 
 // ── VERSION APP ── (incrémenter à chaque mise à jour notable, pour déclencher l'invite de rechargement)
-const APP_VERSION = '2026.09.11-1';
+const APP_VERSION = '2026.09.11-2';
 
 // ── TRADUCTION (Phase 1 : sélecteur manuel, indépendant du magasin/de la personne connectée) ──
 // Sélecteur manquant en Phase 1 pour un texte donné (traducteur pas encore passé dessus) :
@@ -965,6 +965,25 @@ const I18N = {
     modal_mdp_ph: 'Mot de passe...', modal_piece_jointe: 'Pièce jointe supplémentaire (PDF, optionnel)', modal_retirer: '✕ Retirer',
     modal_joindre_eval: '📋 Joindre le récapitulatif Évaluation Équipe de ce magasin', modal_envoyer: '📧 Envoyer',
     modal_previsualiser_pdf: '👁 Prévisualiser le PDF', btn_annuler: 'Annuler',
+    confirm_reinitialiser: 'Réinitialiser la saisie en cours ? Toutes les informations déjà saisies pour ce bilan seront effacées.',
+    confirm_eval_manquante: 'Aucune donnée Évaluation Équipe trouvée pour ce magasin. Envoyer le bilan de passage sans cette pièce jointe ?',
+    confirm_eval_erreur_prefix: 'Évaluation Équipe : ', confirm_eval_erreur_suffix: '\n\nEnvoyer quand même le bilan de passage sans cette pièce jointe ?',
+    confirm_suppr_historique: "Supprimer tout l'historique", confirm_suppr_historique_filtre: ' de ce magasin',
+    confirm_suppr_bilan: "Supprimer ce bilan de l'historique ?",
+    prompt_mdp_notif_olivier: 'Mot de passe Zimbra pour envoyer la notification à Olivier :',
+    prompt_mdp_notif_olivier2: 'Mot de passe Zimbra pour notifier Olivier :',
+    prompt_mdp_renvoi: 'Mot de passe Zimbra pour renvoyer le bilan :',
+    pdf_pas_entretien: "Pas d'entretien individuel lors de ce passage.", pdf_bilan_de_passage: 'BILAN DE PASSAGE',
+    pdf_indicateurs_cles: 'INDICATEURS CLÉS', pdf_document_confidentiel: 'Optical Center — Document confidentiel',
+    pdf_aucune_action: 'Aucune action renseignée pour ce passage', pdf_actions_attendues_prochain_passage: 'ACTIONS ATTENDUES — PROCHAIN PASSAGE',
+    pdf_actions_attendues: 'ACTIONS ATTENDUES', pdf_passage_n: 'Passage n°', pdf_prochain_passage: 'PROCHAIN PASSAGE',
+    pdf_page_2_actions: 'Page 2/2 — Actions attendues',
+    eval_titre: 'ÉVALUATION ÉQUIPE', eval_recap_magasin: 'Récapitulatif magasin', eval_animateur_reseau: 'Animateur réseau :',
+    eval_taches_restantes: 'TÂCHES RESTANTES À VALIDER', eval_niveau_equipe: "Niveau de l'équipe — moyenne des tâches actives", eval_objectif: 'Objectif',
+    eval_col_tache: 'Tâche', eval_col_responsable: 'Responsable', eval_col_depuis: 'Depuis', eval_col_second: 'Second', eval_col_note: 'Note (3 meill.)', eval_col_ctrl: 'Ctrl.',
+    eval_ouvre_janvier_2027: 'Ouvre en janvier 2027', pdf_page_1: 'Page 1/2', pdf_page_2: 'Page 2/2',
+    eval_footer_magasin: 'Optical Center · Évaluation Équipe · magasin', eval_aucun_controle: 'Aucun contrôle effectué',
+    eval_import_historique: 'Import historique', eval_dernier_controle_du: 'Dernier contrôle du', eval_tous_criteres_valides: 'Tous les critères validés',
   },
   EN: {
     nav_nouveau: 'New', nav_historique: 'History', nav_analyse: 'Analysis', nav_parametres: 'Settings',
@@ -1113,6 +1132,25 @@ const I18N = {
     modal_mdp_ph: 'Password...', modal_piece_jointe: 'Additional attachment (PDF, optional)', modal_retirer: '✕ Remove',
     modal_joindre_eval: '📋 Attach this store\'s Team Evaluation summary', modal_envoyer: '📧 Send',
     modal_previsualiser_pdf: '👁 Preview the PDF', btn_annuler: 'Cancel',
+    confirm_reinitialiser: 'Reset the current entry? All information already entered for this report will be erased.',
+    confirm_eval_manquante: 'No Team Evaluation data found for this store. Send the report without this attachment?',
+    confirm_eval_erreur_prefix: 'Team Evaluation: ', confirm_eval_erreur_suffix: '\n\nSend the report anyway without this attachment?',
+    confirm_suppr_historique: 'Delete all history', confirm_suppr_historique_filtre: ' for this store',
+    confirm_suppr_bilan: 'Delete this report from the history?',
+    prompt_mdp_notif_olivier: 'Zimbra password to send the notification to Olivier:',
+    prompt_mdp_notif_olivier2: 'Zimbra password to notify Olivier:',
+    prompt_mdp_renvoi: 'Zimbra password to resend the report:',
+    pdf_pas_entretien: 'No one-on-one meeting during this visit.', pdf_bilan_de_passage: 'VISIT REPORT',
+    pdf_indicateurs_cles: 'KEY INDICATORS', pdf_document_confidentiel: 'Optical Center — Confidential document',
+    pdf_aucune_action: 'No action recorded for this visit', pdf_actions_attendues_prochain_passage: 'EXPECTED ACTIONS — NEXT VISIT',
+    pdf_actions_attendues: 'EXPECTED ACTIONS', pdf_passage_n: 'Visit no. ', pdf_prochain_passage: 'NEXT VISIT',
+    pdf_page_2_actions: 'Page 2/2 — Expected actions',
+    eval_titre: 'TEAM EVALUATION', eval_recap_magasin: 'Store summary', eval_animateur_reseau: 'Network animator:',
+    eval_taches_restantes: 'TASKS REMAINING TO VALIDATE', eval_niveau_equipe: 'Team level — average of active tasks', eval_objectif: 'Target',
+    eval_col_tache: 'Task', eval_col_responsable: 'Owner', eval_col_depuis: 'Since', eval_col_second: 'Backup', eval_col_note: 'Score (top 3)', eval_col_ctrl: 'Checks',
+    eval_ouvre_janvier_2027: 'Opens January 2027', pdf_page_1: 'Page 1/2', pdf_page_2: 'Page 2/2',
+    eval_footer_magasin: 'Optical Center · Team Evaluation · store', eval_aucun_controle: 'No check performed',
+    eval_import_historique: 'Historical import', eval_dernier_controle_du: 'Last check on', eval_tous_criteres_valides: 'All criteria validated',
   },
   ES: {
     nav_nouveau: 'Nuevo', nav_historique: 'Historial', nav_analyse: 'Análisis', nav_parametres: 'Ajustes',
@@ -1261,6 +1299,25 @@ const I18N = {
     modal_mdp_ph: 'Contraseña...', modal_piece_jointe: 'Adjunto adicional (PDF, opcional)', modal_retirer: '✕ Quitar',
     modal_joindre_eval: '📋 Adjuntar el resumen de Evaluación de Equipo de esta tienda', modal_envoyer: '📧 Enviar',
     modal_previsualiser_pdf: '👁 Previsualizar el PDF', btn_annuler: 'Cancelar',
+    confirm_reinitialiser: '¿Reiniciar la entrada en curso? Toda la información ya introducida para este informe se borrará.',
+    confirm_eval_manquante: 'No se encontraron datos de Evaluación de Equipo para esta tienda. ¿Enviar el informe sin este adjunto?',
+    confirm_eval_erreur_prefix: 'Evaluación de Equipo: ', confirm_eval_erreur_suffix: '\n\n¿Enviar igualmente el informe sin este adjunto?',
+    confirm_suppr_historique: 'Eliminar todo el historial', confirm_suppr_historique_filtre: ' de esta tienda',
+    confirm_suppr_bilan: '¿Eliminar este informe del historial?',
+    prompt_mdp_notif_olivier: 'Contraseña de Zimbra para enviar la notificación a Olivier:',
+    prompt_mdp_notif_olivier2: 'Contraseña de Zimbra para notificar a Olivier:',
+    prompt_mdp_renvoi: 'Contraseña de Zimbra para reenviar el informe:',
+    pdf_pas_entretien: 'No hubo entrevista individual durante esta visita.', pdf_bilan_de_passage: 'INFORME DE VISITA',
+    pdf_indicateurs_cles: 'INDICADORES CLAVE', pdf_document_confidentiel: 'Optical Center — Documento confidencial',
+    pdf_aucune_action: 'Ninguna acción registrada para esta visita', pdf_actions_attendues_prochain_passage: 'ACCIONES ESPERADAS — PRÓXIMA VISITA',
+    pdf_actions_attendues: 'ACCIONES ESPERADAS', pdf_passage_n: 'Visita n.º ', pdf_prochain_passage: 'PRÓXIMA VISITA',
+    pdf_page_2_actions: 'Página 2/2 — Acciones esperadas',
+    eval_titre: 'EVALUACIÓN DE EQUIPO', eval_recap_magasin: 'Resumen de la tienda', eval_animateur_reseau: 'Animador de red:',
+    eval_taches_restantes: 'TAREAS PENDIENTES DE VALIDAR', eval_niveau_equipe: 'Nivel del equipo — media de las tareas activas', eval_objectif: 'Objetivo',
+    eval_col_tache: 'Tarea', eval_col_responsable: 'Responsable', eval_col_depuis: 'Desde', eval_col_second: 'Suplente', eval_col_note: 'Nota (3 mejores)', eval_col_ctrl: 'Ctrl.',
+    eval_ouvre_janvier_2027: 'Se abre en enero de 2027', pdf_page_1: 'Página 1/2', pdf_page_2: 'Página 2/2',
+    eval_footer_magasin: 'Optical Center · Evaluación de Equipo · tienda', eval_aucun_controle: 'Ninguna revisión realizada',
+    eval_import_historique: 'Importación histórica', eval_dernier_controle_du: 'Última revisión el', eval_tous_criteres_valides: 'Todos los criterios validados',
   },
   HE: {
     nav_nouveau: 'חדש', nav_historique: 'היסטוריה', nav_analyse: 'ניתוח', nav_parametres: 'הגדרות',
@@ -1429,6 +1486,25 @@ const I18N = {
     modal_mdp_ph: 'Wachtwoord...', modal_piece_jointe: 'Extra bijlage (PDF, optioneel)', modal_retirer: '✕ Verwijderen',
     modal_joindre_eval: '📋 Teamevaluatie-overzicht van deze winkel toevoegen', modal_envoyer: '📧 Verzenden',
     modal_previsualiser_pdf: '👁 PDF bekijken', btn_annuler: 'Annuleren',
+    confirm_reinitialiser: 'Huidige invoer resetten? Alle reeds ingevoerde informatie voor dit rapport wordt gewist.',
+    confirm_eval_manquante: 'Geen Teamevaluatiegegevens gevonden voor deze winkel. Het rapport verzenden zonder deze bijlage?',
+    confirm_eval_erreur_prefix: 'Teamevaluatie: ', confirm_eval_erreur_suffix: '\n\nHet rapport toch verzenden zonder deze bijlage?',
+    confirm_suppr_historique: 'Alle geschiedenis verwijderen', confirm_suppr_historique_filtre: ' van deze winkel',
+    confirm_suppr_bilan: 'Dit rapport uit de geschiedenis verwijderen?',
+    prompt_mdp_notif_olivier: 'Zimbra-wachtwoord om de melding naar Olivier te verzenden:',
+    prompt_mdp_notif_olivier2: 'Zimbra-wachtwoord om Olivier te melden:',
+    prompt_mdp_renvoi: 'Zimbra-wachtwoord om het rapport opnieuw te verzenden:',
+    pdf_pas_entretien: 'Geen individueel gesprek tijdens dit bezoek.', pdf_bilan_de_passage: 'BEZOEKRAPPORT',
+    pdf_indicateurs_cles: 'KERNINDICATOREN', pdf_document_confidentiel: 'Optical Center — Vertrouwelijk document',
+    pdf_aucune_action: 'Geen actie geregistreerd voor dit bezoek', pdf_actions_attendues_prochain_passage: 'VERWACHTE ACTIES — VOLGEND BEZOEK',
+    pdf_actions_attendues: 'VERWACHTE ACTIES', pdf_passage_n: 'Bezoek nr. ', pdf_prochain_passage: 'VOLGEND BEZOEK',
+    pdf_page_2_actions: 'Pagina 2/2 — Verwachte acties',
+    eval_titre: 'TEAMEVALUATIE', eval_recap_magasin: 'Winkeloverzicht', eval_animateur_reseau: 'Netwerkanimator:',
+    eval_taches_restantes: 'NOG TE VALIDEREN TAKEN', eval_niveau_equipe: 'Teamniveau — gemiddelde van actieve taken', eval_objectif: 'Doel',
+    eval_col_tache: 'Taak', eval_col_responsable: 'Verantwoordelijke', eval_col_depuis: 'Sinds', eval_col_second: 'Back-up', eval_col_note: 'Score (top 3)', eval_col_ctrl: 'Controles',
+    eval_ouvre_janvier_2027: 'Opent in januari 2027', pdf_page_1: 'Pagina 1/2', pdf_page_2: 'Pagina 2/2',
+    eval_footer_magasin: 'Optical Center · Teamevaluatie · winkel', eval_aucun_controle: 'Geen controle uitgevoerd',
+    eval_import_historique: 'Historische import', eval_dernier_controle_du: 'Laatste controle op', eval_tous_criteres_valides: 'Alle criteria gevalideerd',
   },
 };
 
@@ -2173,7 +2249,7 @@ function addNewKpi() {
   const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
   const user = params.zimbraUser || '';
   if (relay && user) {
-    const pwd = prompt('Mot de passe Zimbra pour envoyer la notification à Olivier :');
+    const pwd = prompt(t('prompt_mdp_notif_olivier'));
     if (pwd) {
       fetch(relay + '/notify', {
         method: 'POST',
@@ -2446,7 +2522,7 @@ async function applyRhEffectifPrefill(code) {
 }
 
 function resetSaisie() {
-  if (!confirm('Réinitialiser la saisie en cours ? Toutes les informations déjà saisies pour ce bilan seront effacées.')) return;
+  if (!confirm(t('confirm_reinitialiser'))) return;
   if (draftKey) localStorage.removeItem(draftKey);
   actions = []; kpisAdded = []; photos = [null,null,null]; photoCaptions = ['','',''];
   fortsList = []; diffList = []; entretiens = []; peniches = emptyPeniches();
@@ -2563,7 +2639,7 @@ function addKpiCustomInline() {
   const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
   const user = params.zimbraUser || '';
   if (relay && user) {
-    const pwd = prompt('Mot de passe Zimbra pour notifier Olivier :');
+    const pwd = prompt(t('prompt_mdp_notif_olivier2'));
     if (pwd) {
       fetch(relay + '/notify', {
         method: 'POST',
@@ -3317,7 +3393,7 @@ function evalDrawFooter(doc, magasinCode, pageLabel) {
   const pageH = doc.internal.pageSize.getHeight();
   const now = new Date();
   doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(140, 140, 140);
-  doc.text(`Optical Center · Évaluation Équipe · magasin ${magasinCode}`, 10, pageH - 6);
+  doc.text(`${t('eval_footer_magasin')} ${magasinCode}`, 10, pageH - 6);
   doc.text(`${pageLabel} · ${now.toLocaleDateString('fr-FR')} à ${now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`, pageW - 10, pageH - 6, { align: 'right' });
   doc.setTextColor(0, 0, 0);
 }
@@ -3338,7 +3414,7 @@ function evalPdfHeader(doc, magasin, sousTitre) {
   const textX = badgeW + 6;
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold'); doc.setFontSize(14);
-  doc.text('ÉVALUATION ÉQUIPE', textX, 11);
+  doc.text(t('eval_titre'), textX, 11);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
   doc.setTextColor(250, 220, 220);
   doc.text(sousTitre, textX, 17);
@@ -3346,7 +3422,7 @@ function evalPdfHeader(doc, magasin, sousTitre) {
   doc.setFont('helvetica', 'bold'); doc.setFontSize(11);
   doc.text(evalSanitizePdfText(magasin.libelle), pageW - 8, 11, { align: 'right' });
   doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
-  doc.text(`Animateur réseau : ${evalSanitizePdfText(magasin.animateur) || '—'}`, pageW - 8, 17, { align: 'right' });
+  doc.text(`${t('eval_animateur_reseau')} ${evalSanitizePdfText(magasin.animateur) || '—'}`, pageW - 8, 17, { align: 'right' });
   doc.setTextColor(0, 0, 0);
 }
 
@@ -3365,7 +3441,7 @@ function evalPdfHeaderCompact(doc, magasin) {
 
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold'); doc.setFontSize(11);
-  doc.text('TÂCHES RESTANTES À VALIDER', badgeW + 5, bannerH / 2 + 3.2);
+  doc.text(t('eval_taches_restantes'), badgeW + 5, bannerH / 2 + 3.2);
   doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
   doc.text(evalSanitizePdfText(magasin.libelle), pageW - 8, bannerH / 2 + 3.2, { align: 'right' });
   doc.setTextColor(0, 0, 0);
@@ -3390,16 +3466,16 @@ function buildEvalEquipePdf(data, magasin) {
   const niveauTxt = data.niveau_equipe != null ? data.niveau_equipe.toFixed(1) : '—';
 
   // ---- PAGE 1 : récapitulatif ----
-  evalPdfHeader(doc, magasin, `Récapitulatif magasin · ${today}`);
+  evalPdfHeader(doc, magasin, `${t('eval_recap_magasin')} · ${today}`);
 
   doc.setFillColor(245, 243, 238); doc.rect(0, 24, pageW, 16, 'F');
   doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(90, 90, 90);
-  doc.text("Niveau de l'équipe — moyenne des tâches actives", 10, 31);
+  doc.text(t('eval_niveau_equipe'), 10, 31);
   doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
   doc.setTextColor.apply(doc, evalPdfNiveauColor(data.niveau_equipe));
   doc.text(`${niveauTxt} / 10`, 10, 38);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(140, 140, 140);
-  doc.text('Objectif', pageW - 10, 30, { align: 'right' });
+  doc.text(t('eval_objectif'), pageW - 10, 30, { align: 'right' });
   doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(60, 60, 60);
   doc.text(data.objectif.toFixed(1), pageW - 10, 36, { align: 'right' });
   doc.setTextColor(0, 0, 0);
@@ -3409,7 +3485,7 @@ function buildEvalEquipePdf(data, magasin) {
     if (t.nb_criteres === 0) {
       return [
         { content: `${num}  ${evalSanitizePdfText(t.tache)}`, styles: { textColor: [150, 150, 150] } },
-        { content: 'Ouvre en janvier 2027', colSpan: 5, styles: { textColor: [150, 150, 150], fontStyle: 'italic' } },
+        { content: t('eval_ouvre_janvier_2027'), colSpan: 5, styles: { textColor: [150, 150, 150], fontStyle: 'italic' } },
       ];
     }
     const f = t.fiche;
@@ -3425,7 +3501,7 @@ function buildEvalEquipePdf(data, magasin) {
 
   doc.autoTable({
     startY: 44,
-    head: [['Tâche', 'Responsable', 'Depuis', 'Second', 'Note (3 meill.)', 'Ctrl.']],
+    head: [[t('eval_col_tache'), t('eval_col_responsable'), t('eval_col_depuis'), t('eval_col_second'), t('eval_col_note'), t('eval_col_ctrl')]],
     body: bodyRows,
     theme: 'plain',
     styles: { font: 'helvetica', fontSize: 9.5, cellPadding: 3, lineColor: [230, 227, 220], lineWidth: 0.2 },
@@ -3448,7 +3524,7 @@ function buildEvalEquipePdf(data, magasin) {
     },
   });
 
-  evalDrawFooter(doc, magasin.code, 'Page 1/2');
+  evalDrawFooter(doc, magasin.code, t('pdf_page_1'));
 
   // ---- PAGE 2 : détail du dernier contrôle (2 colonnes) ----
   doc.addPage('a4', 'landscape');
@@ -3472,10 +3548,10 @@ function buildEvalEquipePdf(data, magasin) {
       const dernier = t.dernier_controle;
       let suffix;
       if (!dernier) {
-        suffix = '  \u2014  Aucun contrôle effectué';
+        suffix = '  \u2014  ' + t('eval_aucun_controle');
       } else {
-        const dateTxt = dernier.date_controle ? dernier.date_controle.split('-').reverse().join('/') : 'Import historique';
-        suffix = `  \u2014  Dernier contrôle du ${dateTxt}`;
+        const dateTxt = dernier.date_controle ? dernier.date_controle.split('-').reverse().join('/') : t('eval_import_historique');
+        suffix = `  \u2014  ${t('eval_dernier_controle_du')} ${dateTxt}`;
       }
       doc.setFont('helvetica', 'italic'); doc.setFontSize(7.5);
       const suffixColor = dernier ? [120, 120, 120] : EVAL_PDF_RED;
@@ -3511,7 +3587,7 @@ function buildEvalEquipePdf(data, magasin) {
         } else {
           evalDrawCheck(doc, x, cy, EVAL_PDF_GREEN);
           doc.setTextColor.apply(doc, EVAL_PDF_GREEN);
-          doc.text('Tous les critères validés', x + 4.5, cy);
+          doc.text(t('eval_tous_criteres_valides'), x + 4.5, cy);
           cy += 6;
         }
       } else {
@@ -3521,7 +3597,7 @@ function buildEvalEquipePdf(data, magasin) {
     });
   });
 
-  evalDrawFooter(doc, magasin.code, 'Page 2/2');
+  evalDrawFooter(doc, magasin.code, t('pdf_page_2'));
 
   return doc;
 }
@@ -3580,12 +3656,12 @@ async function sendBilan() {
       showToast(t('toast_verif_eval'));
       evalPdfResult = await fetchEvalEquipePdfForSend(relay, data.magasin, data.ar, user, pwd);
       if (evalPdfResult.noData) {
-        const continuer = confirm('Aucune donnée Évaluation Équipe trouvée pour ce magasin. Envoyer le bilan de passage sans cette pièce jointe ?');
+        const continuer = confirm(t('confirm_eval_manquante'));
         if (!continuer) { showToast(t('toast_envoi_annule')); return; }
         evalPdfResult = null;
         document.getElementById('modal-mailbody').value = evalMentionRemove(document.getElementById('modal-mailbody').value);
       } else if (evalPdfResult.error) {
-        const continuer = confirm('Évaluation Équipe : ' + evalPdfResult.error + '\n\nEnvoyer quand même le bilan de passage sans cette pièce jointe ?');
+        const continuer = confirm(t('confirm_eval_erreur_prefix') + evalPdfResult.error + t('confirm_eval_erreur_suffix'));
         if (!continuer) { showToast(t('toast_envoi_annule')); return; }
         evalPdfResult = null;
         document.getElementById('modal-mailbody').value = evalMentionRemove(document.getElementById('modal-mailbody').value);
@@ -4418,7 +4494,7 @@ async function generatePDF(data, humeurSliderImg) {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(16);
   doc.setTextColor(255, 255, 255);
-  doc.text('BILAN DE PASSAGE', logoBoxW + 5, 11);
+  doc.text(t('pdf_bilan_de_passage'), logoBoxW + 5, 11);
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   doc.text(`Passage n°${data.passage || '?'} · ${formatDate(data.date)}`, logoBoxW + 5, 16);
@@ -4660,7 +4736,7 @@ async function generatePDF(data, humeurSliderImg) {
     data.process ? [colW, data.process, null] : null,
     (data.entretiens||[]).length
       ? [colW, null, (data.entretiens||[]).map(e => e.prenom + (e.sujet ? ' : '+e.sujet : ' (sujet confidentiel)'))]
-      : [colW, "Pas d'entretien individuel lors de ce passage.", null],
+      : [colW, t('pdf_pas_entretien'), null],
   ].filter(Boolean);
 
   // Pré-calculer les contenus de col2 (hors KPI qui ont hauteur fixe)
@@ -4712,24 +4788,24 @@ async function generatePDF(data, humeurSliderImg) {
     ...splitToLines(data.rh),
     ...splitToLines(data.formation).map(l => 'Formation : ' + l),
   ].filter(Boolean);
-  yc1 = drawBloc(col1, yc1, colW, 'RH & \u00c9quipe', null, cRH.title, rhBullets, adaptLineH, cRH.bg);
+  yc1 = drawBloc(col1, yc1, colW, t('saisie_rh_equipe'), null, cRH.title, rhBullets, adaptLineH, cRH.bg);
   yc1 += 3;
 
   const mgrBullets = [
     ...(data.rituels || []).map(r => 'Rituel en place : ' + r),
     ...splitToLines(data.manager_obs).map(l => "Point d'attention : " + l),
   ].filter(Boolean);
-  yc1 = drawBloc(col1, yc1, colW, 'Suivi manager', null, cManager.title, mgrBullets, adaptLineH, cManager.bg);
+  yc1 = drawBloc(col1, yc1, colW, t('saisie_suivi_manager'), null, cManager.title, mgrBullets, adaptLineH, cManager.bg);
   yc1 += 3;
 
-  if (data.process) { yc1 = drawBloc(col1, yc1, colW, 'Process & Nouveaut\u00e9s', data.process, cProcess.title, null, adaptLineH, cProcess.bg); yc1 += 3; }
+  if (data.process) { yc1 = drawBloc(col1, yc1, colW, t('saisie_process'), data.process, cProcess.title, null, adaptLineH, cProcess.bg); yc1 += 3; }
 
   const entretiensArr = data.entretiens || [];
   if (entretiensArr.length) {
     const entBullets = entretiensArr.map(e => e.prenom + (e.sujet ? ' : ' + e.sujet : ' (sujet confidentiel)'));
-    yc1 = drawBloc(col1, yc1, colW, 'Entretiens individuels', null, cEntret.title, entBullets, adaptLineH, cEntret.bg);
+    yc1 = drawBloc(col1, yc1, colW, t('saisie_entretiens'), null, cEntret.title, entBullets, adaptLineH, cEntret.bg);
   } else {
-    yc1 = drawBloc(col1, yc1, colW, 'Entretiens individuels', "Pas d'entretien individuel lors de ce passage.", cEntret.title, null, adaptLineH, cEntret.bg);
+    yc1 = drawBloc(col1, yc1, colW, t('saisie_entretiens'), t('pdf_pas_entretien'), cEntret.title, null, adaptLineH, cEntret.bg);
   }
   yc1 += 3;
 
@@ -4751,7 +4827,7 @@ async function generatePDF(data, humeurSliderImg) {
     doc.line(col2Pos, yc2 + 6.5, col2Pos + colW2, yc2 + 6.5);
     doc.setLineWidth(0.2);
     doc.setTextColor(...kpiTitleColor); doc.setFont('helvetica','bold'); doc.setFontSize(6);
-    doc.text('INDICATEURS CL\u00c9S', col2Pos+3, yc2+4.5);
+    doc.text(t('pdf_indicateurs_cles'), col2Pos+3, yc2+4.5);
     data.kpis.forEach((k, idx) => {
       const row = Math.floor(idx / kpiCols);
       const col = idx % kpiCols;
@@ -4763,7 +4839,7 @@ async function generatePDF(data, humeurSliderImg) {
       const ok = def.dir === 'gte' ? val >= obj : (def.dir === 'lte' ? val <= obj : true);
       const kColor = !def.obj ? [40,40,40] : (ok ? [42,158,42] : [204,23,25]);
       doc.setTextColor(140,140,140); doc.setFont('helvetica','normal'); doc.setFontSize(6);
-      doc.text(doc.splitTextToSize(k.name, kpiCellW - 4)[0], cx, cy);
+      doc.text(doc.splitTextToSize(kpiLabel(k.name, def), kpiCellW - 4)[0], cx, cy);
       doc.setTextColor(...kColor); doc.setFont('helvetica','bold'); doc.setFontSize(11);
       doc.text(k.val + (def.unit || ''), cx, cy + 5);
     });
@@ -4772,7 +4848,7 @@ async function generatePDF(data, humeurSliderImg) {
 
   // Blocs col2 : partent juste après les KPI (yc2), pas de Math.max
   if (data.kpi_comment) {
-    yc2 = drawBloc(col2Pos, yc2, colW2, 'Commentaire indicateurs', data.kpi_comment, cCommInd.title, null, adaptLineH, cCommInd.bg);
+    yc2 = drawBloc(col2Pos, yc2, colW2, t('saisie_commentaire_kpi'), data.kpi_comment, cCommInd.title, null, adaptLineH, cCommInd.bg);
     yc2 += 3;
   }
 
@@ -4781,13 +4857,13 @@ async function generatePDF(data, humeurSliderImg) {
   const diffArr = [...(Array.isArray(data.diff) ? data.diff : (data.diff ? [data.diff] : [])), ...penRoutingFinal.diff];
   if (fortsArr.length || diffArr.length) {
     const pfdContent = [...fortsArr.map(t => '(+) ' + t), ...diffArr.map(t => '(-) ' + t)].join('\n');
-    yc2 = drawBloc(col2Pos, yc2, colW2, 'Points forts & Difficult\u00e9s', pfdContent, cPfd.title, null, adaptLineH, cPfd.bg);
+    yc2 = drawBloc(col2Pos, yc2, colW2, t('saisie_forts_diff'), pfdContent, cPfd.title, null, adaptLineH, cPfd.bg);
     yc2 += 3;
   }
 
   const remarqueFinal = [data.remarque_libre, ...penRoutingFinal.remarque].filter(Boolean).join('\n');
   if (remarqueFinal) {
-    yc2 = drawBloc(col2Pos, yc2, colW2, 'Remarque libre', remarqueFinal, cRemarque.title, null, adaptLineH, cRemarque.bg);
+    yc2 = drawBloc(col2Pos, yc2, colW2, t('saisie_remarque_libre'), remarqueFinal, cRemarque.title, null, adaptLineH, cRemarque.bg);
     yc2 += 3;
   }
 
@@ -4925,7 +5001,7 @@ async function generatePDF(data, humeurSliderImg) {
       doc.setFillColor(204, 23, 25);
       doc.rect(col1, actY, contentRight - col1, actHeaderH, 'F');
       doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(6.5);
-      doc.text('ACTIONS ATTENDUES \u2014 PROCHAIN PASSAGE', col1+3, actY+5);
+      doc.text(t('pdf_actions_attendues_prochain_passage'), col1+3, actY+5);
       doc.setFillColor(255,255,255);
       doc.rect(col1, actY+actHeaderH, contentRight-col1, actBodyH2, 'F');
       doc.setDrawColor(204,23,25); doc.setLineWidth(0.5);
@@ -4939,13 +5015,13 @@ async function generatePDF(data, humeurSliderImg) {
       doc.setFillColor(204, 23, 25);
       doc.rect(0, 0, W, 14, 'F');
       doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(11);
-      doc.text(`ACTIONS ATTENDUES \u2014 ${pdfSafe(mag.libelle)} \u2014 Passage n°${data.passage || '?'}`, mar, 9.5);
+      doc.text(`${t('pdf_actions_attendues')} \u2014 ${pdfSafe(mag.libelle)} \u2014 ${t('pdf_passage_n')}${data.passage || '?'}`, mar, 9.5);
       const p2ActY = 20, p2FooterY = H - 9;
       const p2HeaderH = 8;
       doc.setFillColor(204, 23, 25);
       doc.rect(mar, p2ActY, W - 2*mar, p2HeaderH, 'F');
       doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(7);
-      doc.text('PROCHAIN PASSAGE', mar+3, p2ActY+5.5);
+      doc.text(t('pdf_prochain_passage'), mar+3, p2ActY+5.5);
       doc.setFillColor(255,255,255);
       doc.rect(mar, p2ActY+p2HeaderH, W - 2*mar, p2FooterY - (p2ActY+p2HeaderH), 'F');
       doc.setDrawColor(204,23,25); doc.setLineWidth(0.5);
@@ -4991,14 +5067,14 @@ async function generatePDF(data, humeurSliderImg) {
       doc.setDrawColor(220,220,220);
       doc.line(0, H-7, W, H-7);
       doc.setTextColor(150,150,150); doc.setFont('helvetica','normal'); doc.setFontSize(6.5);
-      doc.text('Optical Center — Document confidentiel', mar, H-3);
-      doc.text('Page 2/2 — Actions attendues', W/2, H-3, {align:'center'});
+      doc.text(t('pdf_document_confidentiel'), mar, H-3);
+      doc.text(t('pdf_page_2_actions'), W/2, H-3, {align:'center'});
     } else {
       // Cas nominal : tout rentre sur la page 1 avec la config choisie
       doc.setFillColor(204, 23, 25);
       doc.rect(col1, actY, contentRight - col1, actHeaderH, 'F');
       doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(6.5);
-      doc.text('ACTIONS ATTENDUES \u2014 PROCHAIN PASSAGE', col1+3, actY+5);
+      doc.text(t('pdf_actions_attendues_prochain_passage'), col1+3, actY+5);
       doc.setFillColor(255,255,255);
       doc.rect(col1, actY+actHeaderH, contentRight-col1, actBodyH2, 'F');
       doc.setDrawColor(204,23,25); doc.setLineWidth(0.5);
@@ -5024,14 +5100,14 @@ async function generatePDF(data, humeurSliderImg) {
     doc.setFillColor(204, 23, 25);
     doc.rect(col1, actY, contentRight - col1, actHeaderH, 'F');
     doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(6.5);
-    doc.text('ACTIONS ATTENDUES \u2014 PROCHAIN PASSAGE', col1+3, actY+5);
+    doc.text(t('pdf_actions_attendues_prochain_passage'), col1+3, actY+5);
     doc.setFillColor(255,255,255);
     doc.rect(col1, actY+actHeaderH, contentRight-col1, actBodyH, 'F');
     doc.setDrawColor(204,23,25); doc.setLineWidth(0.5);
     doc.rect(col1, actY, contentRight-col1, actTotalH, 'S');
     doc.setLineWidth(0.2);
     doc.setTextColor(180,180,180); doc.setFont('helvetica','italic'); doc.setFontSize(6);
-    doc.text('Aucune action renseignée pour ce passage', col1+4, actY+actHeaderH+8);
+    doc.text(t('pdf_aucune_action'), col1+4, actY+actHeaderH+8);
   }
 
   // PHOTOS — toujours sur la page 1, même si les actions ont débordé sur la
@@ -5045,7 +5121,7 @@ async function generatePDF(data, humeurSliderImg) {
   doc.setDrawColor(220,220,220);
   doc.rect(photoCol, py, photoW, 6.5, 'S');
   doc.setTextColor(204,23,25); doc.setFont('helvetica','bold'); doc.setFontSize(6);
-  doc.text('PHOTOS', photoCol+3, py+4.5);
+  doc.text(t('saisie_photos').toUpperCase(), photoCol+3, py+4.5);
   py += 11;
 
   const validPhotos = photos.filter(Boolean);
@@ -5136,7 +5212,7 @@ async function generatePDF(data, humeurSliderImg) {
   doc.setDrawColor(220,220,220);
   doc.line(0, H-7, W, H-7);
   doc.setTextColor(150,150,150); doc.setFont('helvetica','normal'); doc.setFontSize(6.5);
-  doc.text('Optical Center — Document confidentiel', mar, H-3);
+  doc.text(t('pdf_document_confidentiel'), mar, H-3);
   doc.text(`Généré le ${new Date().toLocaleDateString('fr-FR')}`, W/2, H-3, {align:'center'});
   doc.text(data.prochain_passage ? `Prochain passage : ${formatDate(data.prochain_passage)}` : 'Prochain passage : à définir', W-mar, H-3, {align:'right'});
 
@@ -5183,7 +5259,7 @@ function renderHistory() {
   clearBtn.className = 'btn-secondary';
   clearBtn.style.cssText = 'margin-bottom:12px;font-size:12px;padding:6px 12px;';
   clearBtn.onclick = () => {
-    if (!confirm('Supprimer tout l\'historique' + (filter ? ' de ce magasin' : '') + ' ?')) return;
+    if (!confirm(t('confirm_suppr_historique') + (filter ? t('confirm_suppr_historique_filtre') : '') + ' ?')) return;
     codes.forEach(code => localStorage.removeItem(`bilan_history_${code}`));
     renderHistory();
   };
@@ -5317,7 +5393,7 @@ function clearExtraPdf() {
 
 function deleteHistoryItem(e, code, idx) {
   e.stopPropagation();
-  if (!confirm('Supprimer ce bilan de l\'historique ?')) return;
+  if (!confirm(t('confirm_suppr_bilan'))) return;
   const history = JSON.parse(localStorage.getItem(`bilan_history_${code}`) || '[]');
   history.splice(idx, 1);
   if (history.length) localStorage.setItem(`bilan_history_${code}`, JSON.stringify(history));
@@ -5351,7 +5427,7 @@ async function resendBilan(e, code, idx) {
     const history = JSON.parse(localStorage.getItem('bilan_history_' + code) || '[]');
     const d = history[idx];
     if (!d) { showToast(t('toast_bilan_indispo')); return; }
-    const pwd = prompt('Mot de passe Zimbra pour renvoyer le bilan :');
+    const pwd = prompt(t('prompt_mdp_renvoi'));
     if (!pwd) return;
     const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
     const user = params.zimbraUser || '';
