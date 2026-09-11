@@ -587,19 +587,19 @@ input[type=date]{color-scheme:dark}
 <!-- SCREEN 3 : HISTORIQUE -->
 <div id="screen-history" class="screen">
   <div class="history-header">
-    <h2>Historique</h2>
+    <h2 data-i18n="hist_titre">Historique</h2>
     <select class="select-box" id="hist-mag-filter" style="width:auto;font-size:12px;padding:8px 12px" onchange="renderHistory()">
-      <option value="">Tous les magasins</option>
+      <option value="" data-i18n="hist_tous_magasins">Tous les magasins</option>
     </select>
   </div>
   <div style="display:flex;gap:8px;margin-bottom:6px;">
-    <button class="btn-secondary" style="font-size:12px;padding:6px 12px;flex:1;" onclick="exportHistory()">📤 Exporter sauvegarde</button>
+    <button class="btn-secondary" style="font-size:12px;padding:6px 12px;flex:1;" onclick="exportHistory()" data-i18n="hist_exporter">📤 Exporter sauvegarde</button>
     <label class="btn-secondary" style="font-size:12px;padding:6px 12px;flex:1;text-align:center;cursor:pointer;">
-      📥 Importer sauvegarde
+      <span data-i18n="hist_importer">📥 Importer sauvegarde</span>
       <input type="file" accept=".json" style="display:none;" onchange="importHistory(this)">
     </label>
   </div>
-  <div style="font-size:11px;color:var(--text-dim,#999);margin-bottom:12px;line-height:1.4;">
+  <div style="font-size:11px;color:var(--text-dim,#999);margin-bottom:12px;line-height:1.4;" data-i18n="hist_desc">
     Inclut l'historique ET les brouillons en cours par magasin. À utiliser avant de supprimer le raccourci de l'app (ex: changement d'icône) et à réimporter juste après réinstallation, pour ne rien perdre.
   </div>
   <div id="history-list"></div>
@@ -619,92 +619,92 @@ input[type=date]{color-scheme:dark}
     <span style="font-size:10px;color:var(--muted)" data-i18n="params_langue_note">Cette langue est aussi appliquée automatiquement selon le magasin sélectionné.</span>
   </div>
   <div class="params-section">
-    <div class="params-section-title">Objectifs KPI</div>
+    <div class="params-section-title" data-i18n="params_objectifs_kpi">Objectifs KPI</div>
     <div id="kpi-params-list"></div>
-    <span style="font-size:10px;color:var(--muted)">Vert = objectif atteint · Orange = proche · Rouge = éloigné</span>
+    <span style="font-size:10px;color:var(--muted)" data-i18n="params_legende_couleurs">Vert = objectif atteint · Orange = proche · Rouge = éloigné</span>
     <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
-      <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Ajouter un nouvel indicateur</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px" data-i18n="params_ajouter_indicateur">Ajouter un nouvel indicateur</div>
       <div style="display:flex;flex-direction:column;gap:6px">
-        <input type="text" id="new-kpi-name" placeholder="Nom de l'indicateur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+        <input type="text" id="new-kpi-name" data-i18n-placeholder="params_nom_indicateur_ph" placeholder="Nom de l'indicateur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
         <div style="display:flex;gap:6px">
-          <input type="number" id="new-kpi-obj" placeholder="Objectif (optionnel)" style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
-          <input type="text" id="new-kpi-unit" placeholder="Unité (%, €, vide...)" style="width:120px;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+          <input type="number" id="new-kpi-obj" data-i18n-placeholder="params_objectif_ph" placeholder="Objectif (optionnel)" style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+          <input type="text" id="new-kpi-unit" data-i18n-placeholder="params_unite_ph" placeholder="Unité (%, €, vide...)" style="width:120px;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
         </div>
-        <button class="btn-add" style="width:100%;text-align:center" onclick="addNewKpi()">+ Ajouter l'indicateur</button>
+        <button class="btn-add" style="width:100%;text-align:center" onclick="addNewKpi()" data-i18n="params_ajouter_indicateur_btn">+ Ajouter l'indicateur</button>
       </div>
-      <span style="font-size:10px;color:var(--muted);display:block;margin-top:6px">Cet indicateur reste local à ton téléphone. Pour le rendre commun à tous les AR, transmets-le à Olivier pour intégration au référentiel partagé.</span>
+      <span style="font-size:10px;color:var(--muted);display:block;margin-top:6px" data-i18n="params_indicateur_local_note">Cet indicateur reste local à ton téléphone. Pour le rendre commun à tous les AR, transmets-le à Olivier pour intégration au référentiel partagé.</span>
     </div>
   </div>
   <div class="params-section">
-    <div class="params-section-title">Email</div>
-    <div class="field-group"><label>Votre email (optionnel — si différent de votre identifiant Zimbra + @optical-center.com)</label>
+    <div class="params-section-title" data-i18n="params_email_titre">Email</div>
+    <div class="field-group"><label data-i18n="params_votre_email">Votre email (optionnel — si différent de votre identifiant Zimbra + @optical-center.com)</label>
       <input type="email" id="p-my-email" placeholder="votre@email.fr" oninput="saveParams()"></div>
-    <div class="field-group"><label>Relay Cloudflare</label>
+    <div class="field-group"><label data-i18n="params_relay">Relay Cloudflare</label>
       <input type="text" id="p-relay" placeholder="https://oc-inter-relay.cecilia-lecomte.workers.dev" oninput="saveParams()"></div>
-    <div class="field-group"><label>Identifiant Zimbra</label>
+    <div class="field-group"><label data-i18n="params_identifiant_zimbra">Identifiant Zimbra</label>
       <input type="text" id="p-zimbra-user" placeholder="prenom.nom@opticalcenter.fr" oninput="saveParams()"></div>
-    <div class="field-group"><label>Renta salariale cible (%)</label>
+    <div class="field-group"><label data-i18n="params_renta_cible">Renta salariale cible (%)</label>
       <input type="number" id="p-renta-target" placeholder="28" oninput="saveParams()"></div>
-    <div class="field-group"><label>URL référentiel magasins (CSV ou JSON GitHub)</label>
+    <div class="field-group"><label data-i18n="params_url_magasins">URL référentiel magasins (CSV ou JSON GitHub)</label>
       <input type="text" id="p-json-url" placeholder="https://raw.githubusercontent.com/oc-inter/bilan-passage/main/magasins_inter.csv" oninput="saveParams()"></div>
-    <button class="btn-primary" onclick="reloadMagasins()">🔄 Recharger le référentiel magasins</button>
-    <div class="field-group" style="margin-top:10px"><label>URL référentiel KPI (CSV ou JSON GitHub)</label>
+    <button class="btn-primary" onclick="reloadMagasins()" data-i18n="params_recharger_magasins">🔄 Recharger le référentiel magasins</button>
+    <div class="field-group" style="margin-top:10px"><label data-i18n="params_url_kpi">URL référentiel KPI (CSV ou JSON GitHub)</label>
       <input type="text" id="p-kpi-url" placeholder="https://raw.githubusercontent.com/oc-inter/bilan-passage/main/kpis.csv" oninput="saveParams()"></div>
-    <button class="btn-primary" onclick="reloadKpiDefaults()">🔄 Recharger le référentiel KPI</button>
+    <button class="btn-primary" onclick="reloadKpiDefaults()" data-i18n="params_recharger_kpi">🔄 Recharger le référentiel KPI</button>
   </div>
 </div>
 
 <!-- SCREEN 5 : ANALYSE -->
 <div id="screen-analyse" class="screen" style="padding:20px 16px 90px;gap:12px;overflow-y:auto">
-  <h2 style="margin:0 0 4px">Analyse IA</h2>
+  <h2 style="margin:0 0 4px" data-i18n="analyse_titre">Analyse IA</h2>
 
   <div id="analyse-login-block" style="display:none;background:rgba(20,16,16,0.85);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px">
-    <div style="font-size:12px;color:var(--muted)">Connecte-toi avec ton mot de passe Zimbra pour accéder à tes magasins. Rien n'est stocké — seule une session temporaire (12h) est conservée sur ce téléphone.</div>
+    <div style="font-size:12px;color:var(--muted)" data-i18n="analyse_login_desc">Connecte-toi avec ton mot de passe Zimbra pour accéder à tes magasins. Rien n'est stocké — seule une session temporaire (12h) est conservée sur ce téléphone.</div>
     <div id="analyse-login-user-display" style="font-size:13px;color:var(--text);background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px"></div>
-    <div id="analyse-login-nouser" style="display:none;font-size:12px;color:var(--red)">Aucun identifiant Zimbra configuré. Va d'abord dans <b>Paramètres → Identifiant Zimbra</b>.</div>
-    <input type="password" id="analyse-login-pass" placeholder="Mot de passe Zimbra" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
-    <button class="btn-primary" id="analyse-login-btn" onclick="doArLogin()">Se connecter</button>
+    <div id="analyse-login-nouser" style="display:none;font-size:12px;color:var(--red)" data-i18n="analyse_login_nouser">Aucun identifiant Zimbra configuré. Va d'abord dans <b>Paramètres → Identifiant Zimbra</b>.</div>
+    <input type="password" id="analyse-login-pass" data-i18n-placeholder="analyse_login_pass_ph" placeholder="Mot de passe Zimbra" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+    <button class="btn-primary" id="analyse-login-btn" onclick="doArLogin()" data-i18n="analyse_se_connecter">Se connecter</button>
     <div id="analyse-login-error" style="display:none;color:var(--red);font-size:12px"></div>
   </div>
 
   <div id="analyse-content" style="display:none;flex-direction:column;gap:12px">
     <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)">
       <span id="analyse-session-info"></span>
-      <button class="btn-secondary" style="font-size:11px;padding:4px 10px" onclick="arLogout()">Se déconnecter</button>
+      <button class="btn-secondary" style="font-size:11px;padding:4px 10px" onclick="arLogout()" data-i18n="analyse_se_deconnecter">Se déconnecter</button>
     </div>
     <div style="display:flex;gap:8px">
-      <button class="btn-secondary" id="analyse-mode-single" style="flex:1;font-size:12px;padding:8px" onclick="setAnalyseMode('single')">📍 Un magasin</button>
-      <button class="btn-secondary" id="analyse-mode-group" style="flex:1;font-size:12px;padding:8px" onclick="setAnalyseMode('group')">🗺️ Tournée</button>
-      <button class="btn-secondary" id="analyse-mode-comhebdo" style="flex:1;font-size:12px;padding:8px;display:none" onclick="setAnalyseMode('comhebdo')">📣 Com hebdo</button>
+      <button class="btn-secondary" id="analyse-mode-single" style="flex:1;font-size:12px;padding:8px" onclick="setAnalyseMode('single')" data-i18n="analyse_mode_single">📍 Un magasin</button>
+      <button class="btn-secondary" id="analyse-mode-group" style="flex:1;font-size:12px;padding:8px" onclick="setAnalyseMode('group')" data-i18n="analyse_mode_group">🗺️ Tournée</button>
+      <button class="btn-secondary" id="analyse-mode-comhebdo" style="flex:1;font-size:12px;padding:8px;display:none" onclick="setAnalyseMode('comhebdo')" data-i18n="analyse_mode_comhebdo">📣 Com hebdo</button>
     </div>
 
     <div id="analyse-comhebdo-block" style="display:none">
-      <button class="btn-primary" style="width:100%" onclick="runComHebdo()">✨ Générer la com de la semaine</button>
+      <button class="btn-primary" style="width:100%" onclick="runComHebdo()" data-i18n="analyse_generer_com">✨ Générer la com de la semaine</button>
       <div id="analyse-comhebdo-result" style="display:none;margin-top:12px;display:flex;flex-direction:column;gap:12px"></div>
     </div>
 
     <div id="analyse-single-block">
       <select class="select-box" id="analyse-mag-select" onchange="onAnalyseMagChange()">
-        <option value="">Sélectionner un magasin...</option>
+        <option value="" data-i18n="home_magasin_placeholder">Sélectionner un magasin...</option>
       </select>
       <div id="analyse-mag-history" style="margin-top:10px;font-size:12px;color:var(--muted)"></div>
-      <button class="btn-primary" id="analyse-btn-single" style="width:100%;margin-top:10px;display:none" onclick="runAnalyse('single')">✨ Analyser ce magasin</button>
+      <button class="btn-primary" id="analyse-btn-single" style="width:100%;margin-top:10px;display:none" onclick="runAnalyse('single')" data-i18n="analyse_analyser_magasin">✨ Analyser ce magasin</button>
     </div>
 
     <div id="analyse-group-block" style="display:none">
       <div style="font-size:12px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">
-        <span>État des magasins — du plus urgent au moins urgent :</span>
-        <button type="button" onclick="hcmOpen()" title="Régler les coefficients du score de santé" style="background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 4px;flex-shrink:0">⚖️</button>
+        <span data-i18n="analyse_etat_magasins">État des magasins — du plus urgent au moins urgent :</span>
+        <button type="button" onclick="hcmOpen()" data-i18n-title="analyse_hcm_title" title="Régler les coefficients du score de santé" style="background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 4px;flex-shrink:0">⚖️</button>
       </div>
-      <input type="text" id="analyse-health-search" placeholder="🔎 Rechercher un magasin..." oninput="renderStoreHealthList()" style="width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:9px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;margin-bottom:8px">
+      <input type="text" id="analyse-health-search" data-i18n-placeholder="analyse_rechercher_magasin_ph" placeholder="🔎 Rechercher un magasin..." oninput="renderStoreHealthList()" style="width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:9px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;margin-bottom:8px">
       <div id="analyse-health-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
 
-      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Sélectionne les magasins à inclure dans l'analyse IA de tournée :</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px" data-i18n="analyse_selectionner_magasins">Sélectionne les magasins à inclure dans l'analyse IA de tournée :</div>
       <div id="analyse-group-list" style="display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto"></div>
-      <button class="btn-primary" id="analyse-btn-group" style="width:100%;margin-top:10px" onclick="runAnalyse('group')">✨ Analyser la tournée</button>
+      <button class="btn-primary" id="analyse-btn-group" style="width:100%;margin-top:10px" onclick="runAnalyse('group')" data-i18n="analyse_analyser_tournee">✨ Analyser la tournée</button>
     </div>
 
-    <div id="analyse-loading" style="display:none;text-align:center;padding:20px;color:var(--muted);font-size:13px">⏳ Analyse en cours...</div>
+    <div id="analyse-loading" style="display:none;text-align:center;padding:20px;color:var(--muted);font-size:13px" data-i18n="analyse_en_cours">⏳ Analyse en cours...</div>
     <div id="analyse-result" style="display:none;background:rgba(20,16,16,0.85);border:1px solid var(--border);border-radius:12px;padding:16px;font-size:13px;line-height:1.6;white-space:pre-wrap"></div>
   </div>
 </div>
@@ -861,6 +861,106 @@ const I18N = {
     btn_dicter: 'Dicter', btn_ajouter: '+ Ajouter', btn_creer: '+ Créer', btn_ajouter_photo: 'Ajouter', btn_brouillon: '💾 Brouillon', btn_finaliser: 'Finaliser & Envoyer →',
     mail_texte_modifiable: 'Texte du mail (modifiable avant envoi)',
     params_langue: 'Langue', params_langue_note: 'Cette langue est aussi appliquée automatiquement selon le magasin sélectionné.',
+    hist_titre: 'Historique', hist_tous_magasins: 'Tous les magasins', hist_exporter: '📤 Exporter sauvegarde', hist_importer: '📥 Importer sauvegarde',
+    hist_desc: "Inclut l'historique ET les brouillons en cours par magasin. À utiliser avant de supprimer le raccourci de l'app (ex: changement d'icône) et à réimporter juste après réinstallation, pour ne rien perdre.",
+    params_objectifs_kpi: 'Objectifs KPI', params_legende_couleurs: 'Vert = objectif atteint · Orange = proche · Rouge = éloigné',
+    params_ajouter_indicateur: 'Ajouter un nouvel indicateur', params_nom_indicateur_ph: "Nom de l'indicateur", params_objectif_ph: 'Objectif (optionnel)', params_unite_ph: 'Unité (%, €, vide...)',
+    params_ajouter_indicateur_btn: "+ Ajouter l'indicateur",
+    params_indicateur_local_note: 'Cet indicateur reste local à ton téléphone. Pour le rendre commun à tous les AR, transmets-le à Olivier pour intégration au référentiel partagé.',
+    params_email_titre: 'Email', params_votre_email: 'Votre email (optionnel — si différent de votre identifiant Zimbra + @optical-center.com)',
+    params_relay: 'Relay Cloudflare', params_identifiant_zimbra: 'Identifiant Zimbra', params_renta_cible: 'Renta salariale cible (%)',
+    params_url_magasins: 'URL référentiel magasins (CSV ou JSON GitHub)', params_recharger_magasins: '🔄 Recharger le référentiel magasins',
+    params_url_kpi: 'URL référentiel KPI (CSV ou JSON GitHub)', params_recharger_kpi: '🔄 Recharger le référentiel KPI',
+    params_objectif_label: 'Objectif',
+    analyse_titre: 'Analyse IA',
+    analyse_login_desc: "Connecte-toi avec ton mot de passe Zimbra pour accéder à tes magasins. Rien n'est stocké — seule une session temporaire (12h) est conservée sur ce téléphone.",
+    analyse_login_nouser: 'Aucun identifiant Zimbra configuré. Va d\'abord dans <b>Paramètres → Identifiant Zimbra</b>.',
+    analyse_login_pass_ph: 'Mot de passe Zimbra', analyse_se_connecter: 'Se connecter', analyse_se_deconnecter: 'Se déconnecter',
+    analyse_mode_single: '📍 Un magasin', analyse_mode_group: '🗺️ Tournée', analyse_mode_comhebdo: '📣 Com hebdo',
+    analyse_generer_com: '✨ Générer la com de la semaine', analyse_analyser_magasin: '✨ Analyser ce magasin',
+    analyse_etat_magasins: 'État des magasins — du plus urgent au moins urgent :', analyse_hcm_title: 'Régler les coefficients du score de santé',
+    analyse_rechercher_magasin_ph: '🔎 Rechercher un magasin...', analyse_selectionner_magasins: "Sélectionne les magasins à inclure dans l'analyse IA de tournée :",
+    analyse_analyser_tournee: '✨ Analyser la tournée', analyse_en_cours: '⏳ Analyse en cours...',
+    hist_aucun_bilan: 'Aucun bilan enregistré pour ce filtre.',
+    analyse_chargement_etat: "Chargement de l'état des magasins...", analyse_etat_indisponible: 'État des magasins indisponible pour le moment (réessaie plus tard).',
+    analyse_aucun_magasin_perimetre: 'Aucun magasin dans ton périmètre.', analyse_aucun_magasin_recherche: 'Aucun magasin ne correspond à la recherche.',
+    rituel_lj: 'Lancement de journée systématique', rituel_pi: 'Points individuels réguliers', rituel_brief: 'Briefs équipe hebdomadaires',
+    rituel_obj: 'Suivi des objectifs en équipe', rituel_ecoute: 'Écoute & Feedback', rituel_confidence: 'Utilisation quotidienne de Confidence',
+    rituel_devis: 'Gestion des rappels Devis', rituel_sop: 'Suivi du challenge SOP', rituel_stats: 'Suivi régulier des indicateurs statistiques du magasin',
+    rituel_rush: 'Gestion des périodes de Rush', rituel_optometrie: 'Optométrie pour TOUS', rituel_debrief: 'Débriefing des réunions',
+    kpi_sop: 'SOP', kpi_ndv: 'NDV', kpi_mdc_intemporelle: 'MdC/Intemporelle', kpi_audio_d_pistage: 'Audio dépistage',
+    kpi_devis_rappels: 'Devis rappels', kpi_oney_financement: 'Oney financement', kpi_lyleoo: 'Lyleoo',
+    kpi_confidence_tool: 'Confidence tool', kpi_ca_n_n_1: 'CA N/N-1',
+
+    toast_pdf_gen1: '1/2 — Génération du PDF...',
+    toast_auth1: '1/4 — Authentification...',
+    toast_pdf_gen2: '2/4 — Génération du PDF...',
+    toast_upload_pj: '3/4 — Upload pièce jointe...',
+    toast_upload_pj2: '3b/4 — Upload pièce jointe supplémentaire...',
+    toast_upload_eval: '3c/4 — Upload Évaluation Équipe...',
+    toast_aucun_magasin: 'Aucun magasin sélectionné',
+    toast_aucune_donnee_export: 'Aucune donnée à exporter',
+    toast_aucune_donnee_preview: 'Aucune donnée à prévisualiser',
+    toast_authentification: 'Authentification...',
+    toast_bilan_indispo: 'Bilan non disponible',
+    toast_bilan_renvoye: 'Bilan renvoyé ✓',
+    toast_brouillon_recharge: 'Brouillon rechargé',
+    toast_brouillon_sauve: 'Brouillon sauvegardé ✓',
+    toast_indicateur_existe: 'Cet indicateur existe déjà',
+    toast_choisir_indicateur_valeur: 'Choisir un indicateur et saisir une valeur',
+    toast_decris_action: 'Décris l\'action',
+    toast_envoi_annule: 'Envoi annulé',
+    toast_erreur_photo: 'Erreur de chargement de la photo',
+    toast_erreur_brouillon: 'Erreur sauvegarde brouillon',
+    toast_gen_pdf: 'Génération du PDF...',
+    toast_indicateur_deja_ajoute: 'Indicateur déjà ajouté',
+    toast_indique_nom_indicateur: 'Indique un nom pour l\'indicateur',
+    toast_prenom_requis: 'Le prénom du collaborateur est requis',
+    toast_max3_actions: 'Maximum 3 actions attendues',
+    toast_max6_indicateurs: 'Maximum 6 indicateurs',
+    toast_max6_indicateurs2: 'Maximum 6 indicateurs (2 lignes de 3)',
+    toast_mdp_requis: 'Mot de passe requis',
+    toast_nom_valeur_requis: 'Nom et valeur requis',
+    toast_notif_envoyee: 'Notification envoyée à Olivier ✓',
+    toast_pdf_nouvel_onglet: 'PDF ouvert dans un nouvel onglet',
+    toast_pdf_telecharge: 'PDF téléchargé (popups bloqués)',
+    toast_relay_non_config: 'Relay non configuré',
+    toast_saisie_reinit: 'Saisie réinitialisée',
+    toast_upload_pdf: 'Upload PDF...',
+    toast_verif_eval: 'Vérification Évaluation Équipe...',
+    toast_dictee_non_supportee: '⚠ Dictée vocale non supportée sur ce navigateur',
+    toast_humeur_obligatoire: '⚠ Humeur du passage obligatoire',
+    toast_zimbra_non_config: '⚠ Identifiant Zimbra non configuré dans Paramètres',
+    toast_max3_zones: '⚠ Maximum 3 zones contrôlées par passage',
+    toast_ca_annuel_nn1_obligatoire: '⚠ Positionnement CA annuel N/N-1 obligatoire',
+    toast_ca_annuel_obligatoire: '⚠ Positionnement CA annuel obligatoire',
+    toast_renta_obligatoire: '⚠ Renta salariale obligatoire',
+    toast_rh_obligatoire: '⚠ Situation RH obligatoire',
+    toast_peniches_obligatoire: '⚠ Tour de péniches obligatoire : au moins 5 dossiers contrôlés dans une zone',
+    toast_sauvegarde_exportee: '✓ Sauvegarde exportée (historique + brouillons)',
+    toast_erreur_dictee: '⚠ Erreur dictée : ', toast_referentiel_label: 'Référentiel',
+    toast_encodage_corrige: 'encodage à corriger sur GitHub (auto-réparé pour l\'instant)', toast_encodage_invalide: 'encodage invalide détecté, fichier source à corriger',
+    toast_indicateur_prefix: 'Indicateur', toast_ajoute_suffix: 'ajouté ✓',
+    toast_ref_recharge: 'Référentiel rechargé —', toast_magasins_suffix: 'magasins', toast_indicateurs_suffix: 'indicateurs',
+    toast_3actions_prefix: '⚠ 3 actions attendues obligatoires (actuellement ', toast_erreur_preview: '⚠ Erreur lors de la prévisualisation : ',
+    toast_envoi_a: 'Envoi à', toast_destinataires_suffix: 'destinataire(s)...',
+    toast_bilans_suffix: 'bilan(s)', toast_brouillons_importes_suffix: 'brouillon(s) importé(s)',
+    toast_fichier_invalide: '⚠ Fichier invalide : ', toast_erreur_pdf: 'Erreur PDF : ', toast_erreur_renvoi: 'Erreur renvoi : ',
+    sante_jours_sans_visite: 'j sans visite', sante_jamais_visite: 'jamais visité', sante_actions_non_soldees: "action(s) non soldée(s)",
+    sante_indic_rouge: 'indic. dans le rouge', sante_dernier_passage: 'Dernier passage :', sante_aucun_bilan_magasin: 'Aucun bilan enregistré pour ce magasin',
+    sante_score_titre: 'Score de santé', sante_comment_calcule: 'Comment est calculé ce score ?', sante_reprise: 'reprise',
+    sante_actions_non_soldees_titre: 'Actions non soldées', sante_aucune_action_attente: 'Aucune action en attente.',
+    sante_sous_effectif_soutenu: 'sous-effectif soutenu (3 mois)', sante_effectif: 'Effectif', sante_absenteisme: 'Absentéisme',
+    sante_positionnement_annuel: 'Positionnement annuel', sante_avis_google: 'Avis Google', sante_niveau_equipe: 'Niveau équipe', sante_obj_abbr: 'obj.',
+    sante_indicateurs_pedlv: 'Indicateurs PEDLV', sante_dans_le_rouge: 'dans le rouge', sante_vs: 'vs', sante_sem_derniere: 'sem. dernière',
+    sante_pas_donnees_pedlv: "Pas de données Pour être dans le vert cette période.", sante_cloture: 'clôturé', sante_en_cours: 'en cours',
+    sante_pas_encore_commence: 'pas encore commencé', sante_aucun_mois_cloture: 'aucun mois clôturé', sante_audit_5s: 'audit 5S',
+    sante_mois_en_cours: 'Mois en cours', sante_dernier_cloture: 'Dernier clôturé', sante_pas_remontee_kaizen: 'Pas de remontée Kaizen pour ce magasin.',
+    pedlv_pm: 'Panier moyen Opt.', pedlv_tc: '% Concrétisation', pedlv_sop: '% SOP', pedlv_mdc: '% MdC',
+    pedlv_pack: '% Pack Confort', pedlv_pmpc: 'PM Pack Confort', pedlv_ta: '% Test auditif', pedlv_tva: '% Vente add. audio',
+    hcm_defaut: 'Défaut', hcm_generer: '⬇ Générer le fichier', btn_fermer: 'Fermer',
+    hcm_actions: 'Actions non soldées', hcm_effectif: 'Effectif', hcm_absenteisme: 'Absentéisme', hcm_positionnement: 'Positionnement annuel',
+    hcm_pedlv: 'PEDLV (indicateurs rouges)', hcm_avis: 'Avis Google', hcm_equipe: 'Niveau équipe', hcm_kaizen: 'Kaizen (audit 5S)',
   },
   EN: {
     nav_nouveau: 'New', nav_historique: 'History', nav_analyse: 'Analysis', nav_parametres: 'Settings',
@@ -905,6 +1005,106 @@ const I18N = {
     btn_dicter: 'Dictate', btn_ajouter: '+ Add', btn_creer: '+ Create', btn_ajouter_photo: 'Add', btn_brouillon: '💾 Draft', btn_finaliser: 'Finalize & Send →',
     mail_texte_modifiable: 'Email text (editable before sending)',
     params_langue: 'Language', params_langue_note: 'This language is also applied automatically based on the selected store.',
+    hist_titre: 'History', hist_tous_magasins: 'All stores', hist_exporter: '📤 Export backup', hist_importer: '📥 Import backup',
+    hist_desc: 'Includes history AND current drafts per store. Use before removing the app shortcut (e.g. icon change) and re-import right after reinstalling, to avoid losing anything.',
+    params_objectifs_kpi: 'KPI targets', params_legende_couleurs: 'Green = target met · Orange = close · Red = far off',
+    params_ajouter_indicateur: 'Add a new indicator', params_nom_indicateur_ph: 'Indicator name', params_objectif_ph: 'Target (optional)', params_unite_ph: 'Unit (%, €, blank...)',
+    params_ajouter_indicateur_btn: '+ Add the indicator',
+    params_indicateur_local_note: 'This indicator stays local to your phone. To make it common to all animators, send it to Olivier for inclusion in the shared directory.',
+    params_email_titre: 'Email', params_votre_email: 'Your email (optional — if different from your Zimbra login + @optical-center.com)',
+    params_relay: 'Cloudflare relay', params_identifiant_zimbra: 'Zimbra login', params_renta_cible: 'Target payroll ratio (%)',
+    params_url_magasins: 'Store directory URL (CSV or JSON on GitHub)', params_recharger_magasins: '🔄 Reload store directory',
+    params_url_kpi: 'KPI directory URL (CSV or JSON on GitHub)', params_recharger_kpi: '🔄 Reload KPI directory',
+    params_objectif_label: 'Target',
+    analyse_titre: 'AI Analysis',
+    analyse_login_desc: "Log in with your Zimbra password to access your stores. Nothing is stored — only a temporary session (12h) is kept on this phone.",
+    analyse_login_nouser: 'No Zimbra login configured. Go to <b>Settings → Zimbra login</b> first.',
+    analyse_login_pass_ph: 'Zimbra password', analyse_se_connecter: 'Log in', analyse_se_deconnecter: 'Log out',
+    analyse_mode_single: '📍 One store', analyse_mode_group: '🗺️ Tour', analyse_mode_comhebdo: '📣 Weekly update',
+    analyse_generer_com: "✨ Generate this week's update", analyse_analyser_magasin: '✨ Analyze this store',
+    analyse_etat_magasins: 'Store status — most to least urgent:', analyse_hcm_title: 'Adjust the health score weightings',
+    analyse_rechercher_magasin_ph: '🔎 Search a store...', analyse_selectionner_magasins: 'Select the stores to include in the AI tour analysis:',
+    analyse_analyser_tournee: '✨ Analyze the tour', analyse_en_cours: '⏳ Analysis in progress...',
+    hist_aucun_bilan: 'No report recorded for this filter.',
+    analyse_chargement_etat: 'Loading store status...', analyse_etat_indisponible: 'Store status unavailable right now (try again later).',
+    analyse_aucun_magasin_perimetre: 'No store in your scope.', analyse_aucun_magasin_recherche: 'No store matches the search.',
+    rituel_lj: 'Systematic daily kickoff', rituel_pi: 'Regular one-on-ones', rituel_brief: 'Weekly team briefs',
+    rituel_obj: 'Team goal tracking', rituel_ecoute: 'Listening & Feedback', rituel_confidence: 'Daily use of Confidence',
+    rituel_devis: 'Quote follow-up management', rituel_sop: 'SOP challenge tracking', rituel_stats: "Regular tracking of the store's statistical indicators",
+    rituel_rush: 'Rush period management', rituel_optometrie: 'Optometry for EVERYONE', rituel_debrief: 'Meeting debriefs',
+    kpi_sop: 'SOP', kpi_ndv: 'NDV', kpi_mdc_intemporelle: 'MdC/Timeless', kpi_audio_d_pistage: 'Audio screening',
+    kpi_devis_rappels: 'Quote follow-ups', kpi_oney_financement: 'Oney financing', kpi_lyleoo: 'Lyleoo',
+    kpi_confidence_tool: 'Confidence tool', kpi_ca_n_n_1: 'Sales Y/Y-1',
+
+    toast_pdf_gen1: '1/2 — Generating PDF...',
+    toast_auth1: '1/4 — Authenticating...',
+    toast_pdf_gen2: '2/4 — Generating PDF...',
+    toast_upload_pj: '3/4 — Uploading attachment...',
+    toast_upload_pj2: '3b/4 — Uploading additional attachment...',
+    toast_upload_eval: '3c/4 — Uploading Team Evaluation...',
+    toast_aucun_magasin: 'No store selected',
+    toast_aucune_donnee_export: 'No data to export',
+    toast_aucune_donnee_preview: 'No data to preview',
+    toast_authentification: 'Authenticating...',
+    toast_bilan_indispo: 'Report unavailable',
+    toast_bilan_renvoye: 'Report resent ✓',
+    toast_brouillon_recharge: 'Draft reloaded',
+    toast_brouillon_sauve: 'Draft saved ✓',
+    toast_indicateur_existe: 'This indicator already exists',
+    toast_choisir_indicateur_valeur: 'Choose an indicator and enter a value',
+    toast_decris_action: 'Describe the action',
+    toast_envoi_annule: 'Sending cancelled',
+    toast_erreur_photo: 'Error loading the photo',
+    toast_erreur_brouillon: 'Error saving draft',
+    toast_gen_pdf: 'Generating PDF...',
+    toast_indicateur_deja_ajoute: 'Indicator already added',
+    toast_indique_nom_indicateur: 'Enter a name for the indicator',
+    toast_prenom_requis: 'The team member\'s first name is required',
+    toast_max3_actions: 'Maximum 3 expected actions',
+    toast_max6_indicateurs: 'Maximum 6 indicators',
+    toast_max6_indicateurs2: 'Maximum 6 indicators (2 rows of 3)',
+    toast_mdp_requis: 'Password required',
+    toast_nom_valeur_requis: 'Name and value required',
+    toast_notif_envoyee: 'Notification sent to Olivier ✓',
+    toast_pdf_nouvel_onglet: 'PDF opened in a new tab',
+    toast_pdf_telecharge: 'PDF downloaded (popups blocked)',
+    toast_relay_non_config: 'Relay not configured',
+    toast_saisie_reinit: 'Entry reset',
+    toast_upload_pdf: 'Uploading PDF...',
+    toast_verif_eval: 'Checking Team Evaluation...',
+    toast_dictee_non_supportee: '⚠ Voice dictation not supported on this browser',
+    toast_humeur_obligatoire: '⚠ Visit mood is required',
+    toast_zimbra_non_config: '⚠ Zimbra login not set in Settings',
+    toast_max3_zones: '⚠ Maximum 3 zones checked per visit',
+    toast_ca_annuel_nn1_obligatoire: '⚠ Annual sales achievement Y/Y-1 is required',
+    toast_ca_annuel_obligatoire: '⚠ Annual sales achievement is required',
+    toast_renta_obligatoire: '⚠ Payroll ratio is required',
+    toast_rh_obligatoire: '⚠ HR situation is required',
+    toast_peniches_obligatoire: '⚠ Client file review is required: at least 5 files checked in one zone',
+    toast_sauvegarde_exportee: '✓ Backup exported (history + drafts)',
+    toast_erreur_dictee: '⚠ Dictation error: ', toast_referentiel_label: 'Directory',
+    toast_encodage_corrige: 'encoding to fix on GitHub (auto-repaired for now)', toast_encodage_invalide: 'invalid encoding detected, source file needs fixing',
+    toast_indicateur_prefix: 'Indicator', toast_ajoute_suffix: 'added ✓',
+    toast_ref_recharge: 'Directory reloaded —', toast_magasins_suffix: 'stores', toast_indicateurs_suffix: 'indicators',
+    toast_3actions_prefix: '⚠ 3 expected actions required (currently ', toast_erreur_preview: '⚠ Error while previewing: ',
+    toast_envoi_a: 'Sending to', toast_destinataires_suffix: 'recipient(s)...',
+    toast_bilans_suffix: 'report(s)', toast_brouillons_importes_suffix: 'draft(s) imported',
+    toast_fichier_invalide: '⚠ Invalid file: ', toast_erreur_pdf: 'PDF error: ', toast_erreur_renvoi: 'Resend error: ',
+    sante_jours_sans_visite: 'd without a visit', sante_jamais_visite: 'never visited', sante_actions_non_soldees: 'unresolved action(s)',
+    sante_indic_rouge: 'indicator(s) in the red', sante_dernier_passage: 'Last visit:', sante_aucun_bilan_magasin: 'No report recorded for this store',
+    sante_score_titre: 'Health score', sante_comment_calcule: 'How is this score calculated?', sante_reprise: 'carried over',
+    sante_actions_non_soldees_titre: 'Unresolved actions', sante_aucune_action_attente: 'No pending action.',
+    sante_sous_effectif_soutenu: 'sustained understaffing (3 months)', sante_effectif: 'Headcount', sante_absenteisme: 'Absenteeism',
+    sante_positionnement_annuel: 'Annual achievement', sante_avis_google: 'Google reviews', sante_niveau_equipe: 'Team level', sante_obj_abbr: 'target',
+    sante_indicateurs_pedlv: 'PEDLV indicators', sante_dans_le_rouge: 'in the red', sante_vs: 'vs', sante_sem_derniere: 'last week',
+    sante_pas_donnees_pedlv: 'No PEDLV data for this period.', sante_cloture: 'closed', sante_en_cours: 'in progress',
+    sante_pas_encore_commence: 'not started yet', sante_aucun_mois_cloture: 'no month closed yet', sante_audit_5s: '5S audit',
+    sante_mois_en_cours: 'Current month', sante_dernier_cloture: 'Last closed', sante_pas_remontee_kaizen: 'No Kaizen data reported for this store.',
+    pedlv_pm: 'Avg. basket Opt.', pedlv_tc: '% Conversion', pedlv_sop: '% SOP', pedlv_mdc: '% MdC',
+    pedlv_pack: '% Comfort Pack', pedlv_pmpc: 'Avg. basket Comfort Pack', pedlv_ta: '% Hearing test', pedlv_tva: '% Additional audio sales',
+    hcm_defaut: 'Default', hcm_generer: '⬇ Generate the file', btn_fermer: 'Close',
+    hcm_actions: 'Unresolved actions', hcm_effectif: 'Headcount', hcm_absenteisme: 'Absenteeism', hcm_positionnement: 'Annual achievement',
+    hcm_pedlv: 'PEDLV (red indicators)', hcm_avis: 'Google reviews', hcm_equipe: 'Team level', hcm_kaizen: 'Kaizen (5S audit)',
   },
   ES: {
     nav_nouveau: 'Nuevo', nav_historique: 'Historial', nav_analyse: 'Análisis', nav_parametres: 'Ajustes',
@@ -949,6 +1149,106 @@ const I18N = {
     btn_dicter: 'Dictar', btn_ajouter: '+ Añadir', btn_creer: '+ Crear', btn_ajouter_photo: 'Añadir', btn_brouillon: '💾 Borrador', btn_finaliser: 'Finalizar y enviar →',
     mail_texte_modifiable: 'Texto del correo (editable antes de enviar)',
     params_langue: 'Idioma', params_langue_note: 'Este idioma también se aplica automáticamente según la tienda seleccionada.',
+    hist_titre: 'Historial', hist_tous_magasins: 'Todas las tiendas', hist_exporter: '📤 Exportar copia', hist_importer: '📥 Importar copia',
+    hist_desc: 'Incluye el historial Y los borradores en curso por tienda. Úsalo antes de eliminar el acceso directo de la app (por ejemplo, cambio de icono) y vuelve a importarlo justo después de reinstalar, para no perder nada.',
+    params_objectifs_kpi: 'Objetivos KPI', params_legende_couleurs: 'Verde = objetivo alcanzado · Naranja = cerca · Rojo = lejos',
+    params_ajouter_indicateur: 'Añadir un nuevo indicador', params_nom_indicateur_ph: 'Nombre del indicador', params_objectif_ph: 'Objetivo (opcional)', params_unite_ph: 'Unidad (%, €, vacío...)',
+    params_ajouter_indicateur_btn: '+ Añadir el indicador',
+    params_indicateur_local_note: 'Este indicador permanece local en tu teléfono. Para hacerlo común a todos los animadores, envíalo a Olivier para incluirlo en el directorio compartido.',
+    params_email_titre: 'Correo electrónico', params_votre_email: 'Tu correo (opcional — si difiere de tu usuario Zimbra + @optical-center.com)',
+    params_relay: 'Relay de Cloudflare', params_identifiant_zimbra: 'Usuario Zimbra', params_renta_cible: 'Renta salarial objetivo (%)',
+    params_url_magasins: 'URL del directorio de tiendas (CSV o JSON en GitHub)', params_recharger_magasins: '🔄 Recargar el directorio de tiendas',
+    params_url_kpi: 'URL del directorio de KPI (CSV o JSON en GitHub)', params_recharger_kpi: '🔄 Recargar el directorio de KPI',
+    params_objectif_label: 'Objetivo',
+    analyse_titre: 'Análisis IA',
+    analyse_login_desc: 'Conéctate con tu contraseña de Zimbra para acceder a tus tiendas. No se guarda nada — solo una sesión temporal (12h) queda en este teléfono.',
+    analyse_login_nouser: 'No hay usuario Zimbra configurado. Ve primero a <b>Ajustes → Usuario Zimbra</b>.',
+    analyse_login_pass_ph: 'Contraseña de Zimbra', analyse_se_connecter: 'Conectar', analyse_se_deconnecter: 'Desconectar',
+    analyse_mode_single: '📍 Una tienda', analyse_mode_group: '🗺️ Ronda', analyse_mode_comhebdo: '📣 Comunicado semanal',
+    analyse_generer_com: '✨ Generar el comunicado de la semana', analyse_analyser_magasin: '✨ Analizar esta tienda',
+    analyse_etat_magasins: 'Estado de las tiendas — de más a menos urgente:', analyse_hcm_title: 'Ajustar los coeficientes del índice de salud',
+    analyse_rechercher_magasin_ph: '🔎 Buscar una tienda...', analyse_selectionner_magasins: 'Selecciona las tiendas a incluir en el análisis IA de la ronda:',
+    analyse_analyser_tournee: '✨ Analizar la ronda', analyse_en_cours: '⏳ Análisis en curso...',
+    hist_aucun_bilan: 'No hay ningún informe registrado para este filtro.',
+    analyse_chargement_etat: 'Cargando el estado de las tiendas...', analyse_etat_indisponible: 'Estado de las tiendas no disponible por el momento (inténtalo más tarde).',
+    analyse_aucun_magasin_perimetre: 'No hay ninguna tienda en tu ámbito.', analyse_aucun_magasin_recherche: 'Ninguna tienda coincide con la búsqueda.',
+    rituel_lj: 'Inicio de jornada sistemático', rituel_pi: 'Puntos individuales regulares', rituel_brief: 'Reuniones de equipo semanales',
+    rituel_obj: 'Seguimiento de objetivos en equipo', rituel_ecoute: 'Escucha y feedback', rituel_confidence: 'Uso diario de Confidence',
+    rituel_devis: 'Gestión de recordatorios de presupuestos', rituel_sop: 'Seguimiento del reto SOP', rituel_stats: 'Seguimiento regular de los indicadores estadísticos de la tienda',
+    rituel_rush: 'Gestión de los periodos de Rush', rituel_optometrie: 'Optometría para TODOS', rituel_debrief: 'Debriefing de las reuniones',
+    kpi_sop: 'SOP', kpi_ndv: 'NDV', kpi_mdc_intemporelle: 'MdC/Intemporelle', kpi_audio_d_pistage: 'Cribado auditivo',
+    kpi_devis_rappels: 'Seguimiento de presupuestos', kpi_oney_financement: 'Financiación Oney', kpi_lyleoo: 'Lyleoo',
+    kpi_confidence_tool: 'Confidence tool', kpi_ca_n_n_1: 'Ventas A/A-1',
+
+    toast_pdf_gen1: '1/2 — Generando el PDF...',
+    toast_auth1: '1/4 — Autenticando...',
+    toast_pdf_gen2: '2/4 — Generando el PDF...',
+    toast_upload_pj: '3/4 — Subiendo el adjunto...',
+    toast_upload_pj2: '3b/4 — Subiendo adjunto adicional...',
+    toast_upload_eval: '3c/4 — Subiendo Evaluación de Equipo...',
+    toast_aucun_magasin: 'Ninguna tienda seleccionada',
+    toast_aucune_donnee_export: 'No hay datos para exportar',
+    toast_aucune_donnee_preview: 'No hay datos para previsualizar',
+    toast_authentification: 'Autenticando...',
+    toast_bilan_indispo: 'Informe no disponible',
+    toast_bilan_renvoye: 'Informe reenviado ✓',
+    toast_brouillon_recharge: 'Borrador recargado',
+    toast_brouillon_sauve: 'Borrador guardado ✓',
+    toast_indicateur_existe: 'Este indicador ya existe',
+    toast_choisir_indicateur_valeur: 'Elige un indicador e introduce un valor',
+    toast_decris_action: 'Describe la acción',
+    toast_envoi_annule: 'Envío cancelado',
+    toast_erreur_photo: 'Error al cargar la foto',
+    toast_erreur_brouillon: 'Error al guardar el borrador',
+    toast_gen_pdf: 'Generando el PDF...',
+    toast_indicateur_deja_ajoute: 'Indicador ya añadido',
+    toast_indique_nom_indicateur: 'Indica un nombre para el indicador',
+    toast_prenom_requis: 'El nombre del colaborador es obligatorio',
+    toast_max3_actions: 'Máximo 3 acciones esperadas',
+    toast_max6_indicateurs: 'Máximo 6 indicadores',
+    toast_max6_indicateurs2: 'Máximo 6 indicadores (2 filas de 3)',
+    toast_mdp_requis: 'Contraseña requerida',
+    toast_nom_valeur_requis: 'Nombre y valor requeridos',
+    toast_notif_envoyee: 'Notificación enviada a Olivier ✓',
+    toast_pdf_nouvel_onglet: 'PDF abierto en una nueva pestaña',
+    toast_pdf_telecharge: 'PDF descargado (ventanas emergentes bloqueadas)',
+    toast_relay_non_config: 'Relay no configurado',
+    toast_saisie_reinit: 'Entrada reiniciada',
+    toast_upload_pdf: 'Subiendo PDF...',
+    toast_verif_eval: 'Verificando Evaluación de Equipo...',
+    toast_dictee_non_supportee: '⚠ Dictado por voz no compatible con este navegador',
+    toast_humeur_obligatoire: '⚠ El humor de la visita es obligatorio',
+    toast_zimbra_non_config: '⚠ Usuario Zimbra no configurado en Ajustes',
+    toast_max3_zones: '⚠ Máximo 3 zonas revisadas por visita',
+    toast_ca_annuel_nn1_obligatoire: '⚠ El posicionamiento de ventas anual A/A-1 es obligatorio',
+    toast_ca_annuel_obligatoire: '⚠ El posicionamiento de ventas anual es obligatorio',
+    toast_renta_obligatoire: '⚠ La renta salarial es obligatoria',
+    toast_rh_obligatoire: '⚠ La situación de RR. HH. es obligatoria',
+    toast_peniches_obligatoire: '⚠ La revisión de expedientes es obligatoria: al menos 5 expedientes revisados en una zona',
+    toast_sauvegarde_exportee: '✓ Copia exportada (historial + borradores)',
+    toast_erreur_dictee: '⚠ Error de dictado: ', toast_referentiel_label: 'Directorio',
+    toast_encodage_corrige: 'codificación a corregir en GitHub (reparada automáticamente por ahora)', toast_encodage_invalide: 'codificación inválida detectada, hay que corregir el archivo fuente',
+    toast_indicateur_prefix: 'Indicador', toast_ajoute_suffix: 'añadido ✓',
+    toast_ref_recharge: 'Directorio recargado —', toast_magasins_suffix: 'tiendas', toast_indicateurs_suffix: 'indicadores',
+    toast_3actions_prefix: '⚠ Se requieren 3 acciones esperadas (actualmente ', toast_erreur_preview: '⚠ Error al previsualizar: ',
+    toast_envoi_a: 'Enviando a', toast_destinataires_suffix: 'destinatario(s)...',
+    toast_bilans_suffix: 'informe(s)', toast_brouillons_importes_suffix: 'borrador(es) importado(s)',
+    toast_fichier_invalide: '⚠ Archivo no válido: ', toast_erreur_pdf: 'Error de PDF: ', toast_erreur_renvoi: 'Error al reenviar: ',
+    sante_jours_sans_visite: 'd sin visita', sante_jamais_visite: 'nunca visitada', sante_actions_non_soldees: 'acción(es) pendiente(s)',
+    sante_indic_rouge: 'indicador(es) en rojo', sante_dernier_passage: 'Última visita:', sante_aucun_bilan_magasin: 'No hay ningún informe registrado para esta tienda',
+    sante_score_titre: 'Índice de salud', sante_comment_calcule: '¿Cómo se calcula este índice?', sante_reprise: 'trasladada',
+    sante_actions_non_soldees_titre: 'Acciones pendientes', sante_aucune_action_attente: 'Ninguna acción pendiente.',
+    sante_sous_effectif_soutenu: 'infradotación sostenida (3 meses)', sante_effectif: 'Plantilla', sante_absenteisme: 'Absentismo',
+    sante_positionnement_annuel: 'Posicionamiento anual', sante_avis_google: 'Reseñas de Google', sante_niveau_equipe: 'Nivel del equipo', sante_obj_abbr: 'obj.',
+    sante_indicateurs_pedlv: 'Indicadores PEDLV', sante_dans_le_rouge: 'en rojo', sante_vs: 'vs', sante_sem_derniere: 'semana pasada',
+    sante_pas_donnees_pedlv: 'No hay datos PEDLV para este periodo.', sante_cloture: 'cerrado', sante_en_cours: 'en curso',
+    sante_pas_encore_commence: 'aún no iniciado', sante_aucun_mois_cloture: 'ningún mes cerrado', sante_audit_5s: 'auditoría 5S',
+    sante_mois_en_cours: 'Mes en curso', sante_dernier_cloture: 'Último cerrado', sante_pas_remontee_kaizen: 'No hay datos Kaizen reportados para esta tienda.',
+    pedlv_pm: 'Ticket medio Ópt.', pedlv_tc: '% Conversión', pedlv_sop: '% SOP', pedlv_mdc: '% MdC',
+    pedlv_pack: '% Pack Confort', pedlv_pmpc: 'Ticket medio Pack Confort', pedlv_ta: '% Prueba auditiva', pedlv_tva: '% Venta adicional audio',
+    hcm_defaut: 'Por defecto', hcm_generer: '⬇ Generar el archivo', btn_fermer: 'Cerrar',
+    hcm_actions: 'Acciones pendientes', hcm_effectif: 'Plantilla', hcm_absenteisme: 'Absentismo', hcm_positionnement: 'Posicionamiento anual',
+    hcm_pedlv: 'PEDLV (indicadores en rojo)', hcm_avis: 'Reseñas de Google', hcm_equipe: 'Nivel del equipo', hcm_kaizen: 'Kaizen (auditoría 5S)',
   },
   HE: {
     nav_nouveau: 'חדש', nav_historique: 'היסטוריה', nav_analyse: 'ניתוח', nav_parametres: 'הגדרות',
@@ -1013,6 +1313,106 @@ const I18N = {
     btn_dicter: 'Dicteren', btn_ajouter: '+ Toevoegen', btn_creer: '+ Aanmaken', btn_ajouter_photo: 'Toevoegen', btn_brouillon: '💾 Concept', btn_finaliser: 'Afronden & verzenden →',
     mail_texte_modifiable: 'E-mailtekst (bewerkbaar voor verzending)',
     params_langue: 'Taal', params_langue_note: 'Deze taal wordt ook automatisch toegepast op basis van de geselecteerde winkel.',
+    hist_titre: 'Geschiedenis', hist_tous_magasins: 'Alle winkels', hist_exporter: '📤 Back-up exporteren', hist_importer: '📥 Back-up importeren',
+    hist_desc: 'Bevat de geschiedenis EN de lopende concepten per winkel. Gebruik dit voordat je de app-snelkoppeling verwijdert (bv. icoonwijziging) en importeer opnieuw direct na herinstallatie, om niets te verliezen.',
+    params_objectifs_kpi: 'KPI-doelen', params_legende_couleurs: 'Groen = doel behaald · Oranje = bijna · Rood = ver af',
+    params_ajouter_indicateur: 'Nieuwe indicator toevoegen', params_nom_indicateur_ph: 'Naam van de indicator', params_objectif_ph: 'Doel (optioneel)', params_unite_ph: 'Eenheid (%, €, leeg...)',
+    params_ajouter_indicateur_btn: '+ Indicator toevoegen',
+    params_indicateur_local_note: 'Deze indicator blijft lokaal op je telefoon. Om hem gemeenschappelijk te maken voor alle animators, stuur hem door naar Olivier voor opname in het gedeelde bestand.',
+    params_email_titre: 'E-mail', params_votre_email: 'Je e-mail (optioneel — indien anders dan je Zimbra-login + @optical-center.com)',
+    params_relay: 'Cloudflare relay', params_identifiant_zimbra: 'Zimbra-login', params_renta_cible: 'Doel loonratio (%)',
+    params_url_magasins: 'URL winkelbestand (CSV of JSON op GitHub)', params_recharger_magasins: '🔄 Winkelbestand herladen',
+    params_url_kpi: 'URL KPI-bestand (CSV of JSON op GitHub)', params_recharger_kpi: '🔄 KPI-bestand herladen',
+    params_objectif_label: 'Doel',
+    analyse_titre: 'AI-analyse',
+    analyse_login_desc: 'Log in met je Zimbra-wachtwoord om toegang te krijgen tot je winkels. Er wordt niets opgeslagen — alleen een tijdelijke sessie (12u) blijft op dit toestel bewaard.',
+    analyse_login_nouser: 'Geen Zimbra-login ingesteld. Ga eerst naar <b>Instellingen → Zimbra-login</b>.',
+    analyse_login_pass_ph: 'Zimbra-wachtwoord', analyse_se_connecter: 'Inloggen', analyse_se_deconnecter: 'Uitloggen',
+    analyse_mode_single: '📍 Eén winkel', analyse_mode_group: '🗺️ Ronde', analyse_mode_comhebdo: '📣 Wekelijkse update',
+    analyse_generer_com: '✨ Wekelijkse update genereren', analyse_analyser_magasin: '✨ Deze winkel analyseren',
+    analyse_etat_magasins: 'Status van de winkels — van meest naar minst urgent:', analyse_hcm_title: 'Wegingen van de gezondheidsscore aanpassen',
+    analyse_rechercher_magasin_ph: '🔎 Zoek een winkel...', analyse_selectionner_magasins: 'Selecteer de winkels op te nemen in de AI-analyse van de ronde:',
+    analyse_analyser_tournee: '✨ Ronde analyseren', analyse_en_cours: '⏳ Analyse bezig...',
+    hist_aucun_bilan: 'Geen rapport geregistreerd voor dit filter.',
+    analyse_chargement_etat: 'Status van de winkels wordt geladen...', analyse_etat_indisponible: 'Status van de winkels momenteel niet beschikbaar (probeer later opnieuw).',
+    analyse_aucun_magasin_perimetre: 'Geen winkel in jouw bereik.', analyse_aucun_magasin_recherche: 'Geen winkel komt overeen met de zoekopdracht.',
+    rituel_lj: 'Systematische dagstart', rituel_pi: 'Regelmatige individuele gesprekken', rituel_brief: 'Wekelijkse teambriefings',
+    rituel_obj: 'Teamgewijze opvolging van doelen', rituel_ecoute: 'Luisteren & feedback', rituel_confidence: 'Dagelijks gebruik van Confidence',
+    rituel_devis: 'Beheer van offerteherinneringen', rituel_sop: 'Opvolging van de SOP-uitdaging', rituel_stats: 'Regelmatige opvolging van de statistische indicatoren van de winkel',
+    rituel_rush: 'Beheer van drukke periodes', rituel_optometrie: 'Optometrie voor IEDEREEN', rituel_debrief: 'Debriefing van vergaderingen',
+    kpi_sop: 'SOP', kpi_ndv: 'NDV', kpi_mdc_intemporelle: 'MdC/Intemporelle', kpi_audio_d_pistage: 'Gehoorscreening',
+    kpi_devis_rappels: 'Opvolging offertes', kpi_oney_financement: 'Oney-financiering', kpi_lyleoo: 'Lyleoo',
+    kpi_confidence_tool: 'Confidence tool', kpi_ca_n_n_1: 'Omzet J/J-1',
+
+    toast_pdf_gen1: '1/2 — PDF genereren...',
+    toast_auth1: '1/4 — Authenticeren...',
+    toast_pdf_gen2: '2/4 — PDF genereren...',
+    toast_upload_pj: '3/4 — Bijlage uploaden...',
+    toast_upload_pj2: '3b/4 — Extra bijlage uploaden...',
+    toast_upload_eval: '3c/4 — Teamevaluatie uploaden...',
+    toast_aucun_magasin: 'Geen winkel geselecteerd',
+    toast_aucune_donnee_export: 'Geen gegevens om te exporteren',
+    toast_aucune_donnee_preview: 'Geen gegevens om te bekijken',
+    toast_authentification: 'Authenticeren...',
+    toast_bilan_indispo: 'Rapport niet beschikbaar',
+    toast_bilan_renvoye: 'Rapport opnieuw verzonden ✓',
+    toast_brouillon_recharge: 'Concept opnieuw geladen',
+    toast_brouillon_sauve: 'Concept opgeslagen ✓',
+    toast_indicateur_existe: 'Deze indicator bestaat al',
+    toast_choisir_indicateur_valeur: 'Kies een indicator en voer een waarde in',
+    toast_decris_action: 'Beschrijf de actie',
+    toast_envoi_annule: 'Verzending geannuleerd',
+    toast_erreur_photo: 'Fout bij laden van de foto',
+    toast_erreur_brouillon: 'Fout bij opslaan van concept',
+    toast_gen_pdf: 'PDF genereren...',
+    toast_indicateur_deja_ajoute: 'Indicator al toegevoegd',
+    toast_indique_nom_indicateur: 'Geef een naam voor de indicator op',
+    toast_prenom_requis: 'De voornaam van de medewerker is verplicht',
+    toast_max3_actions: 'Maximaal 3 verwachte acties',
+    toast_max6_indicateurs: 'Maximaal 6 indicatoren',
+    toast_max6_indicateurs2: 'Maximaal 6 indicatoren (2 rijen van 3)',
+    toast_mdp_requis: 'Wachtwoord vereist',
+    toast_nom_valeur_requis: 'Naam en waarde vereist',
+    toast_notif_envoyee: 'Melding verzonden naar Olivier ✓',
+    toast_pdf_nouvel_onglet: 'PDF geopend in een nieuw tabblad',
+    toast_pdf_telecharge: 'PDF gedownload (pop-ups geblokkeerd)',
+    toast_relay_non_config: 'Relay niet geconfigureerd',
+    toast_saisie_reinit: 'Invoer gereset',
+    toast_upload_pdf: 'PDF uploaden...',
+    toast_verif_eval: 'Teamevaluatie controleren...',
+    toast_dictee_non_supportee: '⚠ Spraakinvoer niet ondersteund door deze browser',
+    toast_humeur_obligatoire: '⚠ Sfeer van het bezoek is verplicht',
+    toast_zimbra_non_config: '⚠ Zimbra-login niet ingesteld in Instellingen',
+    toast_max3_zones: '⚠ Maximaal 3 zones gecontroleerd per bezoek',
+    toast_ca_annuel_nn1_obligatoire: '⚠ Jaarlijkse omzetrealisatie J/J-1 is verplicht',
+    toast_ca_annuel_obligatoire: '⚠ Jaarlijkse omzetrealisatie is verplicht',
+    toast_renta_obligatoire: '⚠ Loonratio is verplicht',
+    toast_rh_obligatoire: '⚠ HR-situatie is verplicht',
+    toast_peniches_obligatoire: '⚠ Dossiercontrole is verplicht: minstens 5 dossiers gecontroleerd in één zone',
+    toast_sauvegarde_exportee: '✓ Back-up geëxporteerd (geschiedenis + concepten)',
+    toast_erreur_dictee: '⚠ Fout bij spraakinvoer: ', toast_referentiel_label: 'Bestand',
+    toast_encodage_corrige: 'codering te corrigeren op GitHub (voorlopig automatisch hersteld)', toast_encodage_invalide: 'ongeldige codering gedetecteerd, brondocument moet worden gecorrigeerd',
+    toast_indicateur_prefix: 'Indicator', toast_ajoute_suffix: 'toegevoegd ✓',
+    toast_ref_recharge: 'Bestand opnieuw geladen —', toast_magasins_suffix: 'winkels', toast_indicateurs_suffix: 'indicatoren',
+    toast_3actions_prefix: '⚠ 3 verwachte acties vereist (momenteel ', toast_erreur_preview: '⚠ Fout bij het bekijken van de voorvertoning: ',
+    toast_envoi_a: 'Verzenden naar', toast_destinataires_suffix: 'ontvanger(s)...',
+    toast_bilans_suffix: 'rapport(en)', toast_brouillons_importes_suffix: 'concept(en) geïmporteerd',
+    toast_fichier_invalide: '⚠ Ongeldig bestand: ', toast_erreur_pdf: 'PDF-fout: ', toast_erreur_renvoi: 'Fout bij opnieuw verzenden: ',
+    sante_jours_sans_visite: 'd zonder bezoek', sante_jamais_visite: 'nooit bezocht', sante_actions_non_soldees: 'openstaande actie(s)',
+    sante_indic_rouge: 'indicator(en) in het rood', sante_dernier_passage: 'Laatste bezoek:', sante_aucun_bilan_magasin: 'Geen rapport geregistreerd voor deze winkel',
+    sante_score_titre: 'Gezondheidsscore', sante_comment_calcule: 'Hoe wordt deze score berekend?', sante_reprise: 'overgenomen',
+    sante_actions_non_soldees_titre: 'Openstaande acties', sante_aucune_action_attente: 'Geen actie in afwachting.',
+    sante_sous_effectif_soutenu: 'aanhoudende onderbezetting (3 maanden)', sante_effectif: 'Personeel', sante_absenteisme: 'Absenteïsme',
+    sante_positionnement_annuel: 'Jaarlijkse realisatie', sante_avis_google: 'Google-reviews', sante_niveau_equipe: 'Teamniveau', sante_obj_abbr: 'doel',
+    sante_indicateurs_pedlv: 'PEDLV-indicatoren', sante_dans_le_rouge: 'in het rood', sante_vs: 'vs', sante_sem_derniere: 'vorige week',
+    sante_pas_donnees_pedlv: 'Geen PEDLV-gegevens voor deze periode.', sante_cloture: 'afgesloten', sante_en_cours: 'lopend',
+    sante_pas_encore_commence: 'nog niet gestart', sante_aucun_mois_cloture: 'nog geen maand afgesloten', sante_audit_5s: '5S-audit',
+    sante_mois_en_cours: 'Huidige maand', sante_dernier_cloture: 'Laatst afgesloten', sante_pas_remontee_kaizen: 'Geen Kaizen-gegevens gerapporteerd voor deze winkel.',
+    pedlv_pm: 'Gem. mandje Opt.', pedlv_tc: '% Conversie', pedlv_sop: '% SOP', pedlv_mdc: '% MdC',
+    pedlv_pack: '% Comfort Pack', pedlv_pmpc: 'Gem. mandje Comfort Pack', pedlv_ta: '% Gehoortest', pedlv_tva: '% Extra audioverkoop',
+    hcm_defaut: 'Standaard', hcm_generer: '⬇ Bestand genereren', btn_fermer: 'Sluiten',
+    hcm_actions: 'Openstaande acties', hcm_effectif: 'Personeel', hcm_absenteisme: 'Absenteïsme', hcm_positionnement: 'Jaarlijkse realisatie',
+    hcm_pedlv: 'PEDLV (rode indicatoren)', hcm_avis: 'Google-reviews', hcm_equipe: 'Teamniveau', hcm_kaizen: 'Kaizen (5S-audit)',
   },
 };
 
@@ -1077,7 +1477,7 @@ function startMicFor(fieldId) {
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) {
-    showToast('⚠ Dictée vocale non supportée sur ce navigateur');
+    showToast(t('toast_dictee_non_supportee'));
     return;
   }
 
@@ -1144,7 +1544,7 @@ function startMicFor(fieldId) {
   micRecognition.onerror = (event) => {
     stopMic();
     if (event.error !== 'no-speech' && event.error !== 'aborted') {
-      showToast('⚠ Erreur dictée : ' + event.error);
+      showToast(t('toast_erreur_dictee') + event.error);
     }
   };
 
@@ -1325,6 +1725,18 @@ let KPI_DEFAULTS = [
   {name:'CA N/N-1', unit:'%', obj:100, dir:'gte'},
 ];
 
+// Traduit un nom de KPI. Priorité : colonnes name_<LANG> du référentiel kpis.csv (def.names,
+// personnalisables par Olivier/Cécilia sans toucher au code) > dictionnaire codé en dur
+// (kpi_<slug> dans I18N, pour les 9 KPI de repli) > nom brut tel quel si rien ne correspond
+// (indicateur personnalisé ajouté par un AR, etc.) — jamais de clé technique affichée.
+function kpiLabel(name, def) {
+  if (!name) return name;
+  if (def && def.names && def.names[currentLang]) return def.names[currentLang];
+  const slug = 'kpi_' + name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  const val = (I18N[currentLang] && I18N[currentLang][slug]) || (I18N.FR && I18N.FR[slug]);
+  return val || name;
+}
+
 function parseKpiCSV(text) {
   text = text.replace(/^\uFEFF/, '');
   const lines = text.trim().split(/\r?\n/).map(l => l.trim()).filter(Boolean);
@@ -1341,12 +1753,19 @@ function parseKpiCSV(text) {
     headers.forEach(h => {
       if (h.startsWith('obj_') && obj[h]) objByScope[h.slice(4)] = parseFloat(obj[h]);
     });
+    // Colonnes optionnelles name_<LANG> (ex. name_EN, name_ES, name_NL, name_HE) : traduction
+    // du nom d'indicateur pour cette langue, éditable directement dans kpis.csv sans code.
+    const names = {};
+    headers.forEach(h => {
+      if (h.startsWith('name_') && obj[h]) names[h.slice(5).toUpperCase()] = obj[h];
+    });
     return {
       name: obj.name,
       unit: obj.unit || '',
       obj: obj.obj ? parseFloat(obj.obj) : null,
       dir: obj.dir || null,
       objByScope,
+      names,
     };
   }).filter(k => k.name);
 }
@@ -1425,13 +1844,13 @@ function decodeReferentialText(buf, label) {
     try {
       const text = new TextDecoder('utf-8', {fatal:true}).decode(repairedBuf);
       console.warn(`Référentiel ${label} : ${repaired} octet(s) MacRoman auto-corrigé(s) (é/€ collés depuis une app Mac). Corrige le fichier source sur GitHub pour que ce message disparaisse.`);
-      showToast(`⚠ Référentiel ${label} : encodage à corriger sur GitHub (auto-réparé pour l'instant)`);
+      showToast(`⚠ ${t('toast_referentiel_label')} ${label} : ${t('toast_encodage_corrige')}`);
       return text;
     } catch(e2) {
       // Octet(s) vraiment non identifiable(s) : on isole l'erreur sans
       // corrompre le reste du fichier
       console.warn(`Référentiel ${label} : octet(s) non-UTF-8 non reconnu(s) — à corriger sur GitHub.`);
-      showToast(`⚠ Référentiel ${label} : encodage invalide détecté, fichier source à corriger`);
+      showToast(`⚠ ${t('toast_referentiel_label')} ${label} : ${t('toast_encodage_invalide')}`);
       return new TextDecoder('utf-8', {fatal:false}).decode(buf);
     }
   }
@@ -1514,7 +1933,7 @@ function renderRituels() {
     row.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)';
     const isCustom = rituelsCustom.some(c => c.id === r.id);
     row.innerHTML = `<input type="checkbox" data-rituel-id="${r.id}" ${rituelsChecked[r.id] ? 'checked' : ''} style="width:auto;accent-color:var(--red)" onchange="rituelsChecked['${r.id}']=this.checked">
-      <span style="flex:1">${r.label}</span>
+      <span style="flex:1">${isCustom ? r.label : t('rituel_' + r.id)}</span>
       ${isCustom ? `<span style="cursor:pointer;color:var(--muted);font-size:12px" onclick="removeRituelCustom('${r.id}')">✕</span>` : ''}`;
     list.appendChild(row);
   });
@@ -1689,9 +2108,9 @@ function initParamsUI() {
   KPI_DEFAULTS.forEach(k => {
     const row = document.createElement('div');
     row.className = 'kpi-param-row';
-    row.innerHTML = `<span class="kpi-param-name">${k.name}</span>
+    row.innerHTML = `<span class="kpi-param-name">${kpiLabel(k.name, k)}</span>
       <div class="kpi-param-inputs">
-        <span class="kpi-param-label">Objectif</span>
+        <span class="kpi-param-label">${t('params_objectif_label')}</span>
         <input type="text" inputmode="decimal" value="${formatDecimal(k.obj)}" placeholder="—" oninput="updateKpiObj('${k.name}', this.value)">
         <span class="kpi-param-label">${k.unit || ''}</span>
       </div>`;
@@ -1723,8 +2142,8 @@ function addNewKpi() {
   const name = document.getElementById('new-kpi-name').value.trim();
   const objVal = document.getElementById('new-kpi-obj').value;
   const unit = document.getElementById('new-kpi-unit').value.trim();
-  if (!name) { showToast('Indique un nom pour l\'indicateur'); return; }
-  if (KPI_DEFAULTS.some(k => k.name === name)) { showToast('Cet indicateur existe déjà'); return; }
+  if (!name) { showToast(t('toast_indique_nom_indicateur')); return; }
+  if (KPI_DEFAULTS.some(k => k.name === name)) { showToast(t('toast_indicateur_existe')); return; }
   const newKpi = { name, unit, obj: objVal ? parseDecimal(objVal) : null, dir: objVal ? 'gte' : null };
   KPI_DEFAULTS.push(newKpi);
   saveKpiCustom(newKpi);
@@ -1733,7 +2152,7 @@ function addNewKpi() {
   document.getElementById('new-kpi-unit').value = '';
   initParamsUI();
   initKpiSelect();
-  showToast('Indicateur "' + name + '" ajouté ✓');
+  showToast(`${t('toast_indicateur_prefix')} "${name}" ${t('toast_ajoute_suffix')}`);
   // Notifier Olivier par mail via le relay sécurisé
   const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
   const user = params.zimbraUser || '';
@@ -1753,7 +2172,7 @@ function addNewKpi() {
           zimbraUser: user,
           zimbraPass: pwd
         })
-      }).then(() => showToast('Notification envoyée à Olivier ✓')).catch(() => {});
+      }).then(() => showToast(t('toast_notif_envoyee'))).catch(() => {});
     }
   }
 }
@@ -1855,14 +2274,14 @@ function updateGoogleRatingDisplay(mag) {
 async function reloadMagasins() {
   magasins = [];
   await loadMagasins();
-  showToast(`Référentiel rechargé — ${magasins.length} magasins ✓`);
+  showToast(`${t('toast_ref_recharge')} ${magasins.length} ${t('toast_magasins_suffix')} ✓`);
 }
 
 async function reloadKpiDefaults() {
   await loadKpiDefaults();
   initKpiSelect();
   initParamsUI();
-  showToast(`Référentiel KPI rechargé — ${KPI_DEFAULTS.length} indicateurs ✓`);
+  showToast(`${t('toast_ref_recharge')} ${KPI_DEFAULTS.length} ${t('toast_indicateurs_suffix')} ✓`);
 }
 
 function getARList() {
@@ -2032,7 +2451,7 @@ function resetSaisie() {
   // indépendant du reste de la saisie en cours (bug signalé le 27/08).
   if (currentMag && currentMag.code) loadPreviousActions(currentMag.code);
   setToday();
-  showToast('Saisie réinitialisée');
+  showToast(t('toast_saisie_reinit'));
 }
 
 function startBilan() {
@@ -2097,10 +2516,10 @@ function updateWatermark() {
 // ── KPI ──
 function initKpiSelect() {
   const sel = document.getElementById('kpi-select');
-  sel.innerHTML = '<option value="">Choisir un indicateur...</option>';
+  sel.innerHTML = `<option value="">${t('saisie_choisir_indicateur')}</option>`;
   KPI_DEFAULTS.forEach(k => {
     const opt = document.createElement('option');
-    opt.value = k.name; opt.textContent = k.name + (k.unit ? ' (' + k.unit + ')' : '');
+    opt.value = k.name; opt.textContent = kpiLabel(k.name, k) + (k.unit ? ' (' + k.unit + ')' : '');
     sel.appendChild(opt);
   });
 }
@@ -2108,9 +2527,9 @@ function initKpiSelect() {
 function addKpiCustomInline() {
   const name = document.getElementById('kpi-custom-name').value.trim();
   const val = document.getElementById('kpi-custom-val').value.trim();
-  if (!name || !val) { showToast('Nom et valeur requis'); return; }
-  if (kpisAdded.length >= 6) { showToast('Maximum 6 indicateurs'); return; }
-  if (kpisAdded.find(k => k.name === name)) { showToast('Indicateur déjà ajouté'); return; }
+  if (!name || !val) { showToast(t('toast_nom_valeur_requis')); return; }
+  if (kpisAdded.length >= 6) { showToast(t('toast_max6_indicateurs')); return; }
+  if (kpisAdded.find(k => k.name === name)) { showToast(t('toast_indicateur_deja_ajoute')); return; }
   // Sauvegarder en local si pas déjà dans KPI_DEFAULTS
   if (!KPI_DEFAULTS.some(k => k.name === name)) {
     const newKpi = { name, unit: '', obj: null, dir: null };
@@ -2123,7 +2542,7 @@ function addKpiCustomInline() {
   document.getElementById('kpi-custom-name').value = '';
   document.getElementById('kpi-custom-val').value = '';
   renderKpiChips();
-  showToast('Indicateur "' + name + '" ajouté ✓');
+  showToast(`${t('toast_indicateur_prefix')} "${name}" ${t('toast_ajoute_suffix')}`);
   // Envoyer mail de notification à Olivier
   const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
   const user = params.zimbraUser || '';
@@ -2140,7 +2559,7 @@ function addKpiCustomInline() {
           zimbraUser: user,
           zimbraPass: pwd
         })
-      }).then(() => showToast('Notification envoyée à Olivier ✓')).catch(() => {});
+      }).then(() => showToast(t('toast_notif_envoyee'))).catch(() => {});
     }
   }
 }
@@ -2166,9 +2585,9 @@ function toggleSign(inputId) {
 function addKpi() {
   const name = document.getElementById('kpi-select').value;
   const val = document.getElementById('kpi-val').value.trim();
-  if (!name || !val) { showToast('Choisir un indicateur et saisir une valeur'); return; }
-  if (kpisAdded.find(k => k.name === name)) { showToast('Indicateur déjà ajouté'); return; }
-  if (kpisAdded.length >= 6) { showToast('Maximum 6 indicateurs (2 lignes de 3)'); return; }
+  if (!name || !val) { showToast(t('toast_choisir_indicateur_valeur')); return; }
+  if (kpisAdded.find(k => k.name === name)) { showToast(t('toast_indicateur_deja_ajoute')); return; }
+  if (kpisAdded.length >= 6) { showToast(t('toast_max6_indicateurs2')); return; }
   const def = KPI_DEFAULTS.find(k => k.name === name);
   kpisAdded.push({name, val, def});
   document.getElementById('kpi-val').value = '';
@@ -2194,7 +2613,7 @@ function renderKpiChips() {
     const unit = k.def?.unit || '';
     const chip = document.createElement('div');
     chip.className = `kpi-chip ${cls}`;
-    chip.innerHTML = `${k.name}: <strong>${k.val}${unit}</strong> <span class="kpi-chip-del" onclick="removeKpi(${i})">✕</span>`;
+    chip.innerHTML = `${kpiLabel(k.name, k.def)}: <strong>${k.val}${unit}</strong> <span class="kpi-chip-del" onclick="removeKpi(${i})">✕</span>`;
     c.appendChild(chip);
   });
 }
@@ -2212,12 +2631,12 @@ function updateRentaBadge() {
     badge.style.background = 'rgba(45,158,45,0.15)';
     badge.style.border = '1px solid rgba(45,158,45,0.3)';
     badge.style.color = 'var(--green)';
-    badge.textContent = `✓ ${val}% — Objectif atteint (${obj}%)`;
+    badge.textContent = `✓ ${val}% — ${t('saisie_objectif_atteint')} (${obj}%)`;
   } else {
     badge.style.background = 'rgba(204,23,25,0.15)';
     badge.style.border = '1px solid rgba(204,23,25,0.3)';
     badge.style.color = 'var(--red)';
-    badge.textContent = `⚠ ${val}% — Au-dessus de l'objectif (${obj}%)`;
+    badge.textContent = `⚠ ${val}% — ${t('saisie_au_dessus_objectif')} (${obj}%)`;
   }
 }
 
@@ -2225,7 +2644,7 @@ function updateRentaBadge() {
 function addEntretien() {
   const prenom = document.getElementById('ent-prenom').value.trim();
   const sujet = document.getElementById('ent-sujet').value.trim();
-  if (!prenom) { showToast('Le prénom du collaborateur est requis'); return; }
+  if (!prenom) { showToast(t('toast_prenom_requis')); return; }
   entretiens.push({prenom, sujet});
   document.getElementById('ent-prenom').value = '';
   document.getElementById('ent-sujet').value = '';
@@ -2255,8 +2674,8 @@ function addAction() {
   const comment = document.getElementById('act-comment').value.trim();
   const who = document.getElementById('act-who').value.trim();
   const date = document.getElementById('act-date').value;
-  if (!text) { showToast('Décris l\'action'); return; }
-  if (actions.filter(a => !a._fromPrevious).length >= 3) { showToast('Maximum 3 actions attendues'); return; }
+  if (!text) { showToast(t('toast_decris_action')); return; }
+  if (actions.filter(a => !a._fromPrevious).length >= 3) { showToast(t('toast_max3_actions')); return; }
   actions.push({text, comment, who, date});
   document.getElementById('act-text').value = '';
   document.getElementById('act-comment').value = '';
@@ -2324,7 +2743,7 @@ function penicheChange(key, delta) {
   if (next < 0) return;
   // Plafond : pas plus de 3 zones renseignées en simultané (bloc option A, temps réel)
   if (delta > 0 && zone.n === 0 && penicheZonesFilledCount() >= 3) {
-    showToast('⚠ Maximum 3 zones contrôlées par passage');
+    showToast(t('toast_max3_zones'));
     return;
   }
   zone.n = next;
@@ -2453,7 +2872,7 @@ function openCropModal(dataUrl, slotIndex) {
       setupCropDrag();
     });
   };
-  img.onerror = () => showToast('Erreur de chargement de la photo');
+  img.onerror = () => showToast(t('toast_erreur_photo'));
   img.src = dataUrl;
 }
 
@@ -2626,9 +3045,9 @@ function saveDraft(silent) {
   if (!draftKey) return;
   try {
     localStorage.setItem(draftKey, JSON.stringify(collectData()));
-    if (!silent) showToast('Brouillon sauvegardé ✓');
+    if (!silent) showToast(t('toast_brouillon_sauve'));
   } catch(e) {
-    if (!silent) showToast('Erreur sauvegarde brouillon');
+    if (!silent) showToast(t('toast_erreur_brouillon'));
   }
 }
 
@@ -2670,7 +3089,7 @@ function loadDraft() {
     if (d.remarque_libre) document.getElementById('f-remarque-libre').value = d.remarque_libre;
     if (d.entretiens) { entretiens = d.entretiens; renderEntretiens(); }
     if (d.humeur !== undefined) { document.getElementById('f-humeur').value = d.humeur; updateHumeur(); }
-    showToast('Brouillon rechargé');
+    showToast(t('toast_brouillon_recharge'));
   } catch(e) {}
 }
 
@@ -2678,19 +3097,19 @@ function loadDraft() {
 function finalizeBilan() {
   const data = collectData();
   const mag = data.magasin;
-  if (!mag) { showToast('Aucun magasin sélectionné'); return; }
+  if (!mag) { showToast(t('toast_aucun_magasin')); return; }
   // Champs obligatoires
   const renta = document.getElementById('f-renta').value.trim();
   const rh = document.getElementById('f-rh').value.trim();
   const caMensuel = document.getElementById('f-ca-mensuel').value.trim();
   const caAnnuel = document.getElementById('f-ca-annuel').value.trim();
-  if (!renta) { showToast('⚠ Renta salariale obligatoire'); toggleBloc('b2'); document.getElementById('f-renta').focus(); return; }
-  if (!rh) { showToast('⚠ Situation RH obligatoire'); toggleBloc('b2'); document.getElementById('f-rh').focus(); return; }
-  if (!caAnnuel) { showToast('⚠ Positionnement CA annuel N/N-1 obligatoire'); toggleBloc('b2'); document.getElementById('f-ca-annuel').focus(); return; }
-  if (!caAnnuel) { showToast('⚠ Positionnement CA annuel obligatoire'); toggleBloc('b2'); document.getElementById('f-ca-annuel').focus(); return; }
-  if (!humeurTouched) { showToast('⚠ Humeur du passage obligatoire'); document.getElementById('f-humeur').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  if (!renta) { showToast(t('toast_renta_obligatoire')); toggleBloc('b2'); document.getElementById('f-renta').focus(); return; }
+  if (!rh) { showToast(t('toast_rh_obligatoire')); toggleBloc('b2'); document.getElementById('f-rh').focus(); return; }
+  if (!caAnnuel) { showToast(t('toast_ca_annuel_nn1_obligatoire')); toggleBloc('b2'); document.getElementById('f-ca-annuel').focus(); return; }
+  if (!caAnnuel) { showToast(t('toast_ca_annuel_obligatoire')); toggleBloc('b2'); document.getElementById('f-ca-annuel').focus(); return; }
+  if (!humeurTouched) { showToast(t('toast_humeur_obligatoire')); document.getElementById('f-humeur').scrollIntoView({behavior:'smooth',block:'center'}); return; }
   if (data.actions.length < 3) {
-    showToast('⚠ 3 actions attendues obligatoires (actuellement ' + data.actions.length + ')');
+    showToast(t('toast_3actions_prefix') + data.actions.length + ')');
     const b8 = document.getElementById('b8');
     if (b8 && !b8.classList.contains('open')) toggleBloc('b8');
     document.getElementById('act-text')?.scrollIntoView({behavior:'smooth',block:'center'});
@@ -2698,7 +3117,7 @@ function finalizeBilan() {
   }
   const penMax = Math.max(0, ...PENICHES_ZONES.map(z => data.peniches[z.key]?.n || 0));
   if (penMax < 5) {
-    showToast('⚠ Tour de péniches obligatoire : au moins 5 dossiers contrôlés dans une zone');
+    showToast(t('toast_peniches_obligatoire'));
     const bpen = document.getElementById('bpen');
     if (bpen && !bpen.classList.contains('open')) toggleBloc('bpen');
     document.getElementById('peniches-list')?.scrollIntoView({behavior:'smooth',block:'center'});
@@ -2737,8 +3156,8 @@ function closeModal() {
 }
 
 async function previewPDF() {
-  if (!pendingBilanData) { showToast('Aucune donnée à prévisualiser'); return; }
-  showToast('1/2 — Génération du PDF...');
+  if (!pendingBilanData) { showToast(t('toast_aucune_donnee_preview')); return; }
+  showToast(t('toast_pdf_gen1'));
   try {
     const data = pendingBilanData;
     const hv = data.humeur !== undefined && data.humeur !== '' ? parseInt(data.humeur) : null;
@@ -2757,14 +3176,14 @@ async function previewPDF() {
       a.href = url;
       a.download = 'Bilan_' + (data.magasin?.libelle || 'apercu') + '_' + (data.date || '') + '.pdf';
       a.click();
-      showToast('PDF téléchargé (popups bloqués)');
+      showToast(t('toast_pdf_telecharge'));
     } else {
-      showToast('PDF ouvert dans un nouvel onglet');
+      showToast(t('toast_pdf_nouvel_onglet'));
       // Libérer l'URL après 60s
       setTimeout(() => URL.revokeObjectURL(url), 60000);
     }
   } catch(e) {
-    showToast('⚠ Erreur lors de la prévisualisation : ' + e.message);
+    showToast(t('toast_erreur_preview') + e.message);
   }
 }
 
@@ -3097,11 +3516,11 @@ function evalPdfFilenameFor(libelle) {
 
 async function sendBilan() {
   const pwd = document.getElementById('modal-pwd').value;
-  if (!pwd) { showToast('Mot de passe requis'); return; }
+  if (!pwd) { showToast(t('toast_mdp_requis')); return; }
   const data = collectData();
   const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
   const user = params.zimbraUser || '';
-  if (!user) { showToast('⚠ Identifiant Zimbra non configuré dans Paramètres'); return; }
+  if (!user) { showToast(t('toast_zimbra_non_config')); return; }
   // IMPORTANT : capturer la PJ supplémentaire avant closeModal(), car celui-ci
   // appelle clearExtraPdf() qui réinitialise selectedExtraPdfFile à null.
   const extraPdfFileForSend = selectedExtraPdfFile;
@@ -3117,7 +3536,7 @@ async function sendBilan() {
 
   try {
     // 1. Auth SOAP
-    showToast('1/4 — Authentification...');
+    showToast(t('toast_auth1'));
     const authResp = await fetch(relay + '/soap', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -3142,23 +3561,23 @@ async function sendBilan() {
     // d'annuler s'il n'y a rien à joindre pour ce magasin.
     let evalPdfResult = null;
     if (joindreEvalForSend) {
-      showToast('Vérification Évaluation Équipe...');
+      showToast(t('toast_verif_eval'));
       evalPdfResult = await fetchEvalEquipePdfForSend(relay, data.magasin, data.ar, user, pwd);
       if (evalPdfResult.noData) {
         const continuer = confirm('Aucune donnée Évaluation Équipe trouvée pour ce magasin. Envoyer le bilan de passage sans cette pièce jointe ?');
-        if (!continuer) { showToast('Envoi annulé'); return; }
+        if (!continuer) { showToast(t('toast_envoi_annule')); return; }
         evalPdfResult = null;
         document.getElementById('modal-mailbody').value = evalMentionRemove(document.getElementById('modal-mailbody').value);
       } else if (evalPdfResult.error) {
         const continuer = confirm('Évaluation Équipe : ' + evalPdfResult.error + '\n\nEnvoyer quand même le bilan de passage sans cette pièce jointe ?');
-        if (!continuer) { showToast('Envoi annulé'); return; }
+        if (!continuer) { showToast(t('toast_envoi_annule')); return; }
         evalPdfResult = null;
         document.getElementById('modal-mailbody').value = evalMentionRemove(document.getElementById('modal-mailbody').value);
       }
     }
 
     // 2. Pré-générer l'image du slider humeur (canvas → PNG) avant generatePDF
-    showToast('2/4 — Génération du PDF...');
+    showToast(t('toast_pdf_gen2'));
     const humeurV_raw = data.humeur !== undefined && data.humeur !== '' ? parseInt(data.humeur) : null;
     const humeurSliderImg = (humeurV_raw !== null && !isNaN(humeurV_raw)) ? await generateHumeurSliderImage(humeurV_raw) : null;
     // Nettoyer le flag interne avant le rendu PDF
@@ -3166,7 +3585,7 @@ async function sendBilan() {
     const pdfBytes = await generatePDF(dataForPDF, humeurSliderImg);
 
     // 3. Upload PDF
-    showToast('3/4 — Upload pièce jointe...');
+    showToast(t('toast_upload_pj'));
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const formData = new FormData();
     const filename = 'Bilan_' + (data.magasin.libelle || 'magasin') + '_' + (data.date || '') + '.pdf';
@@ -3189,7 +3608,7 @@ async function sendBilan() {
     let extraAttachId = null;
     console.log('sendBilan - extraPdfFileForSend:', extraPdfFileForSend?.name);
     if (extraPdfFileForSend) {
-      showToast('3b/4 — Upload pièce jointe supplémentaire...');
+      showToast(t('toast_upload_pj2'));
       const extraFile = extraPdfFileForSend;
       const extraForm = new FormData();
       extraForm.append('file', extraFile, extraFile.name);
@@ -3207,7 +3626,7 @@ async function sendBilan() {
     // Upload PDF Évaluation Équipe, si demandé et des données existent pour ce magasin
     let evalAttachId = null;
     if (evalPdfResult && evalPdfResult.blob) {
-      showToast('3c/4 — Upload Évaluation Équipe...');
+      showToast(t('toast_upload_eval'));
       const evalForm = new FormData();
       evalForm.append('file', evalPdfResult.blob, evalPdfResult.filename);
       const evalUpResp = await fetch(relay + '/upload?fmt=raw', {
@@ -3227,7 +3646,7 @@ async function sendBilan() {
     const arEmail = params.myEmail || (params.zimbraUser ? params.zimbraUser + '@optical-center.com' : '');
     const emails = [...new Set([data.magasin.email, arEmail, COPY_ALWAYS].filter(Boolean))];
     if (!emails.length) throw new Error('Aucun email destinataire');
-    showToast('4/4 — Envoi à ' + emails.length + ' destinataire(s)...');
+    showToast(`4/4 — ${t('toast_envoi_a')} ` + emails.length + ` ${t('toast_destinataires_suffix')}`);
 
     const subject = 'Bilan de passage n°' + (data.passage || '?') + ' — ' + data.magasin.libelle + ' — ' + formatDate(data.date);
     const mailBodyText = document.getElementById('modal-mailbody').value || buildEmailBody(data);
@@ -3410,34 +3829,342 @@ Réécris ce mail dans un style narratif, chaleureux et professionnel. Règles i
   return text.trim();
 }
 
+
+// ── MAIL_STRINGS : variantes de phrases du corps de mail par langue ──
+// Chaque tableau a 5 entrées indexées par humeur (0=Difficile .. 4=Top), comme
+// pick(). Repli automatique sur FR si la langue courante n'est pas couverte
+// (voir mailT()). Certaines entrées sont des fonctions pour permettre un ordre
+// des mots différent selon la langue.
+const MAIL_STRINGS = {
+  FR: {
+    pluralPoint: (n) => n > 1 ? 's' : '',
+    bonjour: 'Bonjour,', cordialement: 'Bien cordialement,', votreAnimateur: 'Votre animateur réseau',
+    openers: [
+      (mag, date) => `Je reviens de ma visite au magasin ${mag} du ${date}. Ce passage a été dense et nous avons eu des sujets sérieux à aborder.`,
+      (mag, date) => `Veuillez trouver ci-joint le bilan de ma visite au magasin ${mag} du ${date}.`,
+      (mag, date) => `Je reviens de ma visite au magasin ${mag} du ${date}. Un passage constructif avec des échanges de qualité.`,
+      (mag, date) => `Je reviens de ma visite au magasin ${mag} du ${date}. Ce passage était vraiment positif et encourageant !`,
+      (mag, date) => `Je reviens de ma visite au magasin ${mag} du ${date}. Excellente journée — une belle énergie dans ce magasin !`,
+    ],
+    presentsSentence: (presents) => `Nous nous sommes retrouvés en présence de ${presents}.`,
+    passageSentence: (n) => `C'était le passage n°${n} de l'année.`,
+    rentaAtteint: [
+      (r,o,e,p) => `La rentabilité salariale s'établit à ${r}% pour un objectif de ${o}% — objectif atteint, ${e} point${p} en dessous.`,
+      (r,o,e,p) => `La rentabilité salariale est à ${r}% (objectif ${o}%) — dans les clous.`,
+      (r,o,e,p) => `La rentabilité salariale ressort à ${r}% pour un objectif de ${o}% — objectif atteint.`,
+      (r,o,e,p) => `Bonne maîtrise de la rentabilité salariale à ${r}% — ${e} point${p} sous l'objectif de ${o}%.`,
+      (r,o,e,p) => `Excellente rentabilité salariale à ${r}%, ${e} point${p} sous l'objectif de ${o}% — bravo !`,
+    ],
+    rentaNonAtteint: [
+      (r,o,e,p) => `La rentabilité salariale est à ${r}% pour un objectif de ${o}% — ${e} point${p} au-dessus de l'objectif, un axe de travail prioritaire.`,
+      (r,o,e,p) => `La rentabilité salariale s'établit à ${r}% (objectif ${o}%) — ${e} point${p} à résorber.`,
+      (r,o,e,p) => `La rentabilité salariale est à ${r}% pour un objectif de ${o}% — ${e} point${p} au-dessus, à optimiser.`,
+      (r,o,e,p) => `La rentabilité salariale est à ${r}% pour un objectif de ${o}% — ${e} point${p} au-dessus, un point de vigilance.`,
+      (r,o,e,p) => `La rentabilité salariale ressort à ${r}% (objectif ${o}%) — ${e} point${p} au-dessus, à surveiller malgré les bons résultats.`,
+    ],
+    caSensPositif: ['légèrement en avance', 'en avance', 'bien positionné', 'bien en avance', 'excellemment positionné'],
+    caSensNegatif: ['en retard', 'en léger retard', 'légèrement en retrait', 'en retrait', 'en dessous'],
+    caMensuelPart: (pct, sens, ecart, p) => `${pct}% sur le mois (${sens} de ${ecart} point${p})`,
+    caAnnuelPart: (pct, ecart, p, sensAn) => `${pct}% sur l'année (${ecart} point${p} ${sensAn})`,
+    caAnnuelSensPositif: 'en avance', caAnnuelSensNegatif: 'en retrait',
+    caFullSentence: (parts, detail) => `Le positionnement CA ressort à ${parts} et ${detail}`,
+    caFullSentenceJoin: ' et ', caFullSentencePrefix: 'Le positionnement CA ressort à ', caFullSentenceSuffix: '.',
+    formationSentence: (formation) => `Formation dispensée sur place : ${formation}.`,
+    mgrIntro: [
+      'Sur le management, les rituels suivants sont en place :', 'Côté management,', 'Sur le plan managérial,',
+      'Le management est bien structuré :', 'Le management est au top :',
+    ],
+    mgrEnPlaceSuffix: (intro, rituelsStr) => `${intro} ${rituelsStr} sont bien en place.`,
+    mgrListSuffix: (intro, rituelsStr) => `${intro} ${rituelsStr}.`,
+    entretiensIntroPlural: [
+      "Des entretiens individuels ont été menés avec :", "J'ai également eu des échanges individuels avec :",
+      "Des entretiens ont été conduits avec :", "Nous avons également eu des temps individuels avec :", "De beaux échanges individuels avec :",
+    ],
+    entretiensIntroSingular: [
+      "Un entretien individuel a été mené avec :", "J'ai eu un échange individuel avec :",
+      "Un entretien a été conduit avec :", "Un temps individuel a été pris avec :", "Un bel échange individuel avec :",
+    ],
+    sujetConfidentiel: '(sujet confidentiel)',
+    kpiIntro: [
+      (k) => `Sur les indicateurs : ${k}.`, (k) => `Les indicateurs ressortent comme suit : ${k}.`,
+      (k) => `Côté indicateurs, on retient ${k}.`, (k) => `Les indicateurs sont bons : ${k}.`, (k) => `Excellents indicateurs : ${k}.`,
+    ],
+    kpiA: 'à',
+    ptsFortsIntro: ['Quelques points positifs tout de même :', 'À noter côté points forts :', 'Côté points forts,', 'Parmi les points forts :', 'De vrais points forts à souligner :'],
+    ptsDiffIntro: ['Des axes de travail importants :', 'Des points de vigilance :', 'En revanche,', 'À améliorer :', 'Quelques points à travailler malgré les excellents résultats :'],
+    actionsIntro: [
+      'Points à traiter en priorité avant le prochain passage :',
+      "Pour avancer d'ici le prochain passage, voici les points à traiter :",
+      "Voici les actions à mener d'ici mon retour :",
+      'Pour continuer sur cette lancée, voici les actions attendues :',
+      'Pour maintenir cette excellente dynamique, voici les actions à mener :',
+    ],
+    actionsReportedLabel: '↩ Actions reportées du passage précédent :',
+    actionDueSuffix: (date) => ` — pour le ${date}`,
+    closing: [
+      'Je reste disponible pour échanger sur ce passage.', "N'hésitez pas à me contacter si vous avez des questions.",
+      'Je suis disponible si vous souhaitez en discuter.', 'Je suis à votre disposition pour tout échange complémentaire.',
+      'Encore bravo pour cette belle journée — continuez sur cette lancée !',
+    ],
+    closingProchainPassage: [
+      (date) => ` Rendez-vous le ${date}.`, (date) => ` Je reviendrai le ${date}.`,
+      (date) => ` On se retrouve le ${date} pour faire le point.`, (date) => ` À très vite — je reviendrai le ${date}.`,
+      (date) => ` Vivement le ${date} pour voir vos progrès !`,
+    ],
+  },
+  EN: {
+    pluralPoint: (n) => n > 1 ? 's' : '',
+    bonjour: 'Hello,', cordialement: 'Best regards,', votreAnimateur: 'Your network animator',
+    openers: [
+      (mag, date) => `I'm back from my visit to the ${mag} store on ${date}. This was a dense visit and we had some serious topics to address.`,
+      (mag, date) => `Please find attached the report from my visit to the ${mag} store on ${date}.`,
+      (mag, date) => `I'm back from my visit to the ${mag} store on ${date}. A constructive visit with quality discussions.`,
+      (mag, date) => `I'm back from my visit to the ${mag} store on ${date}. This visit was really positive and encouraging!`,
+      (mag, date) => `I'm back from my visit to the ${mag} store on ${date}. Excellent day — a great energy in this store!`,
+    ],
+    presentsSentence: (presents) => `We met with ${presents}.`,
+    passageSentence: (n) => `This was visit no. ${n} of the year.`,
+    rentaAtteint: [
+      (r,o,e,p) => `The payroll ratio stands at ${r}% against a target of ${o}% — target met, ${e} point${p} below.`,
+      (r,o,e,p) => `The payroll ratio is ${r}% (target ${o}%) — right on track.`,
+      (r,o,e,p) => `The payroll ratio comes out at ${r}% against a target of ${o}% — target met.`,
+      (r,o,e,p) => `Good control of the payroll ratio at ${r}% — ${e} point${p} below the ${o}% target.`,
+      (r,o,e,p) => `Excellent payroll ratio at ${r}%, ${e} point${p} below the ${o}% target — well done!`,
+    ],
+    rentaNonAtteint: [
+      (r,o,e,p) => `The payroll ratio is ${r}% against a target of ${o}% — ${e} point${p} above target, a priority area to work on.`,
+      (r,o,e,p) => `The payroll ratio stands at ${r}% (target ${o}%) — ${e} point${p} to close.`,
+      (r,o,e,p) => `The payroll ratio is ${r}% against a target of ${o}% — ${e} point${p} above, to optimize.`,
+      (r,o,e,p) => `The payroll ratio is ${r}% against a target of ${o}% — ${e} point${p} above, a point to watch.`,
+      (r,o,e,p) => `The payroll ratio comes out at ${r}% (target ${o}%) — ${e} point${p} above, to keep an eye on despite the good results.`,
+    ],
+    caSensPositif: ['slightly ahead', 'ahead', 'well positioned', 'well ahead', 'excellently positioned'],
+    caSensNegatif: ['behind', 'slightly behind', 'slightly below', 'below', 'under'],
+    caMensuelPart: (pct, sens, ecart, p) => `${pct}% for the month (${sens} by ${ecart} point${p})`,
+    caAnnuelPart: (pct, ecart, p, sensAn) => `${pct}% for the year (${ecart} point${p} ${sensAn})`,
+    caAnnuelSensPositif: 'ahead', caAnnuelSensNegatif: 'behind',
+    caFullSentenceJoin: ' and ', caFullSentencePrefix: 'Sales achievement comes out at ', caFullSentenceSuffix: '.',
+    formationSentence: (formation) => `On-site training delivered: ${formation}.`,
+    mgrIntro: [
+      'On management, the following rituals are in place:', 'On the management side,', 'From a management standpoint,',
+      'Management is well structured:', 'Management is excellent:',
+    ],
+    mgrEnPlaceSuffix: (intro, rituelsStr) => `${intro} ${rituelsStr} are well established.`,
+    mgrListSuffix: (intro, rituelsStr) => `${intro} ${rituelsStr}.`,
+    entretiensIntroPlural: [
+      "One-on-one meetings were held with:", "I also had individual conversations with:",
+      "Meetings were conducted with:", "We also had individual time with:", "Great one-on-one conversations with:",
+    ],
+    entretiensIntroSingular: [
+      "A one-on-one meeting was held with:", "I had an individual conversation with:",
+      "A meeting was conducted with:", "Individual time was taken with:", "A great one-on-one conversation with:",
+    ],
+    sujetConfidentiel: '(confidential topic)',
+    kpiIntro: [
+      (k) => `On the indicators: ${k}.`, (k) => `The indicators come out as follows: ${k}.`,
+      (k) => `On the indicator side, we note ${k}.`, (k) => `The indicators are good: ${k}.`, (k) => `Excellent indicators: ${k}.`,
+    ],
+    kpiA: 'at',
+    ptsFortsIntro: ['A few positive points nonetheless:', 'Worth noting on the strengths side:', 'On the strengths side,', 'Among the strengths:', 'Real strengths worth highlighting:'],
+    ptsDiffIntro: ['Important areas to work on:', 'Points to watch:', 'On the other hand,', 'To improve:', 'A few points to work on despite the excellent results:'],
+    actionsIntro: [
+      'Priority points to address before the next visit:',
+      'To move forward before the next visit, here are the points to address:',
+      'Here are the actions to carry out before my return:',
+      'To keep up this momentum, here are the expected actions:',
+      'To maintain this excellent momentum, here are the actions to carry out:',
+    ],
+    actionsReportedLabel: '↩ Actions carried over from the previous visit:',
+    actionDueSuffix: (date) => ` — due ${date}`,
+    closing: [
+      'I remain available to discuss this visit.', "Please don't hesitate to contact me if you have any questions.",
+      "I'm available if you'd like to discuss it further.", "I'm at your disposal for any further discussion.",
+      'Congratulations again for this great day — keep up the momentum!',
+    ],
+    closingProchainPassage: [
+      (date) => ` See you on ${date}.`, (date) => ` I'll be back on ${date}.`,
+      (date) => ` We'll catch up on ${date}.`, (date) => ` See you soon — I'll be back on ${date}.`,
+      (date) => ` Looking forward to ${date} to see your progress!`,
+    ],
+  },
+  ES: {
+    pluralPoint: (n) => n > 1 ? 's' : '',
+    bonjour: 'Hola,', cordialement: 'Saludos cordiales,', votreAnimateur: 'Tu animador de red',
+    openers: [
+      (mag, date) => `Vuelvo de mi visita a la tienda ${mag} del ${date}. Ha sido una visita intensa y hemos tenido temas importantes que abordar.`,
+      (mag, date) => `Adjunto el informe de mi visita a la tienda ${mag} del ${date}.`,
+      (mag, date) => `Vuelvo de mi visita a la tienda ${mag} del ${date}. Una visita constructiva con intercambios de calidad.`,
+      (mag, date) => `Vuelvo de mi visita a la tienda ${mag} del ${date}. ¡Ha sido una visita realmente positiva y alentadora!`,
+      (mag, date) => `Vuelvo de mi visita a la tienda ${mag} del ${date}. Excelente jornada — ¡muy buena energía en esta tienda!`,
+    ],
+    presentsSentence: (presents) => `Nos reunimos con ${presents}.`,
+    passageSentence: (n) => `Fue la visita n.º ${n} del año.`,
+    rentaAtteint: [
+      (r,o,e,p) => `La renta salarial se sitúa en el ${r}% para un objetivo del ${o}% — objetivo alcanzado, ${e} punto${p} por debajo.`,
+      (r,o,e,p) => `La renta salarial está en el ${r}% (objetivo ${o}%) — dentro de lo esperado.`,
+      (r,o,e,p) => `La renta salarial resulta en el ${r}% para un objetivo del ${o}% — objetivo alcanzado.`,
+      (r,o,e,p) => `Buen control de la renta salarial en el ${r}% — ${e} punto${p} por debajo del objetivo del ${o}%.`,
+      (r,o,e,p) => `Excelente renta salarial en el ${r}%, ${e} punto${p} por debajo del objetivo del ${o}% — ¡enhorabuena!`,
+    ],
+    rentaNonAtteint: [
+      (r,o,e,p) => `La renta salarial está en el ${r}% para un objetivo del ${o}% — ${e} punto${p} por encima del objetivo, un eje de trabajo prioritario.`,
+      (r,o,e,p) => `La renta salarial se sitúa en el ${r}% (objetivo ${o}%) — ${e} punto${p} por reducir.`,
+      (r,o,e,p) => `La renta salarial está en el ${r}% para un objetivo del ${o}% — ${e} punto${p} por encima, a optimizar.`,
+      (r,o,e,p) => `La renta salarial está en el ${r}% para un objetivo del ${o}% — ${e} punto${p} por encima, un punto de atención.`,
+      (r,o,e,p) => `La renta salarial resulta en el ${r}% (objetivo ${o}%) — ${e} punto${p} por encima, a vigilar pese a los buenos resultados.`,
+    ],
+    caSensPositif: ['ligeramente por delante', 'por delante', 'bien posicionado', 'muy por delante', 'excelentemente posicionado'],
+    caSensNegatif: ['por detrás', 'ligeramente por detrás', 'ligeramente por debajo', 'por debajo', 'por debajo'],
+    caMensuelPart: (pct, sens, ecart, p) => `${pct}% en el mes (${sens} por ${ecart} punto${p})`,
+    caAnnuelPart: (pct, ecart, p, sensAn) => `${pct}% en el año (${ecart} punto${p} ${sensAn})`,
+    caAnnuelSensPositif: 'por delante', caAnnuelSensNegatif: 'por detrás',
+    caFullSentenceJoin: ' y ', caFullSentencePrefix: 'El posicionamiento de ventas resulta en ', caFullSentenceSuffix: '.',
+    formationSentence: (formation) => `Formación impartida in situ: ${formation}.`,
+    mgrIntro: [
+      'En cuanto a la gestión, los siguientes rituales están implantados:', 'En el ámbito de la gestión,', 'A nivel de gestión,',
+      'La gestión está bien estructurada:', 'La gestión es excelente:',
+    ],
+    mgrEnPlaceSuffix: (intro, rituelsStr) => `${intro} ${rituelsStr} están bien implantados.`,
+    mgrListSuffix: (intro, rituelsStr) => `${intro} ${rituelsStr}.`,
+    entretiensIntroPlural: [
+      "Se realizaron entrevistas individuales con:", "También tuve conversaciones individuales con:",
+      "Se llevaron a cabo entrevistas con:", "También tuvimos momentos individuales con:", "Buenas conversaciones individuales con:",
+    ],
+    entretiensIntroSingular: [
+      "Se realizó una entrevista individual con:", "Tuve una conversación individual con:",
+      "Se llevó a cabo una entrevista con:", "Se dedicó un momento individual a:", "Una buena conversación individual con:",
+    ],
+    sujetConfidentiel: '(tema confidencial)',
+    kpiIntro: [
+      (k) => `Sobre los indicadores: ${k}.`, (k) => `Los indicadores resultan como sigue: ${k}.`,
+      (k) => `En cuanto a los indicadores, destaca ${k}.`, (k) => `Los indicadores son buenos: ${k}.`, (k) => `Excelentes indicadores: ${k}.`,
+    ],
+    kpiA: 'en',
+    ptsFortsIntro: ['Aún así, algunos puntos positivos:', 'A destacar en cuanto a puntos fuertes:', 'En cuanto a puntos fuertes,', 'Entre los puntos fuertes:', 'Auténticos puntos fuertes a destacar:'],
+    ptsDiffIntro: ['Ejes de trabajo importantes:', 'Puntos de atención:', 'En cambio,', 'A mejorar:', 'Algunos puntos a trabajar pese a los excelentes resultados:'],
+    actionsIntro: [
+      'Puntos a tratar con prioridad antes de la próxima visita:',
+      'Para avanzar antes de la próxima visita, estos son los puntos a tratar:',
+      'Estas son las acciones a realizar antes de mi regreso:',
+      'Para seguir con este impulso, estas son las acciones esperadas:',
+      'Para mantener esta excelente dinámica, estas son las acciones a realizar:',
+    ],
+    actionsReportedLabel: '↩ Acciones trasladadas de la visita anterior:',
+    actionDueSuffix: (date) => ` — para el ${date}`,
+    closing: [
+      'Quedo a tu disposición para comentar esta visita.', 'No dudes en contactarme si tienes alguna pregunta.',
+      'Estoy disponible si quieres comentarlo.', 'Estoy a tu disposición para cualquier intercambio adicional.',
+      '¡Enhorabuena de nuevo por esta gran jornada — sigue así!',
+    ],
+    closingProchainPassage: [
+      (date) => ` Nos vemos el ${date}.`, (date) => ` Volveré el ${date}.`,
+      (date) => ` Nos vemos el ${date} para hacer balance.`, (date) => ` Hasta pronto — volveré el ${date}.`,
+      (date) => ` ¡Con ganas de ${date} para ver vuestros progresos!`,
+    ],
+  },
+  NL: {
+    pluralPoint: (n) => n > 1 ? 'en' : '',
+    bonjour: 'Hallo,', cordialement: 'Met vriendelijke groet,', votreAnimateur: 'Jouw netwerkanimator',
+    openers: [
+      (mag, date) => `Ik kom net terug van mijn bezoek aan de winkel ${mag} van ${date}. Dit was een intensief bezoek met enkele ernstige onderwerpen om te bespreken.`,
+      (mag, date) => `Hierbij het rapport van mijn bezoek aan de winkel ${mag} van ${date}.`,
+      (mag, date) => `Ik kom net terug van mijn bezoek aan de winkel ${mag} van ${date}. Een constructief bezoek met kwalitatieve gesprekken.`,
+      (mag, date) => `Ik kom net terug van mijn bezoek aan de winkel ${mag} van ${date}. Dit bezoek was echt positief en bemoedigend!`,
+      (mag, date) => `Ik kom net terug van mijn bezoek aan de winkel ${mag} van ${date}. Uitstekende dag — een fijne energie in deze winkel!`,
+    ],
+    presentsSentence: (presents) => `We kwamen samen met ${presents}.`,
+    passageSentence: (n) => `Dit was bezoek nr. ${n} van het jaar.`,
+    rentaAtteint: [
+      (r,o,e,p) => `De loonratio staat op ${r}% voor een doel van ${o}% — doel behaald, ${e} punt${p} eronder.`,
+      (r,o,e,p) => `De loonratio staat op ${r}% (doel ${o}%) — helemaal op koers.`,
+      (r,o,e,p) => `De loonratio komt uit op ${r}% voor een doel van ${o}% — doel behaald.`,
+      (r,o,e,p) => `Goede beheersing van de loonratio op ${r}% — ${e} punt${p} onder het doel van ${o}%.`,
+      (r,o,e,p) => `Uitstekende loonratio van ${r}%, ${e} punt${p} onder het doel van ${o}% — knap gedaan!`,
+    ],
+    rentaNonAtteint: [
+      (r,o,e,p) => `De loonratio staat op ${r}% voor een doel van ${o}% — ${e} punt${p} boven het doel, een prioritair aandachtspunt.`,
+      (r,o,e,p) => `De loonratio staat op ${r}% (doel ${o}%) — ${e} punt${p} weg te werken.`,
+      (r,o,e,p) => `De loonratio staat op ${r}% voor een doel van ${o}% — ${e} punt${p} erboven, te optimaliseren.`,
+      (r,o,e,p) => `De loonratio staat op ${r}% voor een doel van ${o}% — ${e} punt${p} erboven, een aandachtspunt.`,
+      (r,o,e,p) => `De loonratio komt uit op ${r}% (doel ${o}%) — ${e} punt${p} erboven, in de gaten te houden ondanks de goede resultaten.`,
+    ],
+    caSensPositif: ['licht voor', 'voor', 'goed gepositioneerd', 'ruim voor', 'uitstekend gepositioneerd'],
+    caSensNegatif: ['achter', 'licht achter', 'licht onder', 'onder', 'onder'],
+    caMensuelPart: (pct, sens, ecart, p) => `${pct}% voor de maand (${sens} met ${ecart} punt${p})`,
+    caAnnuelPart: (pct, ecart, p, sensAn) => `${pct}% voor het jaar (${ecart} punt${p} ${sensAn})`,
+    caAnnuelSensPositif: 'voor', caAnnuelSensNegatif: 'achter',
+    caFullSentenceJoin: ' en ', caFullSentencePrefix: 'De omzetrealisatie komt uit op ', caFullSentenceSuffix: '.',
+    formationSentence: (formation) => `Training gegeven op locatie: ${formation}.`,
+    mgrIntro: [
+      'Op managementvlak zijn de volgende rituelen ingevoerd:', 'Wat het management betreft,', 'Op managementgebied,',
+      'Het management is goed gestructureerd:', 'Het management is uitstekend:',
+    ],
+    mgrEnPlaceSuffix: (intro, rituelsStr) => `${intro} ${rituelsStr} zijn goed ingevoerd.`,
+    mgrListSuffix: (intro, rituelsStr) => `${intro} ${rituelsStr}.`,
+    entretiensIntroPlural: [
+      "Er werden individuele gesprekken gevoerd met:", "Ik had ook individuele gesprekken met:",
+      "Er werden gesprekken gevoerd met:", "We namen ook individueel de tijd voor:", "Fijne individuele gesprekken met:",
+    ],
+    entretiensIntroSingular: [
+      "Er werd een individueel gesprek gevoerd met:", "Ik had een individueel gesprek met:",
+      "Er werd een gesprek gevoerd met:", "Er werd individueel de tijd genomen voor:", "Een fijn individueel gesprek met:",
+    ],
+    sujetConfidentiel: '(vertrouwelijk onderwerp)',
+    kpiIntro: [
+      (k) => `Wat de indicatoren betreft: ${k}.`, (k) => `De indicatoren komen als volgt uit: ${k}.`,
+      (k) => `Op het vlak van indicatoren valt op: ${k}.`, (k) => `De indicatoren zijn goed: ${k}.`, (k) => `Uitstekende indicatoren: ${k}.`,
+    ],
+    kpiA: 'op',
+    ptsFortsIntro: ['Toch enkele positieve punten:', 'Vermeldenswaardig aan sterke punten:', 'Wat de sterke punten betreft,', 'Onder de sterke punten:', 'Echte sterke punten om te benadrukken:'],
+    ptsDiffIntro: ['Belangrijke werkpunten:', 'Aandachtspunten:', 'Daarentegen,', 'Te verbeteren:', 'Enkele werkpunten ondanks de uitstekende resultaten:'],
+    actionsIntro: [
+      'Prioritaire punten om te behandelen vóór het volgende bezoek:',
+      'Om vooruitgang te boeken vóór het volgende bezoek, hier de te behandelen punten:',
+      'Hier zijn de acties te ondernemen vóór mijn volgende bezoek:',
+      'Om dit momentum vast te houden, hier de verwachte acties:',
+      'Om deze uitstekende dynamiek te behouden, hier de te ondernemen acties:',
+    ],
+    actionsReportedLabel: '↩ Acties overgenomen van het vorige bezoek:',
+    actionDueSuffix: (date) => ` — tegen ${date}`,
+    closing: [
+      'Ik blijf beschikbaar om dit bezoek te bespreken.', 'Aarzel niet om contact met me op te nemen bij vragen.',
+      'Ik ben beschikbaar als je erover wilt praten.', 'Ik sta tot je beschikking voor verdere uitwisseling.',
+      'Nogmaals proficiat voor deze mooie dag — ga zo door!',
+    ],
+    closingProchainPassage: [
+      (date) => ` Tot ${date}.`, (date) => ` Ik kom terug op ${date}.`,
+      (date) => ` We spreken elkaar op ${date} voor een stand van zaken.`, (date) => ` Tot snel — ik kom terug op ${date}.`,
+      (date) => ` Kijk uit naar ${date} om jullie vooruitgang te zien!`,
+    ],
+  },
+};
+function mailStrings() { return MAIL_STRINGS[currentLang] || MAIL_STRINGS.FR; }
+// Traduit un libellé de rituel stocké (toujours en FR dans les données, voir
+// getAllRituels/rituelsChecked) pour l'affichage dans le mail — n'affecte pas
+// le stockage/la relecture des bilans, qui continue de matcher sur le label FR.
+function rituelLabelFromStored(frLabel) {
+  const def = RITUELS_DEFAULTS.find(r => r.label === frLabel);
+  return def ? t('rituel_' + def.id) : frLabel;
+}
+
 function buildEmailBody(d) {
+  const M = mailStrings();
   const mag = d.magasin;
   const rituels = d.rituels || [];
   const paragraphs = [];
   const humeur = parseInt(d.humeur ?? 2); // 0=Difficile 1=Mitigé 2=Correct 3=Bien 4=Top
 
-  // ── Helpers tonalité selon humeur ──
-  function ton(difficile, mitige, correct, bien, top) {
-    return [difficile, mitige, correct, bien, top][Math.min(Math.max(humeur, 0), 4)];
-  }
   function pick(arr) { return arr[Math.min(Math.max(humeur, 0), arr.length-1)]; }
 
   // ── Ouverture ──
-  const openers = [
-    `Je reviens de ma visite au magasin ${mag.libelle} du ${formatDate(d.date)}. Ce passage a été dense et nous avons eu des sujets sérieux à aborder.`,
-    `Veuillez trouver ci-joint le bilan de ma visite au magasin ${mag.libelle} du ${formatDate(d.date)}.`,
-    `Je reviens de ma visite au magasin ${mag.libelle} du ${formatDate(d.date)}. Un passage constructif avec des échanges de qualité.`,
-    `Je reviens de ma visite au magasin ${mag.libelle} du ${formatDate(d.date)}. Ce passage était vraiment positif et encourageant !`,
-    `Je reviens de ma visite au magasin ${mag.libelle} du ${formatDate(d.date)}. Excellente journée — une belle énergie dans ce magasin !`,
-  ];
-  let opener = pick(openers);
+  let opener = pick(M.openers)(mag.libelle, formatDate(d.date));
   if (d.mot_intro) opener += ' ' + d.mot_intro;
   paragraphs.push(opener);
 
   // ── Contexte visite ──
   let ctx = '';
-  if (d.presents) ctx += `Nous nous sommes retrouvés en présence de ${d.presents}.`;
-  if (d.passage) ctx += (ctx ? ' ' : '') + `C'était le passage n°${d.passage} de l'année.`;
+  if (d.presents) ctx += M.presentsSentence(d.presents);
+  if (d.passage) ctx += (ctx ? ' ' : '') + M.passageSentence(d.passage);
   if (ctx) paragraphs.push(ctx);
 
   // ── Renta + positionnement CA ──
@@ -3446,84 +4173,52 @@ function buildEmailBody(d) {
     const renta = parseFloat(d.renta);
     const obj = parseFloat(d.renta_obj || 28);
     const ecart = Math.abs(renta - obj).toFixed(1);
-    const atteint = renta <= obj; // ✅ CORRIGÉ : renta salariale, plus bas = mieux
-    if (atteint) {
-      rhSentences.push(pick([
-        `La rentabilité salariale s'établit à ${d.renta}% pour un objectif de ${obj}% — objectif atteint, ${ecart} point${ecart>1?'s':''} en dessous.`,
-        `La rentabilité salariale est à ${d.renta}% (objectif ${obj}%) — dans les clous.`,
-        `La rentabilité salariale ressort à ${d.renta}% pour un objectif de ${obj}% — objectif atteint.`,
-        `Bonne maîtrise de la rentabilité salariale à ${d.renta}% — ${ecart} point${ecart>1?'s':''} sous l'objectif de ${obj}%.`,
-        `Excellente rentabilité salariale à ${d.renta}%, ${ecart} point${ecart>1?'s':''} sous l'objectif de ${obj}% — bravo !`,
-      ]));
-    } else {
-      rhSentences.push(pick([
-        `La rentabilité salariale est à ${d.renta}% pour un objectif de ${obj}% — ${ecart} point${ecart>1?'s':''} au-dessus de l'objectif, un axe de travail prioritaire.`,
-        `La rentabilité salariale s'établit à ${d.renta}% (objectif ${obj}%) — ${ecart} point${ecart>1?'s':''} à résorber.`,
-        `La rentabilité salariale est à ${d.renta}% pour un objectif de ${obj}% — ${ecart} point${ecart>1?'s':''} au-dessus, à optimiser.`,
-        `La rentabilité salariale est à ${d.renta}% pour un objectif de ${obj}% — ${ecart} point${ecart>1?'s':''} au-dessus, un point de vigilance.`,
-        `La rentabilité salariale ressort à ${d.renta}% (objectif ${obj}%) — ${ecart} point${ecart>1?'s':''} au-dessus, à surveiller malgré les bons résultats.`,
-      ]));
-    }
+    const p = M.pluralPoint(ecart);
+    const atteint = renta <= obj;
+    rhSentences.push(pick(atteint ? M.rentaAtteint : M.rentaNonAtteint)(d.renta, obj, ecart, p));
   }
   if (d.ca_mensuel || d.ca_annuel) {
     const parts = [];
     if (d.ca_mensuel) {
       const pct = parseFloat(d.ca_mensuel);
       const ecartCa = Math.abs(pct - 100).toFixed(0);
-      const sens = pct >= 100
-        ? pick(['légèrement en avance', 'en avance', 'bien positionné', 'bien en avance', 'excellemment positionné'])
-        : pick(['en retard', 'en léger retard', 'légèrement en retrait', 'en retrait', 'en dessous']);
-      parts.push(`${pct}% sur le mois (${sens} de ${ecartCa} point${ecartCa>1?'s':''})`);
+      const sens = pct >= 100 ? pick(M.caSensPositif) : pick(M.caSensNegatif);
+      parts.push(M.caMensuelPart(pct, sens, ecartCa, M.pluralPoint(ecartCa)));
     }
     if (d.ca_annuel) {
       const pct = parseFloat(d.ca_annuel);
       const ecartAn = Math.abs(pct - 100).toFixed(0);
-      const sensAn = pct >= 100 ? 'en avance' : 'en retrait';
-      parts.push(`${pct}% sur l'année (${ecartAn} point${ecartAn>1?'s':''} ${sensAn})`);
+      const sensAn = pct >= 100 ? M.caAnnuelSensPositif : M.caAnnuelSensNegatif;
+      parts.push(M.caAnnuelPart(pct, ecartAn, M.pluralPoint(ecartAn), sensAn));
     }
-    rhSentences.push(`Le positionnement CA ressort à ${parts.join(' et ')}${d.ca_mensuel_detail ? ' (' + d.ca_mensuel_detail + ')' : ''}.`);
+    const detail = d.ca_mensuel_detail ? ' (' + d.ca_mensuel_detail + ')' : '';
+    rhSentences.push(`${M.caFullSentencePrefix}${parts.join(M.caFullSentenceJoin)}${detail}${M.caFullSentenceSuffix}`);
   }
   if (d.rh) rhSentences.push(d.rh);
-  if (d.formation) rhSentences.push(`Formation dispensée sur place : ${d.formation}.`);
+  if (d.formation) rhSentences.push(M.formationSentence(d.formation));
   if (rhSentences.length) paragraphs.push(rhSentences.join(' '));
 
   // ── Management ──
   const mgrSentences = [];
   if (rituels.length) {
-    const intro = pick([
-      'Sur le management, les rituels suivants sont en place :',
-      'Côté management,',
-      'Sur le plan managérial,',
-      'Le management est bien structuré :',
-      'Le management est au top :',
-    ]);
-    const rituelsStr = rituels.join(', ').toLowerCase();
-    mgrSentences.push(rituels.length > 2
-      ? `${intro} ${rituelsStr}.`
-      : `${intro} ${rituelsStr} sont bien en place.`);
+    const intro = pick(M.mgrIntro);
+    const rituelsStr = rituels.map(r => rituelLabelFromStored(r)).join(', ').toLowerCase();
+    mgrSentences.push(rituels.length > 2 ? M.mgrListSuffix(intro, rituelsStr) : M.mgrEnPlaceSuffix(intro, rituelsStr));
   }
   if (d.manager_obs) mgrSentences.push(d.manager_obs);
   if (mgrSentences.length) paragraphs.push(mgrSentences.join(' '));
 
   // ── Entretiens individuels ──
   if (d.entretiens && d.entretiens.length) {
-    const entLines = d.entretiens.map(e => `• ${e.prenom}${e.sujet ? ' : ' + e.sujet : ' (sujet confidentiel)'}`);
-    const intro = d.entretiens.length > 1
-      ? pick(["Des entretiens individuels ont été menés avec :", "J'ai également eu des échanges individuels avec :", "Des entretiens ont été conduits avec :", "Nous avons également eu des temps individuels avec :", "De beaux échanges individuels avec :"])
-      : pick(["Un entretien individuel a été mené avec :", "J'ai eu un échange individuel avec :", "Un entretien a été conduit avec :", "Un temps individuel a été pris avec :", "Un bel échange individuel avec :"]);
+    const entLines = d.entretiens.map(e => `• ${e.prenom}${e.sujet ? ' : ' + e.sujet : ' ' + M.sujetConfidentiel}`);
+    const intro = d.entretiens.length > 1 ? pick(M.entretiensIntroPlural) : pick(M.entretiensIntroSingular);
     paragraphs.push(intro + '\n' + entLines.join('\n'));
   }
 
   // ── Indicateurs ──
   if (d.kpis && d.kpis.length) {
-    const kpisLine = d.kpis.map(k => `${k.name} à ${k.val}${k.def?.unit || ''}`).join(', ');
-    let kpiSentence = pick([
-      `Sur les indicateurs : ${kpisLine}.`,
-      `Les indicateurs ressortent comme suit : ${kpisLine}.`,
-      `Côté indicateurs, on retient ${kpisLine}.`,
-      `Les indicateurs sont bons : ${kpisLine}.`,
-      `Excellents indicateurs : ${kpisLine}.`,
-    ]);
+    const kpisLine = d.kpis.map(k => `${kpiLabel(k.name, k.def)} ${M.kpiA} ${k.val}${k.def?.unit || ''}`).join(', ');
+    let kpiSentence = pick(M.kpiIntro)(kpisLine);
     if (d.kpi_comment) kpiSentence += ' ' + d.kpi_comment;
     paragraphs.push(kpiSentence);
   }
@@ -3540,11 +4235,11 @@ function buildEmailBody(d) {
   const diffArr  = [...(Array.isArray(d.diff)  ? d.diff  : (d.diff  ? [d.diff]  : [])), ...penRouting.diff];
   const ptsSentences = [];
   if (fortsArr.length) {
-    const intro = pick(['Quelques points positifs tout de même :', 'À noter côté points forts :', 'Côté points forts,', 'Parmi les points forts :', 'De vrais points forts à souligner :']);
+    const intro = pick(M.ptsFortsIntro);
     ptsSentences.push(cap(`${intro} ${fortsArr.map(t => low(stripDot(t))).join(', ')}.`));
   }
   if (diffArr.length) {
-    const intro = pick(['Des axes de travail importants :', 'Des points de vigilance :', 'En revanche,', 'À améliorer :', 'Quelques points à travailler malgré les excellents résultats :']);
+    const intro = pick(M.ptsDiffIntro);
     ptsSentences.push(cap(`${intro} ${diffArr.map(t => low(stripDot(t))).join(', ')}.`));
   }
   if (ptsSentences.length) paragraphs.push(ptsSentences.join(' '));
@@ -3553,20 +4248,14 @@ function buildEmailBody(d) {
   if (d.actions && d.actions.length) {
     const nonReported = d.actions.filter(a => !a._fromPrevious);
     const reported = d.actions.filter(a => a._fromPrevious);
-    const intro = pick([
-      'Points à traiter en priorité avant le prochain passage :',
-      "Pour avancer d'ici le prochain passage, voici les points à traiter :",
-      "Voici les actions à mener d'ici mon retour :",
-      'Pour continuer sur cette lancée, voici les actions attendues :',
-      'Pour maintenir cette excellente dynamique, voici les actions à mener :',
-    ]);
+    const intro = pick(M.actionsIntro);
     const actionLines = [];
     if (reported.length) {
-      actionLines.push(`↩ Actions reportées du passage précédent :`);
+      actionLines.push(M.actionsReportedLabel);
       reported.forEach(a => {
         let line = `  • ${a.text}`;
         if (a.who) line += ` (${a.who})`;
-        if (a.date) line += ` — pour le ${formatDate(a.date)}`;
+        if (a.date) line += M.actionDueSuffix(formatDate(a.date));
         if (a.comment) line += `\n     ↳ ${a.comment}`;
         actionLines.push(line);
       });
@@ -3575,7 +4264,7 @@ function buildEmailBody(d) {
     nonReported.forEach(a => {
       let line = `• ${a.text}`;
       if (a.who) line += ` (${a.who})`;
-      if (a.date) line += ` — pour le ${formatDate(a.date)}`;
+      if (a.date) line += M.actionDueSuffix(formatDate(a.date));
       if (a.comment) line += `\n   ↳ ${a.comment}`;
       actionLines.push(line);
     });
@@ -3587,25 +4276,11 @@ function buildEmailBody(d) {
   if (remarqueFull) paragraphs.push(remarqueFull);
 
   // ── Closing ──
-  let closing = d.mot_conclusion || pick([
-    'Je reste disponible pour échanger sur ce passage.',
-    "N'hésitez pas à me contacter si vous avez des questions.",
-    'Je suis disponible si vous souhaitez en discuter.',
-    'Je suis à votre disposition pour tout échange complémentaire.',
-    'Encore bravo pour cette belle journée — continuez sur cette lancée !',
-  ]);
-  if (d.prochain_passage) {
-    closing += pick([
-      ` Rendez-vous le ${formatDate(d.prochain_passage)}.`,
-      ` Je reviendrai le ${formatDate(d.prochain_passage)}.`,
-      ` On se retrouve le ${formatDate(d.prochain_passage)} pour faire le point.`,
-      ` À très vite — je reviendrai le ${formatDate(d.prochain_passage)}.`,
-      ` Vivement le ${formatDate(d.prochain_passage)} pour voir vos progrès !`,
-    ]);
-  }
+  let closing = d.mot_conclusion || pick(M.closing);
+  if (d.prochain_passage) closing += pick(M.closingProchainPassage)(formatDate(d.prochain_passage));
   paragraphs.push(closing);
 
-  return `Bonjour,\n\n${paragraphs.filter(Boolean).join('\n\n')}\n\nBien cordialement,\n${d.ar || 'Votre animateur réseau'}\nOptical Center`;
+  return `${M.bonjour}\n\n${paragraphs.filter(Boolean).join('\n\n')}\n\n${M.cordialement}\n${d.ar || M.votreAnimateur}\nOptical Center`;
 }
 
 
@@ -4469,7 +5144,7 @@ function saveToHistory(data) {
 function populateHistoryFilter() {
   const sel = document.getElementById('hist-mag-filter');
   const prev = sel.value;
-  sel.innerHTML = '<option value="">Tous les magasins</option>';
+  sel.innerHTML = `<option value="">${t('hist_tous_magasins')}</option>`;
   getHomeARStores().slice().sort((a,b) => a.libelle.localeCompare(b.libelle)).forEach(m => {
     const opt = document.createElement('option');
     opt.value = m.code; opt.textContent = m.libelle;
@@ -4530,7 +5205,7 @@ function renderHistory() {
   });
 
   if (total === 0) {
-    list.innerHTML = '<div class="history-empty">Aucun bilan enregistré pour ce filtre.</div>';
+    list.innerHTML = `<div class="history-empty">${t('hist_aucun_bilan')}</div>`;
   } else {
     list.prepend(clearBtn);
   }
@@ -4544,7 +5219,7 @@ function exportHistory() {
       try { backup[key] = JSON.parse(localStorage.getItem(key)); } catch(e) {}
     }
   }
-  if (!Object.keys(backup).length) { showToast('Aucune donnée à exporter'); return; }
+  if (!Object.keys(backup).length) { showToast(t('toast_aucune_donnee_export')); return; }
   const json = JSON.stringify(backup, null, 2);
   const blob = new Blob([json], {type: 'application/json'});
   const a = document.createElement('a');
@@ -4552,7 +5227,7 @@ function exportHistory() {
   a.download = `bilan_historique_${new Date().toISOString().slice(0,10)}.json`;
   a.click();
   URL.revokeObjectURL(a.href);
-  showToast('✓ Sauvegarde exportée (historique + brouillons)');
+  showToast(t('toast_sauvegarde_exportee'));
 }
 
 function importHistory(input) {
@@ -4584,10 +5259,10 @@ function importHistory(input) {
           }
         }
       });
-      showToast(`✓ ${historyCount} bilan(s) + ${draftCount} brouillon(s) importé(s)`);
+      showToast(`✓ ${historyCount} ${t('toast_bilans_suffix')} + ${draftCount} ${t('toast_brouillons_importes_suffix')}`);
       renderHistory();
     } catch(ex) {
-      showToast('⚠ Fichier invalide : ' + ex.message);
+      showToast(t('toast_fichier_invalide') + ex.message);
     }
     input.value = '';
   };
@@ -4639,8 +5314,8 @@ async function downloadHistoryPDF(e, code, idx) {
   try {
     const history = JSON.parse(localStorage.getItem(`bilan_history_${code}`) || '[]');
     const d = history[idx];
-    if (!d) { showToast('Bilan non disponible'); return; }
-    showToast('Génération du PDF...');
+    if (!d) { showToast(t('toast_bilan_indispo')); return; }
+    showToast(t('toast_gen_pdf'));
     const hv = d.humeur !== undefined ? d.humeur : null;
     const humeurSliderImg = (hv !== null && !isNaN(hv)) ? await generateHumeurSliderImage(hv) : null;
     const dataForPDF = {...d, actions: (d.actions||[]).map(a => {const {_fromPrevious, _repriseCount, ...rest} = a; return rest;})};
@@ -4651,7 +5326,7 @@ async function downloadHistoryPDF(e, code, idx) {
     a.download = `Bilan_${code}_${d.date||''}.pdf`;
     a.click();
     URL.revokeObjectURL(a.href);
-  } catch(ex) { showToast('Erreur PDF : ' + ex.message); }
+  } catch(ex) { showToast(t('toast_erreur_pdf') + ex.message); }
 }
 
 async function resendBilan(e, code, idx) {
@@ -4659,15 +5334,15 @@ async function resendBilan(e, code, idx) {
   try {
     const history = JSON.parse(localStorage.getItem('bilan_history_' + code) || '[]');
     const d = history[idx];
-    if (!d) { showToast('Bilan non disponible'); return; }
+    if (!d) { showToast(t('toast_bilan_indispo')); return; }
     const pwd = prompt('Mot de passe Zimbra pour renvoyer le bilan :');
     if (!pwd) return;
     const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
     const user = params.zimbraUser || '';
-    if (!relay || !user) { showToast('Relay non configuré'); return; }
+    if (!relay || !user) { showToast(t('toast_relay_non_config')); return; }
 
     // Régénérer le PDF depuis les données
-    showToast('Génération du PDF...');
+    showToast(t('toast_gen_pdf'));
     const hv = d.humeur !== undefined ? d.humeur : null;
     const humeurSliderImg = (hv !== null && !isNaN(hv)) ? await generateHumeurSliderImage(hv) : null;
     const dataForPDF = {...d, actions: (d.actions||[]).map(a => {const {_fromPrevious, _repriseCount, ...rest} = a; return rest;})};
@@ -4679,7 +5354,7 @@ async function resendBilan(e, code, idx) {
       return JSON.stringify({ Header: { context }, Body: body });
     }
 
-    showToast('Authentification...');
+    showToast(t('toast_authentification'));
     const authResp = await fetch(relay + '/soap', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -4695,7 +5370,7 @@ async function resendBilan(e, code, idx) {
     const token = authData?.Body?.AuthResponse?.authToken?.[0]?._content || null;
     if (!token) throw new Error('Auth échouée');
 
-    showToast('Upload PDF...');
+    showToast(t('toast_upload_pdf'));
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const form = new FormData();
     form.append('file', blob, 'Bilan_' + code + '_' + (d.date || '') + '.pdf');
@@ -4717,7 +5392,7 @@ async function resendBilan(e, code, idx) {
     const subject = '[RENVOI] Bilan de passage n°' + (d.passage || '?') + ' — ' + (d.magasin?.libelle || code) + ' — ' + formatDate(d.date);
     const mailBody = buildEmailBody(d);
 
-    showToast('Envoi à ' + emails.length + ' destinataire(s)...');
+    showToast(`${t('toast_envoi_a')} ` + emails.length + ` ${t('toast_destinataires_suffix')}`);
     for (const to of emails) {
       const mp = { mp: { ct: 'text/plain', content: { _content: mailBody } } };
       if (attachId) mp.attach = { aid: attachId };
@@ -4732,8 +5407,8 @@ async function resendBilan(e, code, idx) {
         }, token)
       });
     }
-    showToast('Bilan renvoyé ✓');
-  } catch(ex) { showToast('Erreur renvoi : ' + ex.message); }
+    showToast(t('toast_bilan_renvoye'));
+  } catch(ex) { showToast(t('toast_erreur_renvoi') + ex.message); }
 }
 
 // ── ANALYSE IA (accès protégé par authentification Zimbra réelle) ──
@@ -4818,7 +5493,7 @@ function initAnalyseScreen() {
   }
 
   const sel = document.getElementById('analyse-mag-select');
-  sel.innerHTML = '<option value="">Sélectionner un magasin...</option>';
+  sel.innerHTML = `<option value="">${t('home_magasin_placeholder')}</option>`;
   stores.forEach(m => {
     const opt = document.createElement('option');
     opt.value = m.code;
@@ -4850,6 +5525,11 @@ const PEDLV_LABELS = {
   pm: 'Panier moyen Opt.', tc: '% Concrétisation', sop: '% SOP', mdc: '% MdC',
   pack: '% Pack Confort', pmpc: 'PM Pack Confort', ta: '% Test auditif', tva: '% Vente add. audio',
 };
+// Traduit une clé PEDLV_LABELS (ex. 'pm', 'tc') ; repli sur le libellé FR si non traduit.
+function pedlvLabel(key) {
+  const val = I18N[currentLang] && I18N[currentLang]['pedlv_' + key];
+  return val || PEDLV_LABELS[key] || key;
+}
 const HEALTH_COLOR_HEX = { vert: 'var(--green)', orange: 'var(--orange)', rouge: 'var(--red)' };
 
 // Coefficients du score de santé magasin — même principe que les coefficients
@@ -4982,7 +5662,7 @@ function normalizeSearch(s) {
 async function loadStoreHealthList() {
   const container = document.getElementById('analyse-health-list');
   if (!container || !arSession) return;
-  container.innerHTML = '<div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">Chargement de l\'état des magasins...</div>';
+  container.innerHTML = `<div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">${t('analyse_chargement_etat')}</div>`;
   const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
   try {
     const r = await fetch(relay + '/store-health', {
@@ -4994,7 +5674,7 @@ async function loadStoreHealthList() {
     storeHealthList = data.results || [];
     renderStoreHealthList();
   } catch(e) {
-    container.innerHTML = '<div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">État des magasins indisponible pour le moment (réessaie plus tard).</div>';
+    container.innerHTML = `<div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">${t('analyse_etat_indisponible')}</div>`;
   }
 }
 
@@ -5022,7 +5702,7 @@ function renderStoreHealthList() {
     baseList = baseList.filter(s => arCodes.has(s.code));
   }
   if (!baseList.length) {
-    container.innerHTML = '<div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">Aucun magasin dans ton périmètre.</div>';
+    container.innerHTML = `<div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">${t('analyse_aucun_magasin_perimetre')}</div>`;
     return;
   }
   const searchEl = document.getElementById('analyse-health-search');
@@ -5031,7 +5711,7 @@ function renderStoreHealthList() {
     ? baseList.filter(s => normalizeSearch(s.libelle).includes(searchTerm))
     : baseList;
   if (!filtered.length) {
-    container.innerHTML = '<div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">Aucun magasin ne correspond à la recherche.</div>';
+    container.innerHTML = `<div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">${t('analyse_aucun_magasin_recherche')}</div>`;
     return;
   }
   const order = { rouge: 0, orange: 1, vert: 2 };
@@ -5041,9 +5721,9 @@ function renderStoreHealthList() {
     const color = storeHealthColor(s);
     const score = computeHealthScore(s);
     const chips = [];
-    chips.push(s.lastVisitDate ? `${s.daysSinceVisit}j sans visite` : 'jamais visité');
-    if (s.actionsNonSoldees && s.actionsNonSoldees.count) chips.push(`${s.actionsNonSoldees.count} action(s) non soldée(s)`);
-    if (s.pedlv && s.pedlv.total) chips.push(`${s.pedlv.rouge}/${s.pedlv.total} indic. dans le rouge`);
+    chips.push(s.lastVisitDate ? `${s.daysSinceVisit} ${t('sante_jours_sans_visite')}` : t('sante_jamais_visite'));
+    if (s.actionsNonSoldees && s.actionsNonSoldees.count) chips.push(`${s.actionsNonSoldees.count} ${t('sante_actions_non_soldees')}`);
+    if (s.pedlv && s.pedlv.total) chips.push(`${s.pedlv.rouge}/${s.pedlv.total} ${t('sante_indic_rouge')}`);
     if (s.kaizenScoreMois !== null && s.kaizenScoreMois !== undefined) chips.push(`Kaizen ${s.kaizenScoreMois}/50`);
     if (s.googleRating && s.googleRating.rating) chips.push(`★ ${Number(s.googleRating.rating).toFixed(1)} (${s.googleRating.reviewsCount || 0})`);
     const scoreColor = score === null ? 'var(--muted)' : (score >= 75 ? 'var(--green)' : (score >= 50 ? 'var(--orange)' : 'var(--red)'));
@@ -5077,48 +5757,48 @@ function openStoreHealthDetail(code) {
   storeHealthDetailCode = code;
   document.getElementById('shd-title').textContent = s.libelle;
   document.getElementById('shd-subtitle').textContent = s.lastVisitDate
-    ? `Dernier passage : ${s.lastVisitDate.split('-').reverse().join('/')} (${s.daysSinceVisit}j)`
-    : 'Aucun bilan enregistré pour ce magasin';
+    ? `${t('sante_dernier_passage')} ${s.lastVisitDate.split('-').reverse().join('/')} (${s.daysSinceVisit}j)`
+    : t('sante_aucun_bilan_magasin');
 
   const parts = [];
 
   const score = computeHealthScore(s);
   if (score !== null) {
     const scoreColor = score >= 75 ? 'var(--green)' : (score >= 50 ? 'var(--orange)' : 'var(--red)');
-    parts.push(`<div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg3);border-radius:8px;padding:10px 12px"><span style="font-size:11px;color:var(--muted);text-transform:uppercase;display:flex;align-items:center;gap:5px">Score de santé <span onclick="event.stopPropagation();showHealthScoreInfo()" title="Comment est calculé ce score ?" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:1px solid var(--muted);color:var(--muted);font-size:9px;font-style:italic;font-weight:700;cursor:pointer;line-height:1;flex-shrink:0">i</span></span><span style="font-size:18px;font-weight:700;color:${scoreColor}">${score}/100</span></div>`);
+    parts.push(`<div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg3);border-radius:8px;padding:10px 12px"><span style="font-size:11px;color:var(--muted);text-transform:uppercase;display:flex;align-items:center;gap:5px">${t('sante_score_titre')} <span onclick="event.stopPropagation();showHealthScoreInfo()" title="${t('sante_comment_calcule')}" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:1px solid var(--muted);color:var(--muted);font-size:9px;font-style:italic;font-weight:700;cursor:pointer;line-height:1;flex-shrink:0">i</span></span><span style="font-size:18px;font-weight:700;color:${scoreColor}">${score}/100</span></div>`);
   }
 
   if (s.actionsNonSoldees && s.actionsNonSoldees.items.length) {
     const items = s.actionsNonSoldees.items.map(a => `
       <div style="background:var(--bg3);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text)">
         ${escapeHtmlLocal(a.text)}
-        ${a.repriseCount > 0 ? `<div style="margin-top:4px"><span style="font-size:10px;background:var(--red2);color:var(--red);padding:2px 6px;border-radius:20px">reprise ${a.repriseCount}x</span></div>` : ''}
+        ${a.repriseCount > 0 ? `<div style="margin-top:4px"><span style="font-size:10px;background:var(--red2);color:var(--red);padding:2px 6px;border-radius:20px">${t('sante_reprise')} ${a.repriseCount}x</span></div>` : ''}
       </div>`).join('');
-    parts.push(`<div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Actions non soldées (${s.actionsNonSoldees.count})</div><div style="display:flex;flex-direction:column;gap:6px">${items}</div></div>`);
+    parts.push(`<div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">${t('sante_actions_non_soldees_titre')} (${s.actionsNonSoldees.count})</div><div style="display:flex;flex-direction:column;gap:6px">${items}</div></div>`);
   } else if (s.actionsNonSoldees) {
-    parts.push(`<div style="font-size:12px;color:var(--muted)">Aucune action en attente.</div>`);
+    parts.push(`<div style="font-size:12px;color:var(--muted)">${t('sante_aucune_action_attente')}</div>`);
   }
 
   const statCards = [];
   const effColor = s.effectif.delta > 0 ? 'var(--orange)' : (s.effectif.delta < 0 ? 'var(--red)' : 'var(--text)');
   const effSoutenuHtml = (s.effectifRH && s.effectifRH.soutenu)
-    ? `<div style="font-size:9px;color:var(--red);font-weight:600;margin-top:2px">sous-effectif soutenu (3 mois)</div>` : '';
-  statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Effectif</div><div style="font-size:14px;font-weight:600;color:${effColor}">${escapeHtmlLocal(s.effectif.label)}</div>${effSoutenuHtml}</div>`);
+    ? `<div style="font-size:9px;color:var(--red);font-weight:600;margin-top:2px">${t('sante_sous_effectif_soutenu')}</div>` : '';
+  statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">${t('sante_effectif')}</div><div style="font-size:14px;font-weight:600;color:${effColor}">${escapeHtmlLocal(s.effectif.label)}</div>${effSoutenuHtml}</div>`);
   if (s.absenteisme && s.absenteisme.score !== null && s.absenteisme.score !== undefined) {
     const tauxPct = Math.round((100 - s.absenteisme.score) * 10) / 10;
     const absColor = tauxPct >= 10 ? 'var(--red)' : (tauxPct >= 6 ? 'var(--orange)' : 'var(--text)');
-    statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Absentéisme</div><div style="font-size:14px;font-weight:600;color:${absColor}">${tauxPct}% <span style="font-size:10px;color:var(--muted);font-weight:400">(${s.absenteisme.moisCount} mois)</span></div></div>`);
+    statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">${t('sante_absenteisme')}</div><div style="font-size:14px;font-weight:600;color:${absColor}">${tauxPct}% <span style="font-size:10px;color:var(--muted);font-weight:400">(${s.absenteisme.moisCount} mois)</span></div></div>`);
   }
   if (s.positionnementAnnuel !== null && s.positionnementAnnuel !== undefined) {
-    statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Positionnement annuel</div><div style="font-size:14px;font-weight:600;color:var(--text)">${s.positionnementAnnuel}%</div></div>`);
+    statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">${t('sante_positionnement_annuel')}</div><div style="font-size:14px;font-weight:600;color:var(--text)">${s.positionnementAnnuel}%</div></div>`);
   }
   if (s.googleRating && s.googleRating.rating) {
-    statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Avis Google</div><div style="font-size:14px;font-weight:600;color:var(--text)">${Number(s.googleRating.rating).toFixed(1)} (${s.googleRating.reviewsCount || 0})</div></div>`);
+    statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">${t('sante_avis_google')}</div><div style="font-size:14px;font-weight:600;color:var(--text)">${Number(s.googleRating.rating).toFixed(1)} (${s.googleRating.reviewsCount || 0})</div></div>`);
   }
   if (s.niveauEquipe !== null && s.niveauEquipe !== undefined) {
     const objectif = s.objectifNiveauEquipe || 8;
     const equipeColor = s.niveauEquipe >= objectif ? 'var(--green)' : (s.niveauEquipe >= objectif - 1 ? 'var(--orange)' : 'var(--red)');
-    statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Niveau équipe</div><div style="font-size:14px;font-weight:600;color:${equipeColor}">${s.niveauEquipe.toFixed(1)}/10 <span style="font-size:10px;color:var(--muted);font-weight:400">(obj. ${objectif})</span></div></div>`);
+    statCards.push(`<div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:var(--muted)">${t('sante_niveau_equipe')}</div><div style="font-size:14px;font-weight:600;color:${equipeColor}">${s.niveauEquipe.toFixed(1)}/10 <span style="font-size:10px;color:var(--muted);font-weight:400">(${t('sante_obj_abbr')} ${objectif})</span></div></div>`);
   }
   parts.push(`<div style="display:flex;gap:8px;flex-wrap:wrap">${statCards.join('')}</div>`);
 
@@ -5132,15 +5812,15 @@ function openStoreHealthDetail(code) {
       const diff = s.pedlv.rouge - s.pedlvTrend.rouge;
       const arrow = diff > 0 ? '▲' : (diff < 0 ? '▼' : '=');
       const trendColor = diff > 0 ? 'var(--red)' : (diff < 0 ? 'var(--green)' : 'var(--muted)');
-      trendHtml = ` <span style="color:${trendColor};font-weight:600">(${arrow} vs ${s.pedlvTrend.rouge}/${s.pedlvTrend.total} sem. dernière)</span>`;
+      trendHtml = ` <span style="color:${trendColor};font-weight:600">(${arrow} ${t('sante_vs')} ${s.pedlvTrend.rouge}/${s.pedlvTrend.total} ${t('sante_sem_derniere')})</span>`;
     }
     const indicRows = Object.entries(s.pedlv.indicateurs || {}).map(([key, v]) => {
       const dot = v.statut === 'vert' ? 'var(--green)' : (v.statut === 'orange' ? 'var(--orange)' : 'var(--red)');
-      return `<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)"><span style="width:7px;height:7px;border-radius:50%;background:${dot};display:inline-block;flex-shrink:0"></span>${escapeHtmlLocal(PEDLV_LABELS[key] || key)}</div>`;
+      return `<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)"><span style="width:7px;height:7px;border-radius:50%;background:${dot};display:inline-block;flex-shrink:0"></span>${escapeHtmlLocal(pedlvLabel(key))}</div>`;
     }).join('');
-    parts.push(`<div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Indicateurs PEDLV — <span style="color:${badgeColor};font-weight:600">${s.pedlv.rouge}/${s.pedlv.total} dans le rouge</span>${trendHtml}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">${indicRows}</div></div>`);
+    parts.push(`<div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">${t('sante_indicateurs_pedlv')} — <span style="color:${badgeColor};font-weight:600">${s.pedlv.rouge}/${s.pedlv.total} ${t('sante_dans_le_rouge')}</span>${trendHtml}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">${indicRows}</div></div>`);
   } else {
-    parts.push(`<div style="font-size:12px;color:var(--muted)">Pas de données Pour être dans le vert cette période.</div>`);
+    parts.push(`<div style="font-size:12px;color:var(--muted)">${t('sante_pas_donnees_pedlv')}</div>`);
   }
 
 // Objectif Kaizen : 40/50 = vert, en dessous de 36 = rouge, entre les deux = orange.
@@ -5157,29 +5837,29 @@ function kzScoreColor(score) {
   // jamais eu d'audit Kaizen (non éligible ou pas encore commencé).
   if ((s.kaizenScoreMois !== null && s.kaizenScoreMois !== undefined) || s.kaizenDernierMoisCloture) {
     const moisEnCoursLabel = (s.kaizenScoreMois !== null && s.kaizenScoreMois !== undefined)
-      ? `${s.kaizenScoreMois}/50${s.kaizenClosedMois ? ' (clôturé)' : ' (en cours)'}`
-      : 'pas encore commencé';
+      ? `${s.kaizenScoreMois}/50${s.kaizenClosedMois ? ' (' + t('sante_cloture') + ')' : ' (' + t('sante_en_cours') + ')'}`
+      : t('sante_pas_encore_commence');
     const moisEnCoursColor = (s.kaizenScoreMois !== null && s.kaizenScoreMois !== undefined)
       ? kzScoreColor(s.kaizenScoreMois) : 'var(--muted)';
     const dernierLabel = s.kaizenDernierMoisCloture
       ? `${s.kaizenDernierScoreCloture}/${s.kaizenDernierScoreMax} (${kzMoisLabelCourt(s.kaizenDernierMoisCloture)})`
-      : 'aucun mois clôturé';
+      : t('sante_aucun_mois_cloture');
     const dernierColor = s.kaizenDernierMoisCloture
       ? kzScoreColor(s.kaizenDernierScoreCloture) : 'var(--muted)';
-    parts.push(`<div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Kaizen (audit 5S)</div>
+    parts.push(`<div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Kaizen (${t('sante_audit_5s')})</div>
       <div style="display:flex;gap:8px">
         <div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px">
-          <div style="font-size:10px;color:var(--muted)">Mois en cours</div>
+          <div style="font-size:10px;color:var(--muted)">${t('sante_mois_en_cours')}</div>
           <div style="font-size:14px;font-weight:600;color:${moisEnCoursColor}">${escapeHtmlLocal(moisEnCoursLabel)}</div>
         </div>
         <div style="flex:1;min-width:100px;background:var(--bg3);border-radius:8px;padding:8px 10px">
-          <div style="font-size:10px;color:var(--muted)">Dernier clôturé</div>
+          <div style="font-size:10px;color:var(--muted)">${t('sante_dernier_cloture')}</div>
           <div style="font-size:14px;font-weight:600;color:${dernierColor}">${escapeHtmlLocal(dernierLabel)}</div>
         </div>
       </div>
     </div>`);
   } else {
-    parts.push(`<div style="font-size:12px;color:var(--muted)">Pas de remontée Kaizen pour ce magasin.</div>`);
+    parts.push(`<div style="font-size:12px;color:var(--muted)">${t('sante_pas_remontee_kaizen')}</div>`);
   }
 
   document.getElementById('shd-body').innerHTML = parts.join('');
@@ -5382,9 +6062,9 @@ function showToastLong(msg) {
     <div style="font-size:12px;color:var(--muted);margin:-8px 0 16px">Ajuste l'importance de chaque indicateur (0 = ignoré, 10 = maximum). Le retard de visite n'est pas concerné : il reste géré à part. « Générer le fichier » télécharge une nouvelle version de cette page à repousser sur GitHub.</div>
     <div id="hcm-sliders" style="display:flex;flex-direction:column;gap:12px"></div>
     <div class="modal-actions">
-      <button class="btn-secondary" onclick="hcmReset()">Défaut</button>
-      <button class="btn-primary" onclick="hcmExport()">⬇ Générer le fichier</button>
-      <button class="btn-secondary" onclick="hcmClose()">Fermer</button>
+      <button class="btn-secondary" onclick="hcmReset()" data-i18n="hcm_defaut">Défaut</button>
+      <button class="btn-primary" onclick="hcmExport()" data-i18n="hcm_generer">⬇ Générer le fichier</button>
+      <button class="btn-secondary" onclick="hcmClose()" data-i18n="btn_fermer">Fermer</button>
     </div>
   </div>
 </div>
@@ -5436,7 +6116,7 @@ function hcmRenderSliders(values) {
   if (!container) return;
   container.innerHTML = Object.keys(HCM_DEFAUT).map(key => `
     <div style="display:flex;align-items:center;gap:8px">
-      <span style="flex:1;font-size:13px;color:var(--text)">${HCM_LABELS[key]}</span>
+      <span style="flex:1;font-size:13px;color:var(--text)">${t('hcm_' + key)}</span>
       <input type="range" id="poids-${key}" min="0" max="10" step="1" value="${values[key]}" style="flex:2" oninput="document.getElementById('val-${key}').textContent = this.value">
       <span id="val-${key}" style="width:20px;text-align:right;font-size:12px;color:var(--muted)">${values[key]}</span>
     </div>`).join('');
