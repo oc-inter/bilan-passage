@@ -732,34 +732,34 @@ input[type=date]{color-scheme:dark}
 <div class="modal-overlay" id="modal-send" onclick="closeModal()">
   <div class="modal-box" onclick="event.stopPropagation()" style="max-width:480px">
     <div class="modal-title">Envoyer le bilan</div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:12px">Le PDF sera envoyé aux destinataires suivants :</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:12px" data-i18n="modal_pdf_destinataires">Le PDF sera envoyé aux destinataires suivants :</div>
     <div id="modal-recipients" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
     <div class="field-group">
       <div class="field-label-row"><label data-i18n="mail_texte_modifiable">Texte du mail (modifiable avant envoi)</label><button type="button" class="mic-btn" onclick="startMicFor('modal-mailbody')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
       <textarea id="modal-mailbody" rows="10" style="font-family:'Barlow',sans-serif;font-size:12.5px;line-height:1.5"></textarea>
       <div style="display:flex;gap:8px;margin-top:6px">
-        <button type="button" class="btn-secondary" style="flex:1;font-size:12px;padding:8px" onclick="resetMailBody()">↺ Texte brut</button>
-        <button type="button" class="btn-secondary" style="flex:1;font-size:12px;padding:8px" onclick="regenerateMailBody()">✨ Reformuler</button>
+        <button type="button" class="btn-secondary" style="flex:1;font-size:12px;padding:8px" onclick="resetMailBody()" data-i18n="modal_texte_brut">↺ Texte brut</button>
+        <button type="button" class="btn-secondary" style="flex:1;font-size:12px;padding:8px" onclick="regenerateMailBody()" data-i18n="modal_reformuler">✨ Reformuler</button>
       </div>
     </div>
-    <div class="field-group"><label>Mot de passe Zimbra</label>
-      <input type="password" id="modal-pwd" placeholder="Mot de passe..."></div>
+    <div class="field-group"><label data-i18n="analyse_login_pass_ph">Mot de passe Zimbra</label>
+      <input type="password" id="modal-pwd" data-i18n-placeholder="modal_mdp_ph" placeholder="Mot de passe..."></div>
     <div class="field-group">
-      <label>Pièce jointe supplémentaire (PDF, optionnel)</label>
+      <label data-i18n="modal_piece_jointe">Pièce jointe supplémentaire (PDF, optionnel)</label>
       <div style="display:flex;gap:8px;align-items:center">
         <input type="file" id="modal-extra-pdf" accept="application/pdf" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text);flex:1" onchange="updateExtraPdfLabel()">
-        <button type="button" id="modal-extra-pdf-clear" class="btn-secondary" style="display:none;padding:8px 12px;font-size:12px" onclick="clearExtraPdf()">✕ Retirer</button>
+        <button type="button" id="modal-extra-pdf-clear" class="btn-secondary" style="display:none;padding:8px 12px;font-size:12px" onclick="clearExtraPdf()" data-i18n="modal_retirer">✕ Retirer</button>
       </div>
       <div id="modal-extra-pdf-name" style="font-size:11px;color:var(--muted);margin-top:4px"></div>
     </div>
     <div class="field-group" style="display:flex;align-items:flex-start;gap:8px">
       <input type="checkbox" id="modal-joindre-eval" style="margin-top:3px" onchange="toggleEvalMailMention()">
-      <label for="modal-joindre-eval" style="font-size:13px;line-height:1.4;font-weight:normal">📋 Joindre le récapitulatif Évaluation Équipe de ce magasin</label>
+      <label for="modal-joindre-eval" style="font-size:13px;line-height:1.4;font-weight:normal" data-i18n="modal_joindre_eval">📋 Joindre le récapitulatif Évaluation Équipe de ce magasin</label>
     </div>
     <div class="modal-actions">
-      <button class="btn-primary" onclick="sendBilan()">📧 Envoyer</button>
-      <button class="btn-secondary" onclick="previewPDF()">👁 Prévisualiser le PDF</button>
-      <button class="btn-secondary" onclick="closeModal()">Annuler</button>
+      <button class="btn-primary" onclick="sendBilan()" data-i18n="modal_envoyer">📧 Envoyer</button>
+      <button class="btn-secondary" onclick="previewPDF()" data-i18n="modal_previsualiser_pdf">👁 Prévisualiser le PDF</button>
+      <button class="btn-secondary" onclick="closeModal()" data-i18n="btn_annuler">Annuler</button>
     </div>
   </div>
 </div>
@@ -776,7 +776,7 @@ input[type=date]{color-scheme:dark}
       <input type="range" id="crop-zoom" min="100" max="300" value="100" oninput="updateCropTransform()">
     </div>
     <div class="crop-actions">
-      <button class="btn-secondary" style="flex:1" onclick="cancelCrop()">Annuler</button>
+      <button class="btn-secondary" style="flex:1" onclick="cancelCrop()" data-i18n="btn_annuler">Annuler</button>
       <button class="btn-primary" style="flex:1" onclick="confirmCrop()">✓ Valider</button>
     </div>
   </div>
@@ -961,6 +961,10 @@ const I18N = {
     hcm_defaut: 'Défaut', hcm_generer: '⬇ Générer le fichier', btn_fermer: 'Fermer',
     hcm_actions: 'Actions non soldées', hcm_effectif: 'Effectif', hcm_absenteisme: 'Absentéisme', hcm_positionnement: 'Positionnement annuel',
     hcm_pedlv: 'PEDLV (indicateurs rouges)', hcm_avis: 'Avis Google', hcm_equipe: 'Niveau équipe', hcm_kaizen: 'Kaizen (audit 5S)',
+    modal_pdf_destinataires: 'Le PDF sera envoyé aux destinataires suivants :', modal_texte_brut: '↺ Texte brut', modal_reformuler: '✨ Reformuler',
+    modal_mdp_ph: 'Mot de passe...', modal_piece_jointe: 'Pièce jointe supplémentaire (PDF, optionnel)', modal_retirer: '✕ Retirer',
+    modal_joindre_eval: '📋 Joindre le récapitulatif Évaluation Équipe de ce magasin', modal_envoyer: '📧 Envoyer',
+    modal_previsualiser_pdf: '👁 Prévisualiser le PDF', btn_annuler: 'Annuler',
   },
   EN: {
     nav_nouveau: 'New', nav_historique: 'History', nav_analyse: 'Analysis', nav_parametres: 'Settings',
@@ -1105,6 +1109,10 @@ const I18N = {
     hcm_defaut: 'Default', hcm_generer: '⬇ Generate the file', btn_fermer: 'Close',
     hcm_actions: 'Unresolved actions', hcm_effectif: 'Headcount', hcm_absenteisme: 'Absenteeism', hcm_positionnement: 'Annual achievement',
     hcm_pedlv: 'PEDLV (red indicators)', hcm_avis: 'Google reviews', hcm_equipe: 'Team level', hcm_kaizen: 'Kaizen (5S audit)',
+    modal_pdf_destinataires: 'The PDF will be sent to the following recipients:', modal_texte_brut: '↺ Plain text', modal_reformuler: '✨ Rephrase',
+    modal_mdp_ph: 'Password...', modal_piece_jointe: 'Additional attachment (PDF, optional)', modal_retirer: '✕ Remove',
+    modal_joindre_eval: '📋 Attach this store\'s Team Evaluation summary', modal_envoyer: '📧 Send',
+    modal_previsualiser_pdf: '👁 Preview the PDF', btn_annuler: 'Cancel',
   },
   ES: {
     nav_nouveau: 'Nuevo', nav_historique: 'Historial', nav_analyse: 'Análisis', nav_parametres: 'Ajustes',
@@ -1249,6 +1257,10 @@ const I18N = {
     hcm_defaut: 'Por defecto', hcm_generer: '⬇ Generar el archivo', btn_fermer: 'Cerrar',
     hcm_actions: 'Acciones pendientes', hcm_effectif: 'Plantilla', hcm_absenteisme: 'Absentismo', hcm_positionnement: 'Posicionamiento anual',
     hcm_pedlv: 'PEDLV (indicadores en rojo)', hcm_avis: 'Reseñas de Google', hcm_equipe: 'Nivel del equipo', hcm_kaizen: 'Kaizen (auditoría 5S)',
+    modal_pdf_destinataires: 'El PDF se enviará a los siguientes destinatarios:', modal_texte_brut: '↺ Texto sin formato', modal_reformuler: '✨ Reformular',
+    modal_mdp_ph: 'Contraseña...', modal_piece_jointe: 'Adjunto adicional (PDF, opcional)', modal_retirer: '✕ Quitar',
+    modal_joindre_eval: '📋 Adjuntar el resumen de Evaluación de Equipo de esta tienda', modal_envoyer: '📧 Enviar',
+    modal_previsualiser_pdf: '👁 Previsualizar el PDF', btn_annuler: 'Cancelar',
   },
   HE: {
     nav_nouveau: 'חדש', nav_historique: 'היסטוריה', nav_analyse: 'ניתוח', nav_parametres: 'הגדרות',
@@ -1413,6 +1425,10 @@ const I18N = {
     hcm_defaut: 'Standaard', hcm_generer: '⬇ Bestand genereren', btn_fermer: 'Sluiten',
     hcm_actions: 'Openstaande acties', hcm_effectif: 'Personeel', hcm_absenteisme: 'Absenteïsme', hcm_positionnement: 'Jaarlijkse realisatie',
     hcm_pedlv: 'PEDLV (rode indicatoren)', hcm_avis: 'Google-reviews', hcm_equipe: 'Teamniveau', hcm_kaizen: 'Kaizen (5S-audit)',
+    modal_pdf_destinataires: 'De PDF wordt verzonden naar de volgende ontvangers:', modal_texte_brut: '↺ Platte tekst', modal_reformuler: '✨ Herformuleren',
+    modal_mdp_ph: 'Wachtwoord...', modal_piece_jointe: 'Extra bijlage (PDF, optioneel)', modal_retirer: '✕ Verwijderen',
+    modal_joindre_eval: '📋 Teamevaluatie-overzicht van deze winkel toevoegen', modal_envoyer: '📧 Verzenden',
+    modal_previsualiser_pdf: '👁 PDF bekijken', btn_annuler: 'Annuleren',
   },
 };
 
