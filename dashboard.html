@@ -183,6 +183,10 @@ function startApp(){
   loadDashboard();
 }
 
+function responsableAffiche(r){
+  return r.animateur || r.directeurPays || r.directriceInter || '—';
+}
+
 function scoreColor(score){
   if(score === null || score === undefined) return '#5F5E5A';
   if(score >= 80) return '#2ecc71';
@@ -217,7 +221,7 @@ async function loadDashboard(){
       var color = scoreColor(r.score);
       h += '<div class="store-row" onclick="showDetail(\'' + r.code + '\')">'
         + '<div class="score-dot'+(r.score===null?' na':'')+'" style="background:'+(r.score===null?'':color+'22')+';color:'+color+'">'+(r.score!==null?r.score:'—')+'</div>'
-        + '<div class="store-name"><div class="n">'+r.libelle+'</div><div class="sub">'+(r.animateur||'—')+'</div></div>'
+        + '<div class="store-name"><div class="n">'+r.libelle+'</div><div class="sub">'+responsableAffiche(r)+'</div></div>'
         + (r.overdue ? '<span class="overdue-badge">'+(r.daysSinceVisit!==null?r.daysSinceVisit+'j':'jamais visité')+'</span>' : '')
         + '</div>';
     });
