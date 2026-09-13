@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0D0D0D">
+<link rel="manifest" href="manifest-dashboard.json">
+<title>Dashboard réseau — Optical Center</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');
+  *{box-sizing:border-box;font-family:'Barlow',sans-serif;-webkit-tap-highlight-color:transparent}
+  body{background:#0D0D0D;color:#F0EDE6;margin:0;padding:0 16px 40px}
+  h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.02em;margin:20px 0 2px}
+  p.sub{color:#888780;margin:0 0 20px;font-size:13px}
+  .card{background:#161615;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px}
+  #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center;max-width:340px;margin:0 auto}
+  #login-screen input,#login-screen select{width:100%;margin-bottom:10px;background:#161615;color:#F0EDE6;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:11px 12px;font-size:14px}
+  .btn{background:#CC1719;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+  .btn:hover{background:#a81315}
+  .btn:disabled{opacity:0.5;cursor:not-allowed}
+  #login-error{display:none;color:#CC1719;font-size:12px;margin-bottom:10px}
+  #app-wrap{display:none;max-width:1000px;margin:0 auto}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding-top:16px}
+  .topbar a{color:#888780;font-size:12px;text-decoration:none}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:16px 0}
+  .kpi{background:#161615;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;text-align:center}
+  .kpi .v{font-size:28px;font-weight:700;font-family:'Barlow Condensed',sans-serif}
+  .kpi .l{font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:0.03em}
+  .store-list{margin-top:16px}
+  .store-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06);cursor:pointer}
+  .store-row:hover{background:rgba(255,255,255,0.03)}
+  .score-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+  .score-dot.na{background:rgba(255,255,255,0.08);color:#5F5E5A}
+  .store-name{flex:1;min-width:0}
+  .store-name .n{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .store-name .sub{font-size:11px;color:#888780}
+  .overdue-badge{background:rgba(204,23,25,0.15);color:#CC1719;font-size:10px;padding:2px 8px;border-radius:10px;flex-shrink:0}
+  .empty{text-align:center;color:#5F5E5A;padding:30px 0;font-size:13px}
+  #detail-screen{display:none}
+  .back-btn{background:none;border:none;color:#888780;font-size:13px;cursor:pointer;padding:8px 0;margin-bottom:8px}
+  .subscore-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-top:14px}
+  .subscore{background:#0D0D0D;border-radius:8px;padding:10px;text-align:center}
+  .subscore .v{font-size:18px;font-weight:700}
+  .subscore .l{font-size:10px;color:#888780;text-transform:uppercase}
+  .hist-bars{display:flex;align-items:flex-end;gap:2px;height:60px;margin-top:14px}
+  .hist-bar{flex:1;background:#CC1719;border-radius:2px 2px 0 0;min-height:2px}
+  .loading-msg{text-align:center;color:#888780;padding:30px 0;font-size:13px}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <h1>Dashboard <span style="color:#CC1719">réseau</span></h1>
+  <select id="login-ar-select" onchange="onLoginArChange(this.value)"><option value="">Chargement des animateurs…</option></select>
+  <input id="login-user" type="text" placeholder="prenom.nom@optical-center.com" style="display:none">
+  <input id="login-pass" type="password" placeholder="Mot de passe Zimbra">
+  <div id="login-error"></div>
+  <button class="btn" id="login-btn" onclick="doLogin()">Se connecter</button>
+</div>
+
+<div id="app-wrap">
+  <div class="topbar">
+    <h1 style="margin:0">Dashboard <span style="color:#CC1719">réseau</span></h1>
+    <a href="#" onclick="logout();return false">déconnexion</a>
+  </div>
+  <p class="sub" id="scope-label">—</p>
+
+  <div id="list-screen">
+    <div class="kpi-row">
+      <div class="kpi"><div class="v" id="kpi-score">—</div><div class="l">Score moyen</div></div>
+      <div class="kpi"><div class="v" id="kpi-nb">—</div><div class="l">Magasins</div></div>
+      <div class="kpi"><div class="v" id="kpi-overdue">—</div><div class="l">En retard de visite</div></div>
+    </div>
+    <div class="card">
+      <div id="store-list" class="store-list"><div class="loading-msg">Chargement...</div></div>
+    </div>
+  </div>
+
+  <div id="detail-screen">
+    <button class="back-btn" onclick="showList()">← Retour à la liste</button>
+    <div class="card">
+      <h2 id="detail-name" style="margin:0 0 4px;font-family:'Barlow Condensed',sans-serif"></h2>
+      <p class="sub" id="detail-sub" style="margin:0 0 10px"></p>
+      <div class="subscore-grid" id="detail-subscores"></div>
+      <p class="sub" style="margin-top:18px;margin-bottom:2px">Évolution du score (26 dernières semaines)</p>
+      <div class="hist-bars" id="detail-history"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const RELAY = 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
+const MAGASINS_CSV_URL = 'https://raw.githubusercontent.com/oc-inter/bilan-passage/main/magasins_inter.csv';
+var arSession = null;
+var currentScope = 'ALL';
+var lastResults = [];
+
+function loadSession(){
+  try{
+    var raw = localStorage.getItem('dash_ar_session');
+    if(raw){ var s = JSON.parse(raw); if(s.exp > Date.now()) arSession = s; }
+  }catch(e){}
+}
+function logout(){ localStorage.removeItem('dash_ar_session'); location.reload(); }
+
+function parseMagasinsCSV(text){
+  var lines = text.split(/\r?\n/).filter(Boolean);
+  var header = lines[0].split(';');
+  function idx(name){ return header.indexOf(name); }
+  var iAnimateur = idx('animateur'), iAnimateurEmail = idx('animateur_email');
+  return lines.slice(1).map(function(line){
+    var c = line.split(';');
+    return { animateur: (c[iAnimateur]||'').trim(), animateurEmail: (c[iAnimateurEmail]||'').trim() };
+  });
+}
+
+async function populateLoginArSelect(savedUser){
+  var sel = document.getElementById('login-ar-select');
+  try{
+    var r = await fetch(MAGASINS_CSV_URL, {cache:'no-store'});
+    var text = await r.text();
+    var rows = parseMagasinsCSV(text).filter(function(m){ return m.animateur && m.animateurEmail; });
+    var seen = {}, list = [];
+    rows.forEach(function(m){ if(!seen[m.animateur]){ seen[m.animateur]=1; list.push([m.animateur, m.animateurEmail]); } });
+    list.sort(function(a,b){ return a[0].localeCompare(b[0]); });
+    var h = '<option value="">— Choisir un animateur —</option>';
+    list.forEach(function(p){ h += '<option value="'+p[1]+'">'+p[0]+'</option>'; });
+    h += '<option value="__manual__">Autre identifiant Zimbra…</option>';
+    sel.innerHTML = h;
+    if(savedUser){ sel.value = list.some(function(p){return p[1]===savedUser;}) ? savedUser : '__manual__'; onLoginArChange(sel.value); }
+  }catch(e){
+    sel.innerHTML = '<option value="__manual__">Identifiant Zimbra…</option>';
+    sel.value = '__manual__'; onLoginArChange('__manual__');
+  }
+}
+
+function onLoginArChange(val){
+  var m = document.getElementById('login-user');
+  if(val === '__manual__'){ m.style.display='block'; if(!m.value||m.value==='__manual__') m.value=''; m.focus(); }
+  else { m.style.display='none'; m.value = val; }
+}
+
+async function doLogin(){
+  var errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+  var zimbraUser = document.getElementById('login-user').value.trim();
+  var zimbraPass = document.getElementById('login-pass').value;
+  var btn = document.getElementById('login-btn');
+  if(!zimbraUser){ errEl.textContent='Identifiant Zimbra requis'; errEl.style.display='block'; return; }
+  if(!zimbraPass){ errEl.textContent='Mot de passe requis'; errEl.style.display='block'; return; }
+  localStorage.setItem('dash_zimbra_user', zimbraUser);
+  btn.disabled = true; btn.textContent = 'Connexion...';
+  try{
+    var resp = await fetch(RELAY + '/ar-login', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({zimbraUser: zimbraUser, zimbraPass: zimbraPass})
+    });
+    var data = await resp.json();
+    if(!resp.ok || data.error) throw new Error(data.error || ('Erreur '+resp.status));
+    arSession = {token: data.sessionToken, ar: data.ar, exp: Date.now() + data.expiresInMs};
+    localStorage.setItem('dash_ar_session', JSON.stringify(arSession));
+    document.getElementById('login-pass').value = '';
+    startApp();
+  }catch(e){
+    errEl.textContent = e.message; errEl.style.display = 'block';
+  }finally{
+    btn.disabled = false; btn.textContent = 'Se connecter';
+  }
+}
+
+function startApp(){
+  currentScope = arSession.ar;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-wrap').style.display = 'block';
+  document.getElementById('scope-label').textContent =
+    currentScope === 'ALL' ? 'Tout le réseau' :
+    (currentScope.indexOf('PAYS:') === 0 ? 'Périmètre pays' : 'Périmètre : ' + currentScope);
+  loadDashboard();
+}
+
+function scoreColor(score){
+  if(score === null || score === undefined) return '#5F5E5A';
+  if(score >= 80) return '#2ecc71';
+  if(score >= 60) return '#f0b414';
+  return '#CC1719';
+}
+
+async function loadDashboard(){
+  var listEl = document.getElementById('store-list');
+  listEl.innerHTML = '<div class="loading-msg">Chargement...</div>';
+  try{
+    var url = currentScope === 'ALL'
+      ? RELAY + '/store-health'
+      : RELAY + '/ar-dashboard?ar=' + encodeURIComponent(currentScope);
+    var resp = await fetch(url, { headers: {'X-AR-Session': arSession.token} });
+    var data = await resp.json();
+    if(!resp.ok || data.error) throw new Error(data.error || 'Erreur inconnue');
+    lastResults = data.results || [];
+
+    var scoreMoyen = data.scoreMoyen;
+    if(scoreMoyen === undefined){
+      var valids = lastResults.map(function(r){return r.score;}).filter(function(s){return s !== null;});
+      scoreMoyen = valids.length ? Math.round(valids.reduce(function(a,b){return a+b;},0)/valids.length) : null;
+    }
+    document.getElementById('kpi-score').textContent = scoreMoyen !== null ? scoreMoyen : '—';
+    document.getElementById('kpi-nb').textContent = lastResults.length;
+    document.getElementById('kpi-overdue').textContent = data.magasinsEnRetard !== undefined ? data.magasinsEnRetard : lastResults.filter(function(r){return r.overdue;}).length;
+
+    if(!lastResults.length){ listEl.innerHTML = '<div class="empty">Aucun magasin trouvé.</div>'; return; }
+    var h = '';
+    lastResults.forEach(function(r){
+      var color = scoreColor(r.score);
+      h += '<div class="store-row" onclick="showDetail(\'' + r.code + '\')">'
+        + '<div class="score-dot'+(r.score===null?' na':'')+'" style="background:'+(r.score===null?'':color+'22')+';color:'+color+'">'+(r.score!==null?r.score:'—')+'</div>'
+        + '<div class="store-name"><div class="n">'+r.libelle+'</div><div class="sub">'+(r.animateur||'—')+'</div></div>'
+        + (r.overdue ? '<span class="overdue-badge">'+(r.daysSinceVisit!==null?r.daysSinceVisit+'j':'jamais visité')+'</span>' : '')
+        + '</div>';
+    });
+    listEl.innerHTML = h;
+  }catch(e){
+    listEl.innerHTML = '<div class="empty">Erreur de chargement : '+e.message+'</div>';
+  }
+}
+
+function showList(){
+  document.getElementById('list-screen').style.display = 'block';
+  document.getElementById('detail-screen').style.display = 'none';
+}
+
+const SOUS_SCORE_LABELS = {
+  actions: 'Actions', effectif: 'Effectif', absenteisme: 'Absentéisme',
+  positionnement: 'Position.', pedlv: 'PEDLV', avis: 'Avis Google', equipe: 'Équipe', kaizen: 'Kaizen',
+};
+
+async function showDetail(code){
+  document.getElementById('list-screen').style.display = 'none';
+  document.getElementById('detail-screen').style.display = 'block';
+  document.getElementById('detail-name').textContent = 'Chargement...';
+  document.getElementById('detail-sub').textContent = '';
+  document.getElementById('detail-subscores').innerHTML = '';
+  document.getElementById('detail-history').innerHTML = '';
+  try{
+    var resp = await fetch(RELAY + '/store-health-detail?magasin_code=' + encodeURIComponent(code), { headers: {'X-AR-Session': arSession.token} });
+    var d = await resp.json();
+    if(!resp.ok || d.error) throw new Error(d.error || 'Erreur inconnue');
+
+    document.getElementById('detail-name').textContent = d.libelle;
+    document.getElementById('detail-sub').textContent = 'Score ' + (d.score !== null ? d.score : '—') + ' · Dernière visite : ' + (d.lastVisitDate || 'jamais');
+
+    var subH = '';
+    Object.keys(SOUS_SCORE_LABELS).forEach(function(k){
+      var v = d.subScores ? d.subScores[k] : null;
+      subH += '<div class="subscore"><div class="v" style="color:'+scoreColor(v)+'">'+(v!==null&&v!==undefined?Math.round(v):'—')+'</div><div class="l">'+SOUS_SCORE_LABELS[k]+'</div></div>';
+    });
+    document.getElementById('detail-subscores').innerHTML = subH;
+
+    var hist = d.history || [];
+    if(!hist.length){
+      document.getElementById('detail-history').innerHTML = '<p class="sub">Pas encore d\'historique (le premier snapshot hebdomadaire arrivera dimanche prochain).</p>';
+    } else {
+      var barsH = '';
+      hist.forEach(function(h){
+        var pct = h.score !== null ? Math.max(4, h.score) : 4;
+        barsH += '<div class="hist-bar" style="height:'+pct+'%;background:'+(h.score!==null?scoreColor(h.score):'#2C2C2A')+'" title="'+h.periode+' : '+(h.score!==null?h.score:'—')+'"></div>';
+      });
+      document.getElementById('detail-history').innerHTML = barsH;
+    }
+  }catch(e){
+    document.getElementById('detail-name').textContent = 'Erreur';
+    document.getElementById('detail-sub').textContent = e.message;
+  }
+}
+
+loadSession();
+var savedZimbraUser = localStorage.getItem('dash_zimbra_user') || '';
+document.getElementById('login-user').value = savedZimbraUser;
+populateLoginArSelect(savedZimbraUser);
+if(arSession && arSession.exp > Date.now()){ startApp(); }
+</script>
+</body>
+</html>

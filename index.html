@@ -811,7 +811,7 @@ function loadLogo() {
 }
 
 // ── VERSION APP ── (incrémenter à chaque mise à jour notable, pour déclencher l'invite de rechargement)
-const APP_VERSION = '2026.09.11-3';
+const APP_VERSION = '2026.09.12-1';
 
 // ── TRADUCTION (Phase 1 : sélecteur manuel, indépendant du magasin/de la personne connectée) ──
 // Sélecteur manquant en Phase 1 pour un texte donné (traducteur pas encore passé dessus) :
@@ -961,6 +961,15 @@ const I18N = {
     hcm_defaut: 'Défaut', hcm_generer: '⬇ Générer le fichier', btn_fermer: 'Fermer',
     hcm_actions: 'Actions non soldées', hcm_effectif: 'Effectif', hcm_absenteisme: 'Absentéisme', hcm_positionnement: 'Positionnement annuel',
     hcm_pedlv: 'PEDLV (indicateurs rouges)', hcm_avis: 'Avis Google', hcm_equipe: 'Niveau équipe', hcm_kaizen: 'Kaizen (audit 5S)',
+    health_info_intro: "Le score (sur 100) est une moyenne pondérée de 8 indicateurs. Seuls ceux pour lesquels on a une vraie donnée comptent — jamais un 0 par défaut pour une donnée manquante. Si moins de la moitié du poids total est couverte par de la donnée réelle, aucun score n'est affiché plutôt qu'un chiffre trompeur.",
+    health_info_actions: 'Seules les actions déjà reportées d\'un bilan précédent pénalisent la note ; une action toute neuve du dernier passage ne compte pas encore. -15 pts si elle est « en cours », -25 pts si « non fait ».',
+    health_info_effectif: 'Le sur-effectif fait perdre 25 pts par personne en trop par rapport au théorique. Le sous-effectif est aussi pénalisé s\'il est soutenu sur 3 mois consécutifs (donnée RH réelle, hors salariés en longue durée) — un manque ponctuel n\'est pas mis au débit du score.',
+    health_info_absenteisme: 'taux mensuel = jours d\'absence groupe A (vraie absence, longue durée incluse) / jours ouvrés théoriques, par magasin. Note du mois = 100 - taux en %. Le sous-score est la moyenne des notes mensuelles sur tous les mois pour lesquels le magasin a des données RH.',
+    health_info_positionnement: '% de réalisation de l\'objectif CA annuel, tel que saisi dans le dernier bilan.',
+    health_info_pedlv: 'proportion d\'indicateurs « Pour être dans le vert » dans le rouge. 0 indicateur rouge = 100, tous rouges = 0.',
+    health_info_avis: 'note Google ramenée sur 100 (note/5 × 100).',
+    health_info_equipe: 'moyenne des responsabilités notées dans Évaluation Équipe (objectif 8/10), ramenée sur 100.',
+    health_info_kaizen: 'score du dernier mois clôturé (sur 50 pts, audit 5S), ramené sur 100. Le mois en cours n\'est pas utilisé tant qu\'il n\'est pas clôturé, pour ne pas pénaliser un audit encore en cours de remplissage.',
     modal_pdf_destinataires: 'Le PDF sera envoyé aux destinataires suivants :', modal_texte_brut: '↺ Texte brut', modal_reformuler: '✨ Reformuler',
     modal_mdp_ph: 'Mot de passe...', modal_piece_jointe: 'Pièce jointe supplémentaire (PDF, optionnel)', modal_retirer: '✕ Retirer',
     modal_joindre_eval: '📋 Joindre le récapitulatif Évaluation Équipe de ce magasin', modal_envoyer: '📧 Envoyer',
@@ -1128,6 +1137,15 @@ const I18N = {
     hcm_defaut: 'Default', hcm_generer: '⬇ Generate the file', btn_fermer: 'Close',
     hcm_actions: 'Unresolved actions', hcm_effectif: 'Headcount', hcm_absenteisme: 'Absenteeism', hcm_positionnement: 'Annual achievement',
     hcm_pedlv: 'PEDLV (red indicators)', hcm_avis: 'Google reviews', hcm_equipe: 'Team level', hcm_kaizen: 'Kaizen (5S audit)',
+    health_info_intro: "The score (out of 100) is a weighted average of 8 indicators. Only indicators with real data count — never a default 0 for missing data. If less than half of the total weight is covered by real data, no score is shown rather than a misleading figure.",
+    health_info_actions: 'Only actions already carried over from a previous report count against the score; a brand-new action from the latest visit doesn\'t count yet. -15 pts if it\'s "in progress", -25 pts if "not done".',
+    health_info_effectif: 'Overstaffing costs 25 pts per person above the theoretical headcount. Understaffing is also penalised if sustained over 3 consecutive months (real HR data, excluding long-term absences) — a one-off shortfall isn\'t held against the score.',
+    health_info_absenteisme: 'monthly rate = group A absence days (genuine absence, including long-term) / theoretical working days, per store. Monthly grade = 100 - rate in %. The sub-score is the average of monthly grades across all months for which the store has HR data.',
+    health_info_positionnement: '% achievement of the annual revenue target, as entered in the latest report.',
+    health_info_pedlv: 'proportion of "Pour être dans le vert" indicators showing red. 0 red indicators = 100, all red = 0.',
+    health_info_avis: 'Google rating converted to a 100 scale (rating/5 × 100).',
+    health_info_equipe: 'average of the responsibilities scored in Évaluation Équipe (target 8/10), converted to a 100 scale.',
+    health_info_kaizen: 'score of the last closed month (out of 50 pts, 5S audit), converted to a 100 scale. The current month isn\'t used until it\'s closed, so as not to penalise an audit still being filled in.',
     modal_pdf_destinataires: 'The PDF will be sent to the following recipients:', modal_texte_brut: '↺ Plain text', modal_reformuler: '✨ Rephrase',
     modal_mdp_ph: 'Password...', modal_piece_jointe: 'Additional attachment (PDF, optional)', modal_retirer: '✕ Remove',
     modal_joindre_eval: '📋 Attach this store\'s Team Evaluation summary', modal_envoyer: '📧 Send',
@@ -1295,6 +1313,15 @@ const I18N = {
     hcm_defaut: 'Por defecto', hcm_generer: '⬇ Generar el archivo', btn_fermer: 'Cerrar',
     hcm_actions: 'Acciones pendientes', hcm_effectif: 'Plantilla', hcm_absenteisme: 'Absentismo', hcm_positionnement: 'Posicionamiento anual',
     hcm_pedlv: 'PEDLV (indicadores en rojo)', hcm_avis: 'Reseñas de Google', hcm_equipe: 'Nivel del equipo', hcm_kaizen: 'Kaizen (auditoría 5S)',
+    health_info_intro: "La puntuación (sobre 100) es una media ponderada de 8 indicadores. Solo cuentan aquellos para los que hay datos reales — nunca un 0 por defecto para un dato ausente. Si menos de la mitad del peso total está cubierto por datos reales, no se muestra ninguna puntuación en lugar de una cifra engañosa.",
+    health_info_actions: 'Solo las acciones ya trasladadas de un informe anterior penalizan la nota; una acción totalmente nueva de la última visita aún no cuenta. -15 pts si está «en curso», -25 pts si «no realizada».',
+    health_info_effectif: 'El exceso de plantilla resta 25 pts por persona de más respecto al teórico. La falta de plantilla también se penaliza si es sostenida durante 3 meses consecutivos (dato RRHH real, sin bajas de larga duración) — una carencia puntual no perjudica la puntuación.',
+    health_info_absenteisme: 'tasa mensual = días de ausencia grupo A (ausencia real, incluidas las de larga duración) / días laborables teóricos, por tienda. Nota del mes = 100 - tasa en %. El subíndice es la media de las notas mensuales de todos los meses con datos de RRHH disponibles.',
+    health_info_positionnement: '% de cumplimiento del objetivo de facturación anual, según el último informe.',
+    health_info_pedlv: 'proporción de indicadores «Pour être dans le vert» en rojo. 0 indicadores en rojo = 100, todos en rojo = 0.',
+    health_info_avis: 'valoración de Google convertida a escala de 100 (valoración/5 × 100).',
+    health_info_equipe: 'media de las responsabilidades evaluadas en Évaluation Équipe (objetivo 8/10), convertida a escala de 100.',
+    health_info_kaizen: 'puntuación del último mes cerrado (sobre 50 pts, auditoría 5S), convertida a escala de 100. El mes en curso no se utiliza hasta que se cierra, para no penalizar una auditoría aún en curso.',
     modal_pdf_destinataires: 'El PDF se enviará a los siguientes destinatarios:', modal_texte_brut: '↺ Texto sin formato', modal_reformuler: '✨ Reformular',
     modal_mdp_ph: 'Contraseña...', modal_piece_jointe: 'Adjunto adicional (PDF, opcional)', modal_retirer: '✕ Quitar',
     modal_joindre_eval: '📋 Adjuntar el resumen de Evaluación de Equipo de esta tienda', modal_envoyer: '📧 Enviar',
@@ -1482,6 +1509,15 @@ const I18N = {
     hcm_defaut: 'Standaard', hcm_generer: '⬇ Bestand genereren', btn_fermer: 'Sluiten',
     hcm_actions: 'Openstaande acties', hcm_effectif: 'Personeel', hcm_absenteisme: 'Absenteïsme', hcm_positionnement: 'Jaarlijkse realisatie',
     hcm_pedlv: 'PEDLV (rode indicatoren)', hcm_avis: 'Google-reviews', hcm_equipe: 'Teamniveau', hcm_kaizen: 'Kaizen (5S-audit)',
+    health_info_intro: "De score (op 100) is een gewogen gemiddelde van 8 indicatoren. Alleen indicatoren met echte gegevens tellen mee — nooit een standaard 0 voor ontbrekende gegevens. Als minder dan de helft van het totale gewicht gedekt is door echte gegevens, wordt geen score getoond in plaats van een misleidend cijfer.",
+    health_info_actions: 'Alleen acties die al zijn overgedragen uit een vorig rapport tellen mee voor de score; een gloednieuwe actie van het laatste bezoek telt nog niet mee. -15 pt als "in uitvoering", -25 pt als "niet gedaan".',
+    health_info_effectif: 'Overbezetting kost 25 pt per persoon boven het theoretische aantal. Onderbezetting wordt ook bestraft als deze 3 opeenvolgende maanden aanhoudt (echte HR-gegevens, exclusief langdurig verzuim) — een eenmalig tekort telt niet mee voor de score.',
+    health_info_absenteisme: 'maandelijks percentage = groep A-afwezigheidsdagen (echte afwezigheid, inclusief langdurig) / theoretische werkdagen, per winkel. Maandcijfer = 100 - percentage in %. De subscore is het gemiddelde van de maandcijfers over alle maanden waarvoor de winkel HR-gegevens heeft.',
+    health_info_positionnement: '% realisatie van de jaarlijkse omzetdoelstelling, zoals ingevoerd in het laatste rapport.',
+    health_info_pedlv: 'aandeel indicatoren "Pour être dans le vert" dat rood staat. 0 rode indicatoren = 100, allemaal rood = 0.',
+    health_info_avis: 'Google-beoordeling omgezet naar een schaal van 100 (beoordeling/5 × 100).',
+    health_info_equipe: 'gemiddelde van de verantwoordelijkheden beoordeeld in Évaluation Équipe (doel 8/10), omgezet naar een schaal van 100.',
+    health_info_kaizen: 'score van de laatst afgesloten maand (op 50 pt, 5S-audit), omgezet naar een schaal van 100. De lopende maand wordt niet gebruikt totdat deze is afgesloten, om een audit die nog wordt ingevuld niet te benadelen.',
     modal_pdf_destinataires: 'De PDF wordt verzonden naar de volgende ontvangers:', modal_texte_brut: '↺ Platte tekst', modal_reformuler: '✨ Herformuleren',
     modal_mdp_ph: 'Wachtwoord...', modal_piece_jointe: 'Extra bijlage (PDF, optioneel)', modal_retirer: '✕ Verwijderen',
     modal_joindre_eval: '📋 Teamevaluatie-overzicht van deze winkel toevoegen', modal_envoyer: '📧 Verzenden',
@@ -6171,26 +6207,28 @@ const HCM_LABELS = {
 // Texte du popup "i" (fiche magasin, écran Tournée) — expliquant le calcul du
 // score de santé. Les poids affichés sont lus en direct dans POIDS_SANTE, donc
 // restent à jour même après un réglage via ⚖️ et régénération du fichier.
-const HEALTH_SCORE_INFO_TEXT = "Le score (sur 100) est une moyenne pondérée de 8 indicateurs. Seuls ceux pour lesquels on a une vraie donnée comptent — jamais un 0 par défaut pour une donnée manquante. Si moins de la moitié du poids total est couverte par de la donnée réelle, aucun score n'est affiché plutôt qu'un chiffre trompeur.";
+// Traduit (17/09) : t() lit health_info_* dans I18N, calculé à l'affichage
+// pour toujours suivre currentLang.
+function healthScoreInfoText() { return t('health_info_intro'); }
 const HEALTH_SCORE_INFO_ITEMS = {
-  actions: { label: 'Actions non soldées', text: 'Seules les actions déjà reportées d\'un bilan précédent pénalisent la note ; une action toute neuve du dernier passage ne compte pas encore. -15 pts si elle est « en cours », -25 pts si « non fait ».' },
-  effectif: { label: 'Effectif', text: 'Le sur-effectif fait perdre 25 pts par personne en trop par rapport au théorique. Le sous-effectif est aussi pénalisé s\'il est soutenu sur 3 mois consécutifs (donnée RH réelle, hors salariés en longue durée) — un manque ponctuel n\'est pas mis au débit du score.' },
-  absenteisme: { label: 'Absentéisme', text: 'taux mensuel = jours d\'absence groupe A (vraie absence, longue durée incluse) / jours ouvrés théoriques, par magasin. Note du mois = 100 - taux en %. Le sous-score est la moyenne des notes mensuelles sur tous les mois pour lesquels le magasin a des données RH.' },
-  positionnement: { label: 'Positionnement annuel', text: '% de réalisation de l\'objectif CA annuel, tel que saisi dans le dernier bilan.' },
-  pedlv: { label: 'PEDLV', text: 'proportion d\'indicateurs « Pour être dans le vert » dans le rouge. 0 indicateur rouge = 100, tous rouges = 0.' },
-  avis: { label: 'Avis Google', text: 'note Google ramenée sur 100 (note/5 × 100).' },
-  equipe: { label: 'Niveau équipe', text: 'moyenne des responsabilités notées dans Évaluation Équipe (objectif 8/10), ramenée sur 100.' },
-  kaizen: { label: 'Kaizen (audit 5S)', text: 'score du dernier mois clôturé (sur 50 pts, audit 5S), ramené sur 100. Le mois en cours n\'est pas utilisé tant qu\'il n\'est pas clôturé, pour ne pas pénaliser un audit encore en cours de remplissage.' },
+  actions: { labelKey: 'hcm_actions', textKey: 'health_info_actions' },
+  effectif: { labelKey: 'hcm_effectif', textKey: 'health_info_effectif' },
+  absenteisme: { labelKey: 'hcm_absenteisme', textKey: 'health_info_absenteisme' },
+  positionnement: { labelKey: 'hcm_positionnement', textKey: 'health_info_positionnement' },
+  pedlv: { labelKey: 'hcm_pedlv', textKey: 'health_info_pedlv' },
+  avis: { labelKey: 'hcm_avis', textKey: 'health_info_avis' },
+  equipe: { labelKey: 'hcm_equipe', textKey: 'health_info_equipe' },
+  kaizen: { labelKey: 'hcm_kaizen', textKey: 'health_info_kaizen' },
 };
 
 function showHealthScoreInfo() {
   const items = Object.keys(POIDS_SANTE).map(key => {
     const info = HEALTH_SCORE_INFO_ITEMS[key];
     if (!info) return '';
-    return `<li style="margin-bottom:8px"><strong style="color:var(--text)">${info.label}</strong> <span style="color:var(--muted)">(poids ${POIDS_SANTE[key]})</span> — ${info.text}</li>`;
+    return `<li style="margin-bottom:8px"><strong style="color:var(--text)">${t(info.labelKey)}</strong> <span style="color:var(--muted)">(poids ${POIDS_SANTE[key]})</span> — ${t(info.textKey)}</li>`;
   }).join('');
   document.getElementById('health-info-body').innerHTML =
-    `<p style="font-size:12px;color:var(--text);line-height:1.5;margin:0 0 12px">${HEALTH_SCORE_INFO_TEXT}</p>` +
+    `<p style="font-size:12px;color:var(--text);line-height:1.5;margin:0 0 12px">${healthScoreInfoText()}</p>` +
     `<ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.6;color:var(--text)">${items}</ul>`;
   document.getElementById('modal-health-info').classList.add('open');
 }

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Import RH — Optical Center</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
+  *{box-sizing:border-box;font-family:'Barlow',sans-serif}
+  body{background:#0D0D0D;color:#F0EDE6;margin:0;padding:24px;max-width:900px;margin:0 auto}
+  h1{font-weight:700;margin-bottom:4px}
+  p.sub{color:#888780;margin-top:0;margin-bottom:24px}
+  .card{background:#161615;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:20px}
+  label{display:block;font-size:13px;color:#888780;margin-bottom:6px}
+  textarea{width:100%;min-height:160px;background:#0D0D0D;color:#F0EDE6;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:12px;font-family:monospace;font-size:13px}
+  .hint{font-size:12px;color:#5F5E5A;margin-top:8px;line-height:1.5}
+  button{background:#CC1719;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px}
+  button:hover{background:#a81315}
+  button:disabled{opacity:0.5;cursor:not-allowed}
+  button.sec{background:transparent;border:1px solid rgba(255,255,255,0.2);color:#F0EDE6}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.08)}
+  th{color:#888780;font-weight:600;font-size:11px;text-transform:uppercase}
+  .status{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none}
+  .status.ok{background:rgba(46,204,113,0.12);color:#2ecc71;display:block}
+  .status.err{background:rgba(204,23,25,0.12);color:#CC1719;display:block}
+  .badge-warn{background:rgba(240,180,20,0.15);color:#f0b414;padding:2px 8px;border-radius:10px;font-size:11px}
+</style>
+</head>
+<body>
+  <h1>Import RH — effectif</h1>
+  <p class="sub">Version simplifiée internationale : effectif réel par magasin/mois, sans catégorisation légale d'absence (à venir, module complet par pays)</p>
+
+  <div class="card">
+    <label>Coller les lignes (une par ligne, séparées par point-virgule)</label>
+    <textarea id="csv-input" placeholder="code_site;mois;effectif_reel&#10;278001;2026-09;12&#10;278003;2026-09;6.5"></textarea>
+    <div class="hint">
+      Format : <code>code_site;mois;effectif_reel</code> — mois au format <code>YYYY-MM</code>, effectif_reel peut être décimal (temps partiel). Un ré-import du même magasin/mois remplace la valeur précédente (pas de doublon).
+    </div>
+    <button onclick="importer()" id="btn-import">Importer</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <label style="margin:0">Dernières valeurs importées</label>
+      <button class="sec" onclick="chargerExistant()" style="margin:0;padding:8px 14px;font-size:12px">🔄 Recharger</button>
+    </div>
+    <div id="table-wrap"><p class="hint">Chargement...</p></div>
+  </div>
+
+<script>
+const RELAY = 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
+
+function parseLignes(text) {
+  return text.split('\n').map(l => l.trim()).filter(Boolean).map(l => {
+    const parts = l.split(';').map(p => p.trim());
+    const [codeSite, mois, effectifStr] = parts;
+    const effectifReel = parseFloat((effectifStr || '').replace(',', '.'));
+    return { codeSite, mois, effectifReel: Number.isFinite(effectifReel) ? effectifReel : null };
+  });
+}
+
+async function importer() {
+  const raw = document.getElementById('csv-input').value;
+  const lignes = parseLignes(raw).filter(l => l.codeSite && l.mois && l.effectifReel !== null);
+  const statusEl = document.getElementById('status');
+  const btn = document.getElementById('btn-import');
+  if (!lignes.length) {
+    statusEl.className = 'status err';
+    statusEl.textContent = 'Aucune ligne valide détectée — vérifie le format (code_site;mois;effectif_reel).';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Import en cours...';
+  try {
+    const resp = await fetch(RELAY + '/rh-effectif-import', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lignes }),
+    });
+    const data = await resp.json();
+    if (!resp.ok || data.error) throw new Error(data.error || 'Erreur inconnue');
+    statusEl.className = 'status ok';
+    let msg = `${data.importees} ligne(s) importée(s).`;
+    if (data.codesInconnus && data.codesInconnus.length) {
+      msg += ` ⚠️ Codes magasin non reconnus (ignorés du calcul de score, vérifie l'orthographe) : ${data.codesInconnus.join(', ')}`;
+    }
+    statusEl.textContent = msg;
+    document.getElementById('csv-input').value = '';
+    chargerExistant();
+  } catch (e) {
+    statusEl.className = 'status err';
+    statusEl.textContent = 'Erreur : ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Importer';
+  }
+}
+
+async function chargerExistant() {
+  const wrap = document.getElementById('table-wrap');
+  wrap.innerHTML = '<p class="hint">Chargement...</p>';
+  try {
+    const resp = await fetch(RELAY + '/rh-effectif-simple');
+    const data = await resp.json();
+    if (!resp.ok || data.error) throw new Error(data.error || 'Erreur inconnue');
+    if (!data.results.length) { wrap.innerHTML = '<p class="hint">Aucune donnée importée pour l\'instant.</p>'; return; }
+    let h = '<table><tr><th>Code site</th><th>Mois</th><th>Effectif réel</th></tr>';
+    data.results.forEach(r => {
+      h += `<tr><td>${r.code_site}</td><td>${r.mois}</td><td>${r.effectif_reel}</td></tr>`;
+    });
+    h += '</table>';
+    wrap.innerHTML = h;
+  } catch (e) {
+    wrap.innerHTML = '<p class="hint">Erreur de chargement : ' + e.message + '</p>';
+  }
+}
+
+chargerExistant();
+</script>
+</body>
+</html>
