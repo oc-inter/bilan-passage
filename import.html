@@ -48,11 +48,13 @@
   <h1>Import RH — effectif &amp; agenda</h1>
   <p class="sub">Mêmes libellés de colonnes et mêmes règles de calcul que la France (droit du travail français pour l'instant — à adapter par pays si besoin). Connecté : <span id="session-label"></span> · <a href="#" onclick="logout();return false" style="color:#888780">déconnexion</a></p>
 
-  <div class="card">
-    <label>Mois concerné</label>
-    <input type="month" id="mois-select">
+  <div class="card" style="margin-bottom:12px">
+    <label>Mois concerné <span style="color:#5F5E5A;font-weight:400">(commun aux deux imports ci-dessous)</span></label>
+    <input type="month" id="mois-select" style="margin-bottom:0">
+  </div>
 
-    <label style="margin-top:8px">1. Effectif — export "Rapport effectif par site" (.xlsx)</label>
+  <div class="card">
+    <label>1. Effectif — export "Rapport effectif par site" (.xlsx)</label>
     <input type="file" id="file-effectif" accept=".xlsx,.xls">
     <div class="hint">Colonnes attendues : Matricule, Nom, Prénom, Genre, Poste, Codes sites, Noms sites, Date d'entrée, Date de départ. "Codes sites"/"Noms sites" séparés par des virgules si un salarié couvre plusieurs magasins.</div>
     <button onclick="importerEffectif()" id="btn-effectif">Importer l'effectif</button>
