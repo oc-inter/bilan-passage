@@ -1,10 +1,10 @@
 name;unit;dir;obj;obj_Luxembourg;obj_Quebec;obj_Ontario;pays;name_EN;name_ES;name_NL;name_HE
-SOP;%;gte;40;45;35;35;ALL;SOP;SOP;SOP;
-NDV;;;;;;;ALL;NDV;NDV;NDV;
+SOP;%;gte;50;;50;50;ALL;OPC;SOP;SOP;
+NDV;;gte;100;;100;100;ALL;NDV;NDV;NDV;
 MdC/Intemporelle;%;gte;70;70;65;65;ALL;MdC/Timeless;MdC/Intemporelle;MdC/Intemporelle;
 Audio dépistage;;;;;;;ALL;Audio screening;Cribado auditivo;Gehoorscreening;
 Devis rappels;%;;;;;;ALL;Quote follow-ups;Seguimiento de presupuestos;Opvolging offertes;
-Oney financement;%;gte;;;;;ALL;Oney financing;Financiación Oney;Oney-financiering;
-Lyleoo;;;;;;;ALL;Lyleoo;Lyleoo;Lyleoo;
-Confidence tool;;;;;;;ALL;Confidence tool;Confidence tool;Confidence tool;
+Financement;%;gte;;;;;ALL;Oney financing;Financiación Oney;Oney-financiering;
+Visites CE;%;;;;;;ALL;Visites CE;Visites CE;Visites CE;
+Confidence ;;;;;;;ALL;Confidence ;Confidence ;Confidence ;
 CA N/N-1;%;gte;100;;;;ALL;Sales Y/Y-1;Ventas A/A-1;Omzet J/J-1;
