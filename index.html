@@ -88,6 +88,21 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .action-item-text{font-size:13px;color:var(--text)}
 .action-item-meta{display:flex;gap:8px;font-size:11px;color:var(--muted)}
 .action-item-del{cursor:pointer;color:var(--muted);font-size:12px;padding:2px}
+/* ── CHECKLIST DE PASSAGE (reprise France 24/09, ajout Inter 29/09) ── */
+#checklist-fab{position:fixed;right:16px;bottom:136px;z-index:160;display:none;align-items:center;gap:6px;background:var(--red);color:#fff;border:none;border-radius:22px;padding:10px 16px;font-family:'Barlow',sans-serif;font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.45);cursor:pointer}
+#checklist-fab.complete{background:#1a7a45}
+.ckl-item{display:flex;align-items:center;gap:8px;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text)}
+.ckl-item .ckl-texte{flex:1;line-height:1.35}
+.ckl-item button{background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 4px}
+.ckl-badge{font-size:10px;font-weight:700;color:var(--red);background:var(--red2);border:1px solid var(--red3);border-radius:4px;padding:1px 5px;text-transform:uppercase;letter-spacing:.3px;flex-shrink:0}
+.ckl-sub{font-size:12px;font-weight:700;color:var(--text);margin-top:4px}
+.ckl-hint{font-size:11px;color:var(--muted)}
+.ckl-check{display:flex;align-items:flex-start;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text);cursor:pointer}
+.ckl-check input{width:20px;height:20px;margin:0;flex-shrink:0;accent-color:var(--red)}
+.ckl-check.done .ckl-texte{color:var(--muted);text-decoration:line-through}
+.ckl-input{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif}
+#home-checklist-link{font-size:13px;color:var(--muted);background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer}
+
 /* Tour de péniches */
 .peniche-card{background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
 .peniche-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -264,6 +279,7 @@ input[type=date]{color-scheme:dark}
     <span style="font-size:10px;color:var(--muted);margin-top:2px" data-i18n="home_passage_hint">Numéro de passage dans l'année (sera automatique l'an prochain)</span>
   </div>
   <button class="btn-primary" id="btn-start" onclick="startBilan()" style="display:none" data-i18n="btn_commencer">Commencer le bilan →</button>
+  <div id="home-checklist-link" onclick="goScreen('params')">📋 Ma checklist de passage →</div>
 </div>
 
 <!-- SCREEN 2 : SAISIE -->
@@ -468,7 +484,7 @@ input[type=date]{color-scheme:dark}
     </div>
     <div class="bloc-body" id="bpen">
       <div style="font-size:12px;color:var(--muted);margin-bottom:6px" data-i18n="saisie_peniches_desc">
-        Contrôlez au moins 5 dossiers clients dans une zone (max 3 zones par passage).
+        Contrôlez au moins 5 dossiers clients au total, répartis sur 3 zones maximum.
       </div>
       <div id="peniches-list" style="display:flex;flex-direction:column;gap:10px"></div>
     </div>
@@ -607,6 +623,30 @@ input[type=date]{color-scheme:dark}
 
 <!-- SCREEN 4 : PARAMÈTRES -->
 <div id="screen-params" class="screen">
+  <div class="params-section" id="checklist-section">
+    <div class="params-section-title" data-i18n="ckl_titre">Ma checklist de passage</div>
+    <div class="ckl-hint" data-i18n="ckl_hint_intro"></div>
+    <div id="checklist-login" style="display:none;flex-direction:column;gap:6px">
+      <div class="ckl-hint" data-i18n="ckl_login_hint"></div>
+      <div style="display:flex;gap:6px">
+        <input type="password" id="checklist-login-pass" class="ckl-input" data-i18n-placeholder="ckl_mdp_ph" placeholder="Mot de passe Zimbra" onkeydown="if(event.key==='Enter')checklistLogin()">
+        <button class="btn-add" onclick="checklistLogin()" data-i18n="ckl_btn_connecter">Se connecter</button>
+      </div>
+      <div id="checklist-login-error" class="ckl-hint" style="color:var(--red);display:none"></div>
+    </div>
+    <div class="ckl-sub" data-i18n="ckl_points_reseau">Points réseau</div>
+    <div id="checklist-reseau-list" style="display:flex;flex-direction:column;gap:6px"></div>
+    <div id="checklist-reseau-add" style="display:none;gap:6px">
+      <input type="text" id="checklist-reseau-new" class="ckl-input" data-i18n-placeholder="ckl_reseau_ph" placeholder="Nouveau point pour tous les animateurs" maxlength="300" onkeydown="if(event.key==='Enter')checklistAjouter('reseau')">
+      <button class="btn-add" onclick="checklistAjouter('reseau')" data-i18n="ckl_btn_reseau">+ Réseau</button>
+    </div>
+    <div class="ckl-sub" data-i18n="ckl_mes_points">Mes points</div>
+    <div id="checklist-perso-list" style="display:flex;flex-direction:column;gap:6px"></div>
+    <div id="checklist-perso-add" style="display:none;gap:6px">
+      <input type="text" id="checklist-perso-new" class="ckl-input" data-i18n-placeholder="ckl_perso_ph" placeholder="Ex : vérifier l'affichage vitrine" maxlength="300" onkeydown="if(event.key==='Enter')checklistAjouter('perso')">
+      <button class="btn-add" onclick="checklistAjouter('perso')" data-i18n="ckl_btn_ajouter">+ Ajouter</button>
+    </div>
+  </div>
   <div class="params-section">
     <div class="params-section-title" data-i18n="params_langue">Langue</div>
     <select class="select-box" id="p-lang" onchange="setLang(this.value)">
@@ -728,6 +768,29 @@ input[type=date]{color-scheme:dark}
 <!-- TOAST -->
 <div id="toast"></div>
 
+<!-- CHECKLIST DE PASSAGE : bouton flottant + panneau + alerte -->
+<button id="checklist-fab" onclick="openChecklistPanel()">☑ <span id="checklist-fab-count">0/0</span></button>
+<div class="modal-overlay" id="modal-checklist" onclick="closeChecklistPanel()">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width:480px">
+    <div class="modal-title" data-i18n="ckl_panel_titre">Checklist du passage</div>
+    <div id="checklist-panel-list"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeChecklistPanel()" data-i18n="ckl_btn_fermer">Fermer</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-checklist-alerte" onclick="closeChecklistAlerte()">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width:480px">
+    <div class="modal-title" data-i18n="ckl_alerte_titre">Checklist incomplète</div>
+    <div class="ckl-hint" style="margin-bottom:8px" data-i18n="ckl_alerte_hint"></div>
+    <div id="checklist-alerte-list" style="display:flex;flex-direction:column;gap:6px"></div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="closeChecklistAlerte()" data-i18n="ckl_btn_revenir">← Revenir à la saisie</button>
+      <button class="btn-secondary" onclick="checklistContinuerQuandMeme()" data-i18n="ckl_btn_continuer">Continuer quand même</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-send" onclick="closeModal()">
   <div class="modal-box" onclick="event.stopPropagation()" style="max-width:480px">
@@ -811,7 +874,7 @@ function loadLogo() {
 }
 
 // ── VERSION APP ── (incrémenter à chaque mise à jour notable, pour déclencher l'invite de rechargement)
-const APP_VERSION = '2026.09.12-1';
+const APP_VERSION = '2026.09.29-1';
 
 // ── TRADUCTION (Phase 1 : sélecteur manuel, indépendant du magasin/de la personne connectée) ──
 // Sélecteur manquant en Phase 1 pour un texte donné (traducteur pas encore passé dessus) :
@@ -819,6 +882,8 @@ const APP_VERSION = '2026.09.12-1';
 const I18N_LANGS = ['FR', 'EN', 'ES', 'HE', 'NL'];
 const I18N = {
   FR: {
+    // Checklist de passage (29/09)
+    ckl_titre: "Ma checklist de passage", ckl_hint_intro: "Aide-mémoire consultable pendant la saisie (bouton ☑ en bas à droite). Tes points personnels ne sont visibles que par toi ; les points réseau sont définis par la Direction Inter pour tous les animateurs.", ckl_login_hint: "Connecte-toi avec ton mot de passe Zimbra pour charger et modifier ta checklist (elle te suit sur tous tes appareils).", ckl_mdp_ph: "Mot de passe Zimbra", ckl_btn_connecter: "Se connecter", ckl_points_reseau: "Points réseau", ckl_reseau_ph: "Nouveau point pour tous les animateurs", ckl_btn_reseau: "+ Réseau", ckl_mes_points: "Mes points", ckl_perso_ph: "Ex : vérifier l'affichage vitrine", ckl_btn_ajouter: "+ Ajouter", ckl_panel_titre: "Checklist du passage", ckl_btn_fermer: "Fermer", ckl_alerte_titre: "Checklist incomplète", ckl_alerte_hint: "Ces points ne sont pas cochés. Tu peux revenir les faire, ou continuer quand même.", ckl_btn_revenir: "← Revenir à la saisie", ckl_btn_continuer: "Continuer quand même", ckl_badge_reseau: "Réseau", ckl_home_link: "📋 Ma checklist de passage →", ckl_home_creer: "📋 Créer ma checklist de passage →", ckl_point: "point", ckl_points: "points", ckl_aucun_reseau: "Aucun point réseau pour le moment.", ckl_aucun_reseau_admin: "Aucun point réseau — ajoute-en un ci-dessous, il apparaîtra chez tous les animateurs.", ckl_aucun_perso: "Aucun point personnel — ajoute tes propres rappels ci-dessous.", ckl_connecte_toi: "Connecte-toi pour voir et modifier tes points.", ckl_vide: "Ta checklist est vide — ajoute des points dans Paramètres.", ckl_err_identifiant: "Renseigne d'abord ton identifiant Zimbra plus bas dans Paramètres", ckl_err_mdp: "Mot de passe requis", ckl_monter: "Monter", ckl_descendre: "Descendre", ckl_supprimer: "Supprimer", toast_ckl_chargee: "Checklist chargée ✓", toast_ckl_session_expiree: "⚠ Session expirée — reconnecte-toi", toast_ckl_non_enregistree: "⚠ Checklist non enregistrée : ", confirm_ckl_suppr_reseau: "Supprimer ce point réseau pour tous les animateurs ?",
     nav_nouveau: 'Nouveau', nav_historique: 'Historique', nav_analyse: 'Analyse', nav_parametres: 'Paramètres',
     home_ar_label: 'Animateur réseau', home_ar_placeholder: 'Sélectionner un AR...',
     home_magasin_label: 'Magasin', home_magasin_placeholder: 'Sélectionner un magasin...',
@@ -850,7 +915,7 @@ const I18N = {
     saisie_process: 'Process & Nouveautés', saisie_process_ph: 'Déploiements en cours, niveau de mise en place, blocages identifiés, nouveaux outils...',
     saisie_forts_diff: 'Points forts & Difficultés', saisie_points_forts: '+ Points forts', saisie_point_fort_ph: 'Ajouter un point fort...',
     saisie_points_amelioration: "− Points d'amélioration", saisie_point_amelioration_ph: "Ajouter un point d'amélioration...",
-    saisie_tour_peniches: 'Tour de péniches', saisie_peniches_desc: 'Contrôlez au moins 5 dossiers clients dans une zone (max 3 zones par passage).',
+    saisie_tour_peniches: 'Tour de péniches', saisie_peniches_desc: 'Contrôlez au moins 5 dossiers clients au total, répartis sur 3 zones maximum.', peniches_total: 'Total contrôlé',
     saisie_photos: 'Photos', saisie_actions: 'Actions attendues', saisie_actions_desc: 'Actions attendues (exactement 3 requises)',
     saisie_action_titre_ph: "Titre de l'action...", saisie_action_comment_ph: 'Commentaire / détail (facultatif)', saisie_responsable: 'Responsable',
     saisie_mot_equipe: "Mot pour l'équipe", saisie_mot_intro: "Mot d'introduction (facultatif)", saisie_mot_intro_ph: "Un message d'accroche en début de mail...",
@@ -936,7 +1001,7 @@ const I18N = {
     toast_ca_annuel_obligatoire: '⚠ Positionnement CA annuel obligatoire',
     toast_renta_obligatoire: '⚠ Renta salariale obligatoire',
     toast_rh_obligatoire: '⚠ Situation RH obligatoire',
-    toast_peniches_obligatoire: '⚠ Tour de péniches obligatoire : au moins 5 dossiers contrôlés dans une zone',
+    toast_peniches_obligatoire: '⚠ Tour de péniches obligatoire : au moins 5 dossiers contrôlés au total (3 zones max)',
     toast_sauvegarde_exportee: '✓ Sauvegarde exportée (historique + brouillons)',
     toast_erreur_dictee: '⚠ Erreur dictée : ', toast_referentiel_label: 'Référentiel',
     toast_encodage_corrige: 'encodage à corriger sur GitHub (auto-réparé pour l\'instant)', toast_encodage_invalide: 'encodage invalide détecté, fichier source à corriger',
@@ -995,6 +1060,8 @@ const I18N = {
     eval_import_historique: 'Import historique', eval_dernier_controle_du: 'Dernier contrôle du', eval_tous_criteres_valides: 'Tous les critères validés',
   },
   EN: {
+    // Checklist de passage (29/09)
+    ckl_titre: "My visit checklist", ckl_hint_intro: "Reminder list you can open while filling in the report (☑ button, bottom right). Your personal items are visible only to you; network items are set by International Management for all animators.", ckl_login_hint: "Log in with your Zimbra password to load and edit your checklist (it follows you on all your devices).", ckl_mdp_ph: "Zimbra password", ckl_btn_connecter: "Log in", ckl_points_reseau: "Network items", ckl_reseau_ph: "New item for all animators", ckl_btn_reseau: "+ Network", ckl_mes_points: "My items", ckl_perso_ph: "E.g. check the window display", ckl_btn_ajouter: "+ Add", ckl_panel_titre: "Visit checklist", ckl_btn_fermer: "Close", ckl_alerte_titre: "Checklist incomplete", ckl_alerte_hint: "These items are not ticked. You can go back and do them, or continue anyway.", ckl_btn_revenir: "← Back to the report", ckl_btn_continuer: "Continue anyway", ckl_badge_reseau: "Network", ckl_home_link: "📋 My visit checklist →", ckl_home_creer: "📋 Create my visit checklist →", ckl_point: "item", ckl_points: "items", ckl_aucun_reseau: "No network items yet.", ckl_aucun_reseau_admin: "No network items — add one below, it will appear for all animators.", ckl_aucun_perso: "No personal items — add your own reminders below.", ckl_connecte_toi: "Log in to see and edit your items.", ckl_vide: "Your checklist is empty — add items in Settings.", ckl_err_identifiant: "First enter your Zimbra login further down in Settings", ckl_err_mdp: "Password required", ckl_monter: "Move up", ckl_descendre: "Move down", ckl_supprimer: "Delete", toast_ckl_chargee: "Checklist loaded ✓", toast_ckl_session_expiree: "⚠ Session expired — please log in again", toast_ckl_non_enregistree: "⚠ Checklist not saved: ", confirm_ckl_suppr_reseau: "Delete this network item for all animators?",
     nav_nouveau: 'New', nav_historique: 'History', nav_analyse: 'Analysis', nav_parametres: 'Settings',
     home_ar_label: 'Network animator', home_ar_placeholder: 'Select an animator...',
     home_magasin_label: 'Store', home_magasin_placeholder: 'Select a store...',
@@ -1026,7 +1093,7 @@ const I18N = {
     saisie_process: 'Process & New rollouts', saisie_process_ph: 'Ongoing rollouts, level of adoption, identified blockers, new tools...',
     saisie_forts_diff: 'Strengths & Improvement areas', saisie_points_forts: '+ Strengths', saisie_point_fort_ph: 'Add a strength...',
     saisie_points_amelioration: '− Improvement areas', saisie_point_amelioration_ph: 'Add an improvement area...',
-    saisie_tour_peniches: 'Client file review', saisie_peniches_desc: 'Check at least 5 customer files in one zone (max 3 zones per visit).',
+    saisie_tour_peniches: 'Client file review', saisie_peniches_desc: 'Check at least 5 customer files in total, across 3 zones maximum.', peniches_total: 'Total checked',
     saisie_photos: 'Photos', saisie_actions: 'Expected actions', saisie_actions_desc: 'Expected actions (exactly 3 required)',
     saisie_action_titre_ph: 'Action title...', saisie_action_comment_ph: 'Comment / detail (optional)', saisie_responsable: 'Owner',
     saisie_mot_equipe: 'Message for the team', saisie_mot_intro: 'Opening message (optional)', saisie_mot_intro_ph: 'An opening message for the email...',
@@ -1112,7 +1179,7 @@ const I18N = {
     toast_ca_annuel_obligatoire: '⚠ Annual sales achievement is required',
     toast_renta_obligatoire: '⚠ Payroll ratio is required',
     toast_rh_obligatoire: '⚠ HR situation is required',
-    toast_peniches_obligatoire: '⚠ Client file review is required: at least 5 files checked in one zone',
+    toast_peniches_obligatoire: '⚠ Client file review is required: at least 5 files checked in total (max 3 zones)',
     toast_sauvegarde_exportee: '✓ Backup exported (history + drafts)',
     toast_erreur_dictee: '⚠ Dictation error: ', toast_referentiel_label: 'Directory',
     toast_encodage_corrige: 'encoding to fix on GitHub (auto-repaired for now)', toast_encodage_invalide: 'invalid encoding detected, source file needs fixing',
@@ -1171,6 +1238,8 @@ const I18N = {
     eval_import_historique: 'Historical import', eval_dernier_controle_du: 'Last check on', eval_tous_criteres_valides: 'All criteria validated',
   },
   ES: {
+    // Checklist de passage (29/09)
+    ckl_titre: "Mi checklist de visita", ckl_hint_intro: "Recordatorio disponible durante el informe (botón ☑ abajo a la derecha). Tus puntos personales solo los ves tú; los puntos de red los define la Dirección Internacional para todos los animadores.", ckl_login_hint: "Conéctate con tu contraseña Zimbra para cargar y modificar tu checklist (te sigue en todos tus dispositivos).", ckl_mdp_ph: "Contraseña Zimbra", ckl_btn_connecter: "Conectarse", ckl_points_reseau: "Puntos de red", ckl_reseau_ph: "Nuevo punto para todos los animadores", ckl_btn_reseau: "+ Red", ckl_mes_points: "Mis puntos", ckl_perso_ph: "Ej.: revisar el escaparate", ckl_btn_ajouter: "+ Añadir", ckl_panel_titre: "Checklist de la visita", ckl_btn_fermer: "Cerrar", ckl_alerte_titre: "Checklist incompleta", ckl_alerte_hint: "Estos puntos no están marcados. Puedes volver a hacerlos o continuar de todos modos.", ckl_btn_revenir: "← Volver al informe", ckl_btn_continuer: "Continuar de todos modos", ckl_badge_reseau: "Red", ckl_home_link: "📋 Mi checklist de visita →", ckl_home_creer: "📋 Crear mi checklist de visita →", ckl_point: "punto", ckl_points: "puntos", ckl_aucun_reseau: "Todavía no hay puntos de red.", ckl_aucun_reseau_admin: "Sin puntos de red — añade uno abajo, aparecerá para todos los animadores.", ckl_aucun_perso: "Sin puntos personales — añade tus propios recordatorios abajo.", ckl_connecte_toi: "Conéctate para ver y modificar tus puntos.", ckl_vide: "Tu checklist está vacía — añade puntos en Ajustes.", ckl_err_identifiant: "Primero indica tu usuario Zimbra más abajo en Ajustes", ckl_err_mdp: "Contraseña obligatoria", ckl_monter: "Subir", ckl_descendre: "Bajar", ckl_supprimer: "Eliminar", toast_ckl_chargee: "Checklist cargada ✓", toast_ckl_session_expiree: "⚠ Sesión caducada — vuelve a conectarte", toast_ckl_non_enregistree: "⚠ Checklist no guardada: ", confirm_ckl_suppr_reseau: "¿Eliminar este punto de red para todos los animadores?",
     nav_nouveau: 'Nuevo', nav_historique: 'Historial', nav_analyse: 'Análisis', nav_parametres: 'Ajustes',
     home_ar_label: 'Animador de red', home_ar_placeholder: 'Seleccionar un animador...',
     home_magasin_label: 'Tienda', home_magasin_placeholder: 'Seleccionar una tienda...',
@@ -1202,7 +1271,7 @@ const I18N = {
     saisie_process: 'Procesos y novedades', saisie_process_ph: 'Despliegues en curso, nivel de implementación, bloqueos identificados, nuevas herramientas...',
     saisie_forts_diff: 'Puntos fuertes y dificultades', saisie_points_forts: '+ Puntos fuertes', saisie_point_fort_ph: 'Añadir un punto fuerte...',
     saisie_points_amelioration: '− Puntos de mejora', saisie_point_amelioration_ph: 'Añadir un punto de mejora...',
-    saisie_tour_peniches: 'Revisión de expedientes', saisie_peniches_desc: 'Revisa al menos 5 expedientes de clientes en una zona (máx. 3 zonas por visita).',
+    saisie_tour_peniches: 'Revisión de expedientes', saisie_peniches_desc: 'Revisa al menos 5 expedientes de clientes en total, repartidos en 3 zonas como máximo.', peniches_total: 'Total revisado',
     saisie_photos: 'Fotos', saisie_actions: 'Acciones esperadas', saisie_actions_desc: 'Acciones esperadas (exactamente 3 requeridas)',
     saisie_action_titre_ph: 'Título de la acción...', saisie_action_comment_ph: 'Comentario / detalle (opcional)', saisie_responsable: 'Responsable',
     saisie_mot_equipe: 'Mensaje para el equipo', saisie_mot_intro: 'Mensaje de apertura (opcional)', saisie_mot_intro_ph: 'Un mensaje de apertura para el correo...',
@@ -1288,7 +1357,7 @@ const I18N = {
     toast_ca_annuel_obligatoire: '⚠ El posicionamiento de ventas anual es obligatorio',
     toast_renta_obligatoire: '⚠ La renta salarial es obligatoria',
     toast_rh_obligatoire: '⚠ La situación de RR. HH. es obligatoria',
-    toast_peniches_obligatoire: '⚠ La revisión de expedientes es obligatoria: al menos 5 expedientes revisados en una zona',
+    toast_peniches_obligatoire: '⚠ La revisión de expedientes es obligatoria: al menos 5 expedientes revisados en total (máx. 3 zonas)',
     toast_sauvegarde_exportee: '✓ Copia exportada (historial + borradores)',
     toast_erreur_dictee: '⚠ Error de dictado: ', toast_referentiel_label: 'Directorio',
     toast_encodage_corrige: 'codificación a corregir en GitHub (reparada automáticamente por ahora)', toast_encodage_invalide: 'codificación inválida detectada, hay que corregir el archivo fuente',
@@ -1367,6 +1436,8 @@ const I18N = {
     saisie_rh_equipe: 'משאבי אנוש וצוות',
   },
   NL: {
+    // Checklist de passage (29/09)
+    ckl_titre: "Mijn bezoekchecklist", ckl_hint_intro: "Geheugensteun die je tijdens het invullen kunt openen (knop ☑ rechtsonder). Je persoonlijke punten zie alleen jij; netwerkpunten worden door de Internationale Directie voor alle animatoren bepaald.", ckl_login_hint: "Log in met je Zimbra-wachtwoord om je checklist te laden en te bewerken (hij volgt je op al je toestellen).", ckl_mdp_ph: "Zimbra-wachtwoord", ckl_btn_connecter: "Inloggen", ckl_points_reseau: "Netwerkpunten", ckl_reseau_ph: "Nieuw punt voor alle animatoren", ckl_btn_reseau: "+ Netwerk", ckl_mes_points: "Mijn punten", ckl_perso_ph: "Bv.: etalage controleren", ckl_btn_ajouter: "+ Toevoegen", ckl_panel_titre: "Bezoekchecklist", ckl_btn_fermer: "Sluiten", ckl_alerte_titre: "Checklist onvolledig", ckl_alerte_hint: "Deze punten zijn niet aangevinkt. Je kunt teruggaan om ze te doen, of toch doorgaan.", ckl_btn_revenir: "← Terug naar het verslag", ckl_btn_continuer: "Toch doorgaan", ckl_badge_reseau: "Netwerk", ckl_home_link: "📋 Mijn bezoekchecklist →", ckl_home_creer: "📋 Mijn bezoekchecklist aanmaken →", ckl_point: "punt", ckl_points: "punten", ckl_aucun_reseau: "Nog geen netwerkpunten.", ckl_aucun_reseau_admin: "Geen netwerkpunten — voeg er hieronder een toe, het verschijnt bij alle animatoren.", ckl_aucun_perso: "Geen persoonlijke punten — voeg hieronder je eigen herinneringen toe.", ckl_connecte_toi: "Log in om je punten te zien en te bewerken.", ckl_vide: "Je checklist is leeg — voeg punten toe in Instellingen.", ckl_err_identifiant: "Vul eerst je Zimbra-login verderop in Instellingen in", ckl_err_mdp: "Wachtwoord vereist", ckl_monter: "Omhoog", ckl_descendre: "Omlaag", ckl_supprimer: "Verwijderen", toast_ckl_chargee: "Checklist geladen ✓", toast_ckl_session_expiree: "⚠ Sessie verlopen — log opnieuw in", toast_ckl_non_enregistree: "⚠ Checklist niet opgeslagen: ", confirm_ckl_suppr_reseau: "Dit netwerkpunt voor alle animatoren verwijderen?",
     nav_nouveau: 'Nieuw', nav_historique: 'Geschiedenis', nav_analyse: 'Analyse', nav_parametres: 'Instellingen',
     home_ar_label: 'Netwerkanimator', home_ar_placeholder: 'Selecteer een animator...',
     home_magasin_label: 'Winkel', home_magasin_placeholder: 'Selecteer een winkel...',
@@ -1398,7 +1469,7 @@ const I18N = {
     saisie_process: 'Processen & Nieuwigheden', saisie_process_ph: 'Lopende uitrollen, adoptieniveau, geïdentificeerde blokkades, nieuwe tools...',
     saisie_forts_diff: 'Sterke punten & verbeterpunten', saisie_points_forts: '+ Sterke punten', saisie_point_fort_ph: 'Voeg een sterk punt toe...',
     saisie_points_amelioration: '− Verbeterpunten', saisie_point_amelioration_ph: 'Voeg een verbeterpunt toe...',
-    saisie_tour_peniches: 'Dossiercontrole', saisie_peniches_desc: 'Controleer minstens 5 klantendossiers in één zone (max. 3 zones per bezoek).',
+    saisie_tour_peniches: 'Dossiercontrole', saisie_peniches_desc: 'Controleer in totaal minstens 5 klantendossiers, verdeeld over maximaal 3 zones.', peniches_total: 'Totaal gecontroleerd',
     saisie_photos: "Foto's", saisie_actions: 'Verwachte acties', saisie_actions_desc: 'Verwachte acties (precies 3 vereist)',
     saisie_action_titre_ph: 'Titel van de actie...', saisie_action_comment_ph: 'Opmerking / detail (optioneel)', saisie_responsable: 'Verantwoordelijke',
     saisie_mot_equipe: 'Boodschap voor het team', saisie_mot_intro: 'Openingsboodschap (optioneel)', saisie_mot_intro_ph: 'Een openingsboodschap voor de e-mail...',
@@ -1484,7 +1555,7 @@ const I18N = {
     toast_ca_annuel_obligatoire: '⚠ Jaarlijkse omzetrealisatie is verplicht',
     toast_renta_obligatoire: '⚠ Loonratio is verplicht',
     toast_rh_obligatoire: '⚠ HR-situatie is verplicht',
-    toast_peniches_obligatoire: '⚠ Dossiercontrole is verplicht: minstens 5 dossiers gecontroleerd in één zone',
+    toast_peniches_obligatoire: '⚠ Dossiercontrole is verplicht: in totaal minstens 5 dossiers gecontroleerd (max. 3 zones)',
     toast_sauvegarde_exportee: '✓ Back-up geëxporteerd (geschiedenis + concepten)',
     toast_erreur_dictee: '⚠ Fout bij spraakinvoer: ', toast_referentiel_label: 'Bestand',
     toast_encodage_corrige: 'codering te corrigeren op GitHub (voorlopig automatisch hersteld)', toast_encodage_invalide: 'ongeldige codering gedetecteerd, brondocument moet worden gecorrigeerd',
@@ -1567,6 +1638,7 @@ function setLang(lang) {
   currentLang = I18N_LANGS.includes(normalized) ? normalized : 'FR';
   localStorage.setItem('bdp_lang', currentLang);
   applyTranslations();
+  if (typeof renderChecklistParams === 'function') { renderChecklistParams(); updateHomeChecklistLink(); }
 }
 
 // Token pour la route /store-bilan du Worker (persistance D1, doit correspondre à STORE_SECRET dans worker.js)
@@ -1887,6 +1959,11 @@ function parseKpiCSV(text) {
     headers.forEach(h => {
       if (h.startsWith('name_') && obj[h]) names[h.slice(5).toUpperCase()] = obj[h];
     });
+    // Colonne optionnelle `pays` (retour terrain 29/09) : liste des pays et/ou régions où
+    // l'indicateur est proposé, mêmes valeurs que les colonnes pays/region de
+    // magasins_inter.csv, séparées par | ou , (ex. « Luxembourg|Quebec »). Vide ou ALL = partout.
+    const scopeSep = sep === ';' ? /[|,]/ : /\|/;
+    const pays = String(obj.pays || '').split(scopeSep).map(x => x.trim()).filter(Boolean);
     return {
       name: obj.name,
       unit: obj.unit || '',
@@ -1894,8 +1971,25 @@ function parseKpiCSV(text) {
       dir: obj.dir || null,
       objByScope,
       names,
+      pays,
     };
   }).filter(k => k.name);
+}
+
+// Normalise un nom de pays/région pour comparaison (casse + accents ignorés).
+function normScope(v) {
+  return String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+}
+
+// L'indicateur est-il proposé pour ce magasin ? Oui si la colonne `pays` est vide ou ALL,
+// ou si elle contient le pays OU la région du magasin. KPI ajouté localement par un AR
+// (pas de colonne pays) : toujours visible chez lui.
+function kpiVisiblePour(def, magasin) {
+  const liste = Array.isArray(def && def.pays) ? def.pays : String((def && def.pays) || '').split(/[|,]/).map(x => x.trim()).filter(Boolean);
+  if (!liste.length || liste.some(x => normScope(x) === 'all')) return true;
+  if (!magasin) return true;
+  const cibles = [magasin.pays, magasin.region].filter(Boolean).map(normScope);
+  return liste.some(x => cibles.includes(normScope(x)));
 }
 
 // Résout l'objectif effectif d'un KPI pour un magasin donné : région > pays > objectif par
@@ -2475,6 +2569,12 @@ function populateARSelect() {
   }
 }
 
+// Tri des magasins par code site (retour terrain 29/09) — tri « naturel » :
+// 9 avant 10, et les codes alphanumériques restent groupés.
+function compareMagCode(a, b) {
+  return String(a.code || '').localeCompare(String(b.code || ''), undefined, { numeric: true, sensitivity: 'base' });
+}
+
 function onARChange() {
   const ar = document.getElementById('sel-ar').value;
   if (!ar) { document.getElementById('sec-magasin').style.display = 'none'; return; }
@@ -2485,10 +2585,10 @@ function onARChange() {
   const sel = document.getElementById('sel-mag');
   const list = storesForArFilter(ar);
   sel.innerHTML = `<option value="">${t('home_magasin_placeholder')}</option>`;
-  list.sort((a,b) => a.libelle.localeCompare(b.libelle)).forEach(m => {
+  list.sort(compareMagCode).forEach(m => {
     const opt = document.createElement('option');
     opt.value = m.code;
-    opt.textContent = `${m.libelle} (${m.code})`;
+    opt.textContent = `${m.code} – ${m.libelle}`;
     sel.appendChild(opt);
   });
   document.getElementById('magasin-card').classList.remove('visible');
@@ -2560,6 +2660,7 @@ async function applyRhEffectifPrefill(code) {
 function resetSaisie() {
   if (!confirm(t('confirm_reinitialiser'))) return;
   if (draftKey) localStorage.removeItem(draftKey);
+  checklistClearEtat();
   actions = []; kpisAdded = []; photos = [null,null,null]; photoCaptions = ['','',''];
   fortsList = []; diffList = []; entretiens = []; peniches = emptyPeniches();
   renderPoints('forts'); renderPoints('diff'); renderEntretiens(); renderPeniches();
@@ -2618,6 +2719,7 @@ function startBilan() {
   renderActions(); renderKpiChips();
   draftKey = `bilan_draft_${currentMag.code}`;
   loadDraft();
+  checklistLoadEtat();
   goScreen('saisie');
   document.getElementById('bottom-bar').style.display = 'flex';
   setToday();
@@ -2645,7 +2747,7 @@ function updateWatermark() {
 function initKpiSelect() {
   const sel = document.getElementById('kpi-select');
   sel.innerHTML = `<option value="">${t('saisie_choisir_indicateur')}</option>`;
-  KPI_DEFAULTS.forEach(k => {
+  KPI_DEFAULTS.filter(k => kpiVisiblePour(k, currentMag)).forEach(k => {
     const opt = document.createElement('option');
     opt.value = k.name; opt.textContent = kpiLabel(k.name, k) + (k.unit ? ' (' + k.unit + ')' : '');
     sel.appendChild(opt);
@@ -2901,6 +3003,8 @@ function renderPeniches() {
   const el = document.getElementById('peniches-list');
   if (!el) return;
   const filled = penicheZonesFilledCount();
+  const total = PENICHES_ZONES.reduce((acc, z) => acc + (peniches[z.key]?.n || 0), 0);
+  const totalOk = total >= 5;
   el.innerHTML = '';
   PENICHES_ZONES.forEach(z => {
     const zone = peniches[z.key];
@@ -2912,7 +3016,7 @@ function renderPeniches() {
         <span class="peniche-label">${z.label}</span>
         <div class="peniche-counter">
           <button type="button" class="peniche-btn" onclick="penicheChange('${z.key}', -1)" ${zone.n === 0 ? 'disabled' : ''}>−</button>
-          <span class="peniche-val ${zone.n >= 5 ? 'ok' : ''}">${zone.n}</span>
+          <span class="peniche-val ${totalOk && zone.n > 0 ? 'ok' : ''}">${zone.n}</span>
           <button type="button" class="peniche-btn" onclick="penicheChange('${z.key}', 1)" ${capReached ? 'disabled title="Maximum 3 zones par passage"' : ''}>+</button>
         </div>
       </div>
@@ -2928,6 +3032,10 @@ function renderPeniches() {
     `;
     el.appendChild(card);
   });
+  const tot = document.createElement('div');
+  tot.style.cssText = 'font-size:13px;font-weight:700;text-align:right;padding:2px 4px;color:' + (totalOk ? 'var(--green)' : 'var(--muted)');
+  tot.textContent = `${t('peniches_total')} : ${total} / 5${totalOk ? ' ✓' : ''}`;
+  el.appendChild(tot);
 }
 
 function renderActions() {
@@ -3243,14 +3351,23 @@ function finalizeBilan() {
     document.getElementById('act-text')?.scrollIntoView({behavior:'smooth',block:'center'});
     return;
   }
-  const penMax = Math.max(0, ...PENICHES_ZONES.map(z => data.peniches[z.key]?.n || 0));
-  if (penMax < 5) {
+  // Retour terrain 29/09 : 5 dossiers minimum AU TOTAL, répartis sur 3 zones max
+  // (le plafond de 3 zones est déjà appliqué en temps réel par penicheChange).
+  const penTotal = PENICHES_ZONES.reduce((acc, z) => acc + (data.peniches[z.key]?.n || 0), 0);
+  if (penTotal < 5) {
     showToast(t('toast_peniches_obligatoire'));
     const bpen = document.getElementById('bpen');
     if (bpen && !bpen.classList.contains('open')) toggleBloc('bpen');
     document.getElementById('peniches-list')?.scrollIntoView({behavior:'smooth',block:'center'});
     return;
   }
+  // Checklist de passage : alerte non bloquante si des points restent non cochés —
+  // « Continuer quand même » relance finalizeBilan sans alerte.
+  if (!checklistBypass) {
+    const restants = checklistRestants();
+    if (restants.length) { openChecklistAlerte(restants); return; }
+  }
+  checklistBypass = false;
   params.myEmail = document.getElementById('p-my-email').value || params.myEmail || '';
   const recips = document.getElementById('modal-recipients');
   recips.innerHTML = '';
@@ -3825,11 +3942,13 @@ async function sendBilan() {
     // transverse d'Olivier, indépendamment du localStorage de chaque animateur.
     // Ne doit jamais bloquer ni faire échouer l'envoi du bilan lui-même.
     if (sendOk) {
+      data.checklistReseau = checklistReseauPourBilan();
       fetch(relay + '/store-bilan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET },
         body: JSON.stringify(data)
       }).catch(e => console.warn('store-bilan (persistance centrale) échouée :', e));
+      checklistClearEtat();
     }
 
     if (sendOk) {
@@ -5589,8 +5708,8 @@ async function doArLogin() {
 
 function analyseMyStores() {
   if (!arSession) return [];
-  if (arSession.ar === 'ALL') return magasins.slice().sort((a,b) => a.libelle.localeCompare(b.libelle));
-  return magasins.filter(m => m.animateur === arSession.ar).sort((a,b) => a.libelle.localeCompare(b.libelle));
+  if (arSession.ar === 'ALL') return magasins.slice().sort(compareMagCode);
+  return magasins.filter(m => m.animateur === arSession.ar).sort(compareMagCode);
 }
 
 function initAnalyseScreen() {
@@ -6139,6 +6258,234 @@ async function runComHebdo() {
   }
 }
 // ── NAVIGATION ──
+// ── CHECKLIST DE PASSAGE (reprise France 24/09, ajout Inter 29/09) ───────────
+// Points réseau (définis par un compte accès complet ALL — Cécilia / Olivier —,
+// communs à tous, état coché envoyé avec le bilan) + points personnels de
+// l'animateur (aide-mémoire privé). Les deux listes sont en base (Worker
+// /ar-checklist) ; copie locale pour l'affichage hors connexion. L'état coché du
+// passage en cours est local, par magasin, et repart de zéro à chaque passage.
+let checklist = { reseau: [], perso: [], ar: null, estOlivier: false, sessionRequise: true };
+let checklistEtat = {};
+let checklistBypass = false;
+
+function checklistRelay() { return params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev'; }
+function checklistEtatKey() { return currentMag ? 'bilan_checklist_etat_' + currentMag.code : null; }
+function checklistNewId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function checklistEsc(v) { const d = document.createElement('div'); d.textContent = v == null ? '' : String(v); return d.innerHTML; }
+
+function checklistLoadCache() {
+  try {
+    const c = JSON.parse(localStorage.getItem('bilan_checklist_cache') || 'null');
+    if (c) checklist = Object.assign(checklist, { reseau: c.reseau || [], perso: c.perso || [], ar: c.ar || null, estOlivier: !!c.estOlivier });
+  } catch(e) {}
+}
+function checklistSaveCache() {
+  try { localStorage.setItem('bilan_checklist_cache', JSON.stringify({ reseau: checklist.reseau, perso: checklist.perso, ar: checklist.ar, estOlivier: checklist.estOlivier })); } catch(e) {}
+}
+
+async function checklistRefresh() {
+  const session = loadArSession();
+  try {
+    const headers = { 'X-Store-Token': STORE_SECRET };
+    if (session) headers['X-AR-Session'] = session.token;
+    const resp = await fetch(checklistRelay() + '/ar-checklist', { headers });
+    const d = await resp.json();
+    if (!resp.ok || !d.ok) throw new Error(d.error || ('Erreur ' + resp.status));
+    checklist.reseau = d.reseau || [];
+    checklist.sessionRequise = !!d.sessionRequise;
+    if (!d.sessionRequise) {
+      checklist.perso = d.items || [];
+      checklist.ar = d.ar; checklist.estOlivier = !!d.estOlivier;
+    }
+    checklistSaveCache();
+  } catch(e) {
+    checklist.sessionRequise = !session;
+  }
+  renderChecklistParams(); updateChecklistFab(); updateHomeChecklistLink();
+}
+
+async function checklistLogin() {
+  const errEl = document.getElementById('checklist-login-error');
+  errEl.style.display = 'none';
+  const zimbraUser = (params.zimbraUser || '').trim();
+  const zimbraPass = document.getElementById('checklist-login-pass').value;
+  if (!zimbraUser) { errEl.textContent = t('ckl_err_identifiant'); errEl.style.display = 'block'; return; }
+  if (!zimbraPass) { errEl.textContent = t('ckl_err_mdp'); errEl.style.display = 'block'; return; }
+  try {
+    const resp = await fetch(checklistRelay() + '/ar-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET },
+      body: JSON.stringify({ zimbraUser, zimbraPass })
+    });
+    const raw = await resp.text();
+    let data; try { data = JSON.parse(raw); } catch(e) { data = { error: raw }; }
+    if (!resp.ok || data.error) throw new Error(data.error || ('Erreur ' + resp.status));
+    arSession = { token: data.sessionToken, ar: data.ar, exp: Date.now() + data.expiresInMs };
+    localStorage.setItem('bilan_ar_session', JSON.stringify(arSession));
+    document.getElementById('checklist-login-pass').value = '';
+    await checklistRefresh();
+    showToast(t('toast_ckl_chargee'));
+  } catch(e) {
+    errEl.textContent = e.message; errEl.style.display = 'block';
+  }
+}
+
+async function checklistSauver(type) {
+  const session = loadArSession();
+  if (!session) { checklist.sessionRequise = true; renderChecklistParams(); showToast(t('toast_ckl_session_expiree')); return false; }
+  const path = type === 'reseau' ? '/ar-checklist-reseau' : '/ar-checklist';
+  const items = type === 'reseau' ? checklist.reseau : checklist.perso;
+  try {
+    const resp = await fetch(checklistRelay() + path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET, 'X-AR-Session': session.token },
+      body: JSON.stringify({ items })
+    });
+    const d = await resp.json().catch(() => ({}));
+    if (!resp.ok || !d.ok) throw new Error(d.error || ('Erreur ' + resp.status));
+    checklistSaveCache();
+    return true;
+  } catch(e) {
+    showToast(t('toast_ckl_non_enregistree') + e.message);
+    await checklistRefresh();
+    return false;
+  }
+}
+
+function checklistAjouter(type) {
+  const input = document.getElementById(type === 'reseau' ? 'checklist-reseau-new' : 'checklist-perso-new');
+  const texte = input.value.trim();
+  if (!texte) return;
+  (type === 'reseau' ? checklist.reseau : checklist.perso).push({ id: checklistNewId(), texte });
+  input.value = '';
+  renderChecklistParams(); updateChecklistFab(); updateHomeChecklistLink();
+  checklistSauver(type);
+}
+
+function checklistSupprimer(type, id) {
+  const liste = type === 'reseau' ? checklist.reseau : checklist.perso;
+  const it = liste.find(x => x.id === id);
+  if (!it) return;
+  if (type === 'reseau' && !confirm(t('confirm_ckl_suppr_reseau') + '\n\n« ' + it.texte + ' »')) return;
+  if (type === 'reseau') checklist.reseau = liste.filter(x => x.id !== id); else checklist.perso = liste.filter(x => x.id !== id);
+  renderChecklistParams(); updateChecklistFab(); updateHomeChecklistLink();
+  checklistSauver(type);
+}
+
+function checklistDeplacer(type, id, delta) {
+  const liste = type === 'reseau' ? checklist.reseau : checklist.perso;
+  const i = liste.findIndex(x => x.id === id), j = i + delta;
+  if (i < 0 || j < 0 || j >= liste.length) return;
+  [liste[i], liste[j]] = [liste[j], liste[i]];
+  renderChecklistParams();
+  checklistSauver(type);
+}
+
+function renderChecklistParams() {
+  const connecte = !checklist.sessionRequise && !!loadArSession();
+  const loginEl = document.getElementById('checklist-login');
+  if (!loginEl) return;
+  loginEl.style.display = connecte ? 'none' : 'flex';
+  const peutReseau = connecte && checklist.estOlivier;
+  const ligne = (type, it, editable) => `<div class="ckl-item">
+      ${type === 'reseau' ? `<span class="ckl-badge">${t('ckl_badge_reseau')}</span>` : ''}
+      <span class="ckl-texte">${checklistEsc(it.texte)}</span>
+      ${editable ? `<button title="${t('ckl_monter')}" onclick="checklistDeplacer('${type}','${it.id}',-1)">↑</button><button title="${t('ckl_descendre')}" onclick="checklistDeplacer('${type}','${it.id}',1)">↓</button><button title="${t('ckl_supprimer')}" onclick="checklistSupprimer('${type}','${it.id}')">🗑</button>` : ''}
+    </div>`;
+  document.getElementById('checklist-reseau-list').innerHTML = checklist.reseau.length
+    ? checklist.reseau.map(it => ligne('reseau', it, peutReseau)).join('')
+    : `<div class="ckl-hint">${peutReseau ? t('ckl_aucun_reseau_admin') : t('ckl_aucun_reseau')}</div>`;
+  document.getElementById('checklist-reseau-add').style.display = peutReseau ? 'flex' : 'none';
+  document.getElementById('checklist-perso-list').innerHTML = checklist.perso.length
+    ? checklist.perso.map(it => ligne('perso', it, connecte)).join('')
+    : `<div class="ckl-hint">${connecte ? t('ckl_aucun_perso') : t('ckl_connecte_toi')}</div>`;
+  document.getElementById('checklist-perso-add').style.display = connecte ? 'flex' : 'none';
+}
+
+function checklistTous() {
+  return [...checklist.reseau.map(it => ({ ...it, type: 'reseau' })), ...checklist.perso.map(it => ({ ...it, type: 'perso' }))];
+}
+
+function checklistLoadEtat() {
+  const k = checklistEtatKey();
+  checklistEtat = {};
+  if (!k) return;
+  try { checklistEtat = JSON.parse(localStorage.getItem(k) || '{}') || {}; } catch(e) { checklistEtat = {}; }
+}
+function checklistSaveEtat() {
+  const k = checklistEtatKey();
+  if (k) try { localStorage.setItem(k, JSON.stringify(checklistEtat)); } catch(e) {}
+}
+function checklistClearEtat() {
+  const k = checklistEtatKey();
+  if (k) localStorage.removeItem(k);
+  checklistEtat = {};
+  updateChecklistFab();
+}
+
+function updateChecklistFab() {
+  const fab = document.getElementById('checklist-fab');
+  if (!fab) return;
+  const tous = checklistTous();
+  const enSaisie = document.getElementById('screen-saisie')?.classList.contains('active');
+  if (!enSaisie || !tous.length) { fab.style.display = 'none'; return; }
+  const faits = tous.filter(it => checklistEtat[it.id]).length;
+  document.getElementById('checklist-fab-count').textContent = faits + '/' + tous.length;
+  fab.classList.toggle('complete', faits === tous.length);
+  fab.style.display = 'flex';
+}
+
+function updateHomeChecklistLink() {
+  const el = document.getElementById('home-checklist-link');
+  if (!el) return;
+  const n = checklistTous().length;
+  el.textContent = n
+    ? t('ckl_home_link').replace(/\s*→$/, '') + ` · ${n} ${n > 1 ? t('ckl_points') : t('ckl_point')} →`
+    : t('ckl_home_creer');
+}
+
+function renderChecklistPanel() {
+  const tous = checklistTous();
+  document.getElementById('checklist-panel-list').innerHTML = tous.length ? tous.map(it => `
+    <label class="ckl-check ${checklistEtat[it.id] ? 'done' : ''}">
+      <input type="checkbox" ${checklistEtat[it.id] ? 'checked' : ''} onchange="checklistCocher('${it.id}', this.checked)">
+      <span class="ckl-texte">${it.type === 'reseau' ? `<span class="ckl-badge">${t('ckl_badge_reseau')}</span> ` : ''}${checklistEsc(it.texte)}</span>
+    </label>`).join('') : `<div class="ckl-hint">${t('ckl_vide')}</div>`;
+}
+
+function checklistCocher(id, val) {
+  if (val) checklistEtat[id] = true; else delete checklistEtat[id];
+  checklistSaveEtat();
+  renderChecklistPanel(); updateChecklistFab();
+}
+
+function openChecklistPanel() { renderChecklistPanel(); document.getElementById('modal-checklist').classList.add('open'); }
+function closeChecklistPanel() { document.getElementById('modal-checklist').classList.remove('open'); }
+
+function checklistRestants() { return checklistTous().filter(it => !checklistEtat[it.id]); }
+
+function openChecklistAlerte(restants) {
+  document.getElementById('checklist-alerte-list').innerHTML = restants.map(it => `<div class="ckl-item">${it.type === 'reseau' ? `<span class="ckl-badge">${t('ckl_badge_reseau')}</span>` : ''}<span class="ckl-texte">${checklistEsc(it.texte)}</span></div>`).join('');
+  document.getElementById('modal-checklist-alerte').classList.add('open');
+}
+function closeChecklistAlerte() { document.getElementById('modal-checklist-alerte').classList.remove('open'); }
+function checklistContinuerQuandMeme() {
+  closeChecklistAlerte();
+  checklistBypass = true;
+  finalizeBilan();
+}
+
+// État des points réseau joint au bilan envoyé en base. Les points personnels ne sont jamais transmis.
+function checklistReseauPourBilan() {
+  return checklist.reseau.map(it => ({ id: it.id, texte: it.texte, coche: !!checklistEtat[it.id] }));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  checklistLoadCache();
+  renderChecklistParams(); updateHomeChecklistLink();
+  checklistRefresh();
+});
+
 function goScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -6150,6 +6497,8 @@ function goScreen(name) {
   if (name === 'history') renderHistory();
   if (name === 'saisie') initKpiSelect();
   if (name === 'analyse') initAnalyseScreen();
+  if (name === 'params') { renderChecklistParams(); checklistRefresh(); }
+  updateChecklistFab();
 }
 
 // ── TOAST ──
