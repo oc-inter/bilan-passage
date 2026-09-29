@@ -1807,8 +1807,9 @@ async function loadPreviousActions(magCode) {
   renderPreviousActions();
   const relay = params.relay || 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
   try {
+    const sess = loadArSession();
     const r = await fetch(relay + '/last-actions?magasin_code=' + encodeURIComponent(magCode), {
-      headers: { 'X-Store-Token': STORE_SECRET },
+      headers: { 'X-Store-Token': STORE_SECRET, ...(sess ? { 'X-AR-Session': sess.token } : {}) },
     });
     if (!r.ok) return;
     const data = await r.json();
@@ -3943,11 +3944,35 @@ async function sendBilan() {
     // Ne doit jamais bloquer ni faire échouer l'envoi du bilan lui-même.
     if (sendOk) {
       data.checklistReseau = checklistReseauPourBilan();
-      fetch(relay + '/store-bilan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET },
-        body: JSON.stringify(data)
-      }).catch(e => console.warn('store-bilan (persistance centrale) échouée :', e));
+      // Le Worker international exige une session (X-AR-Session) sur /store-bilan :
+      // on réutilise la session en cours, sinon on en ouvre une avec les identifiants
+      // Zimbra qui viennent de servir à l'envoi (29/09 — auparavant le bilan n'était
+      // jamais enregistré en base faute de session).
+      (async () => {
+        try {
+          let session = loadArSession();
+          if (!session) {
+            const lr = await fetch(relay + '/ar-login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ zimbraUser: user, zimbraPass: pwd })
+            });
+            const ld = await lr.json().catch(() => null);
+            if (lr.ok && ld && ld.sessionToken) {
+              session = { token: ld.sessionToken, ar: ld.ar, exp: Date.now() + ld.expiresInMs };
+              arSession = session;
+              localStorage.setItem('bilan_ar_session', JSON.stringify(session));
+            }
+          }
+          if (!session) { console.warn('store-bilan : pas de session, bilan non enregistré en base'); return; }
+          const sr = await fetch(relay + '/store-bilan', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-AR-Session': session.token },
+            body: JSON.stringify(data)
+          });
+          if (!sr.ok) console.warn('store-bilan refusé :', sr.status, await sr.text());
+        } catch (e) { console.warn('store-bilan (persistance centrale) échouée :', e); }
+      })();
       checklistClearEtat();
     }
 
