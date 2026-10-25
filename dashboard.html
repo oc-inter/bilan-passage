@@ -1,291 +1,2150 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dashboard OC Inter">
 <meta name="theme-color" content="#0D0D0D">
 <link rel="manifest" href="manifest-dashboard.json">
+<link rel="apple-touch-icon" href="icon-180.png">
 <title>Dashboard international — Optical Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
-  *{box-sizing:border-box;font-family:'Montserrat',sans-serif;-webkit-tap-highlight-color:transparent}
-  body{background:#0D0D0D;color:#F5F5F5;margin:0;padding:0 16px 40px}
-  h1{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.02em;margin:20px 0 2px}
-  p.sub{color:#888780;margin:0 0 20px;font-size:13px}
-  .card{background:#161615;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px}
-  #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center;max-width:340px;margin:0 auto}
-  #login-screen input,#login-screen select{width:100%;margin-bottom:10px;background:#161615;color:#F5F5F5;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:11px 12px;font-size:14px}
-  .btn{background:#E2231A;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
-  .btn:hover{background:#a81315}
-  .btn:disabled{opacity:0.5;cursor:not-allowed}
-  #login-error{display:none;color:#E2231A;font-size:12px;margin-bottom:10px}
-  #app-wrap{display:none;max-width:1000px;margin:0 auto}
-  .topbar{display:flex;justify-content:space-between;align-items:center;padding-top:16px}
-  .topbar a{color:#888780;font-size:12px;text-decoration:none}
-  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:16px 0}
-  .kpi{background:#161615;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;text-align:center}
-  .kpi .v{font-size:28px;font-weight:700;font-family:'Montserrat',sans-serif}
-  .kpi .l{font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:0.03em}
-  .store-list{margin-top:16px}
-  .store-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06);cursor:pointer}
-  .store-row:hover{background:rgba(255,255,255,0.03)}
-  .score-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-  .score-dot.na{background:rgba(255,255,255,0.08);color:#5F5E5A}
-  .store-name{flex:1;min-width:0}
-  .store-name .n{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .store-name .sub{font-size:11px;color:#888780}
-  .overdue-badge{background:rgba(226,35,26,0.15);color:#E2231A;font-size:10px;padding:2px 8px;border-radius:10px;flex-shrink:0}
-  .empty{text-align:center;color:#5F5E5A;padding:30px 0;font-size:13px}
-  #detail-screen{display:none}
-  .back-btn{background:none;border:none;color:#888780;font-size:13px;cursor:pointer;padding:8px 0;margin-bottom:8px}
-  .subscore-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-top:14px}
-  .subscore{background:#0D0D0D;border-radius:8px;padding:10px;text-align:center}
-  .subscore .v{font-size:18px;font-weight:700}
-  .subscore .l{font-size:10px;color:#888780;text-transform:uppercase}
-  .hist-bars{display:flex;align-items:flex-end;gap:2px;height:60px;margin-top:14px}
-  .hist-bar{flex:1;background:#E2231A;border-radius:2px 2px 0 0;min-height:2px}
-  .loading-msg{text-align:center;color:#888780;padding:30px 0;font-size:13px}
-select,input,textarea,button{font-family:inherit}
+  /* Charte internationale (lot 1) : écrans sur fond noir, rouge #E2231A,
+     rose #FCEBEA. Propriétés logiques (inline/block) pour préparer l'hébreu. */
+  :root {
+    --bg: #0D0D0D;
+    --surface: #161615;
+    --surface-2: #1E1E1C;
+    --line: rgba(255,255,255,0.08);
+    --line-2: rgba(255,255,255,0.14);
+    --text: #F5F5F5;
+    --red: #E2231A;
+    --pink: #FCEBEA;
+    --green: #3FB950;
+    --green-bg: rgba(63,185,80,0.14);
+    --orange: #F0A23B;
+    --orange-bg: rgba(240,162,59,0.14);
+    --red-bg: rgba(226,35,26,0.16);
+    --gray: #9A9993;
+    --gray-2: #6B6A65;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    font-family: 'Montserrat', 'Heebo', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  html[lang="he"] body { font-family: 'Heebo', 'Montserrat', -apple-system, sans-serif; }
+  select, input, textarea, button { font-family: inherit; }
+  header.topbar {
+    background: var(--bg);
+    border-block-end: 1px solid var(--line);
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  header.topbar h1 { font-size: 17px; font-weight: 700; margin: 0; }
+  header.topbar h1 span { color: var(--red); }
+  .topbar-actions { display: flex; align-items: center; gap: 8px; }
+  header.topbar button, .lang-select {
+    background: transparent; border: 1px solid var(--line-2); color: var(--text);
+    padding: 6px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; white-space: nowrap;
+  }
+  .lang-select option { background: var(--surface); }
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+  .scope-label { color: var(--gray); font-size: 13px; margin: -8px 0 14px; }
+
+  /* ---- Connexion ---- */
+  #login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); padding: 20px; }
+  .login-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 32px 28px; width: 340px; max-width: 100%; }
+  .login-card h2 { margin: 0 0 4px; font-size: 20px; }
+  .login-card h2 span { color: var(--red); }
+  .login-card p.sub { color: var(--gray); font-size: 13px; margin: 0 0 20px; }
+  .login-card label { display: block; font-size: 13px; margin: 14px 0 5px; font-weight: 500; }
+  .login-card input, .login-card select {
+    width: 100%; padding: 10px 11px; border: 1px solid var(--line-2); border-radius: 6px;
+    font-size: 14px; background: var(--bg); color: var(--text);
+  }
+  .login-card button.submit {
+    width: 100%; margin-top: 20px; padding: 12px; border: none; border-radius: 8px;
+    background: var(--red); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .login-card button.submit:disabled { opacity: .5; cursor: not-allowed; }
+  .login-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
+  .login-lang { margin-top: 16px; text-align: center; }
+
+  /* ---- Filtres ---- */
+  .filters { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .filters select, .filters input {
+    padding: 8px 10px; border: 1px solid var(--line-2); border-radius: 6px; font-size: 13px;
+    background: var(--surface); color: var(--text);
+  }
+  .filters input { flex: 1; min-width: 180px; }
+  .btn-dark { background: var(--surface-2); color: var(--text); border: 1px solid var(--line-2); border-radius: 6px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-dark:hover { border-color: var(--red); }
+
+  /* ---- Vignettes ---- */
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .kpi-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .kpi-card .lbl { font-size: 12px; color: var(--gray); margin: 0 0 4px; }
+  .kpi-card .val { font-size: 22px; font-weight: 700; margin: 0; }
+  .kpi-card.kpi-click { cursor: pointer; transition: border-color .15s, transform .15s; }
+  .kpi-card.kpi-click:hover { border-color: var(--line-2); transform: translateY(-1px); }
+  .kpi-card.kpi-click:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+
+  /* ---- Tableaux ---- */
+  table.dash-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 10px; overflow: hidden; }
+  table.dash-table th { text-align: start; font-size: 12px; color: var(--gray); font-weight: 600; padding: 10px 12px; border-block-end: 1px solid var(--line-2); }
+  table.dash-table td { padding: 10px 12px; font-size: 13px; border-block-end: 1px solid var(--line); }
+  table.dash-table tr.row-clickable { cursor: pointer; }
+  table.dash-table tr.row-clickable:hover td { background: var(--surface-2); }
+  table.dash-table th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+  table.dash-table th.sortable:hover { color: var(--text); }
+  table.dash-table th.sorted { color: var(--red); }
+  table.dash-table th .sort-ind { font-size: 10px; margin-inline-start: 3px; }
+  .muted { color: var(--gray); }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .badge-vert { background: var(--green-bg); color: var(--green); }
+  .badge-orange { background: var(--orange-bg); color: var(--orange); }
+  .badge-rouge { background: var(--red-bg); color: var(--red); }
+  .badge-neutre { background: rgba(255,255,255,0.08); color: var(--gray); }
+
+  /* ---- Fiche ---- */
+  .back-btn { background: none; border: none; color: var(--red); font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; margin-block-end: 14px; }
+  .detail-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 6px; }
+  .detail-header h2 { margin: 0 0 2px; font-size: 21px; }
+  .detail-header .sub { color: var(--gray); font-size: 13px; }
+  .pos-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 12px 0 20px; }
+  .pos-chip { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
+  .pos-chip .v { font-weight: 700; font-size: 16px; }
+  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); margin: 22px 0 8px; }
+  .sub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
+  .sub-card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; color: var(--text); }
+  .sub-card:hover { border-color: var(--line-2); }
+  .sub-card .lbl { font-size: 11px; color: var(--gray); margin: 0 0 4px; }
+  .sub-card .val { font-size: 17px; font-weight: 700; margin: 0; }
+  .sub-card .poids { font-size: 10px; color: var(--gray-2); margin: 3px 0 0; }
+  .chart-box { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; margin-bottom: 6px; height: 200px; position: relative; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .card h4 { margin: 0 0 10px; font-size: 14px; }
+  .item-row { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; padding: 6px 0; border-block-end: 1px solid var(--line); }
+  .item-row:last-child { border-block-end: none; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .mini-table th { font-weight: 700; padding: 4px 0; text-align: start; }
+  .mini-table td { padding: 5px 0; border-block-end: 1px solid var(--line); }
+  .mini-table .num { text-align: end; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); align-items: center; justify-content: center; z-index: 50; padding: 20px; }
+  .modal-box { background: var(--surface); border: 1px solid var(--line-2); border-radius: 10px; padding: 18px; width: 420px; max-width: 100%; color: var(--text); }
+  .modal-box h3 { margin: 0 0 12px; font-size: 15px; }
+  .modal-close { float: inline-end; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--gray); }
+  .kl-box { width: 520px; max-height: 85vh; overflow-y: auto; }
+  .kl-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 4px; border-block-end: 1px solid var(--line); font-size: 13px; cursor: pointer; }
+  .kl-row:hover { background: var(--surface-2); }
+  .kl-row:last-child { border-block-end: none; }
+  .kl-ar { display: block; font-size: 11px; color: var(--gray); }
+  .kl-row > span:first-child { flex: 1 1 auto; min-width: 0; }
+  .kl-info { font-size: 12px; color: var(--gray); text-align: end; flex: 0 1 55%; }
+  .kl-vide { font-size: 13px; color: var(--gray); padding: 6px 4px; }
+  .kl-compte { font-size: 13px; color: var(--gray); margin: -6px 0 8px; }
+  .kl-autres { margin-top: 14px; }
+  .kl-autres summary { cursor: pointer; list-style: none; display: flex; justify-content: center; align-items: center; gap: 6px; background: var(--surface-2); border-radius: 8px; padding: 10px 12px; font-size: 13px; font-weight: 600; }
+  .kl-autres summary::-webkit-details-marker { display: none; }
+  .kl-autres summary::after { content: '▾'; font-size: 12px; }
+  .kl-autres[open] summary::after { content: '▴'; }
+  .kl-tag-retard { color: var(--orange); font-weight: 600; }
+  .kl-tag-ko { color: var(--red); font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .loading { text-align: center; padding: 40px; color: var(--gray); }
+
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 22px 0 8px; }
+  .section-head .section-label { margin: 0; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 0 0 10px; }
+  .card-head h4 { margin: 0; }
+  .app-links { display: flex; gap: 14px; flex-wrap: wrap; }
+  a.app-link { font-size: 12px; font-weight: 600; color: var(--red); text-decoration: none; white-space: nowrap; }
+  a.app-link:hover { text-decoration: underline; }
+  .apps-bar { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 18px; }
+  .apps-bar a { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 600; color: var(--text); text-decoration: none; }
+  .apps-bar a:hover { border-color: var(--red); color: var(--red); }
+
+  .sv-summary { font-size: 13px; margin: 0 0 8px; }
+  .sv-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; font-size: 13px; padding: 8px 0; border-block-end: 1px solid var(--line); }
+  .sv-row:last-child { border-block-end: none; }
+  .sv-lib { font-weight: 600; }
+  .sv-meta { display: block; font-size: 12px; color: var(--gray); font-weight: 400; margin-top: 2px; }
+  .sv-ech { white-space: nowrap; text-align: end; font-size: 12px; }
+  .sv-ech b { display: block; font-size: 13px; }
+  .sv-retard { color: var(--red); }
+  .sv-bientot { color: var(--orange); }
+  .sv-later { color: var(--gray); }
+  details.sv-clos { margin-top: 10px; font-size: 13px; }
+  details.sv-clos summary { cursor: pointer; color: var(--gray); font-size: 12px; }
+  .sv-sub { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--gray); margin: 0 0 6px; }
+
+  /* ---- Onglets + « Aujourd'hui » ---- */
+  .main-tabs { display: flex; gap: 4px; margin: 0 0 18px; border-block-end: 1px solid var(--line-2); overflow-x: auto; }
+  .main-tabs button { background: none; border: none; border-block-end: 3px solid transparent; padding: 10px 14px; font-size: 14px; font-weight: 600; color: var(--gray); cursor: pointer; margin-bottom: -1px; white-space: nowrap; }
+  .main-tabs button.active { color: var(--text); border-block-end-color: var(--red); }
+  .today-status { font-size: 13px; color: var(--gray); margin: -6px 0 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; animation: livepulse 2s infinite; }
+  @keyframes livepulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+  .link-btn { background: none; border: none; color: var(--red); font-weight: 600; font-size: 13px; cursor: pointer; padding: 0; }
+  .kpi-sub { font-size: 14px; font-weight: 500; color: var(--gray); }
+  table.today-table th.c, table.today-table td.c { text-align: center; padding-inline: 6px; white-space: nowrap; }
+  table.today-table td.c { min-width: 62px; }
+  .t-mag { font-weight: 600; display: block; }
+  .t-ar { display: block; font-size: 11px; color: var(--gray); margin-top: 2px; }
+  .t-ok { color: var(--green); font-weight: 800; font-size: 16px; display: block; line-height: 1.1; }
+  .t-ko { color: var(--red); font-weight: 800; font-size: 15px; display: block; line-height: 1.1; }
+  .t-h { display: block; font-size: 11px; color: var(--gray); margin-top: 1px; }
+  .t-ko-txt { color: var(--red); }
+  .t-retard { color: var(--orange); font-weight: 800; font-size: 16px; display: block; line-height: 1.1; }
+  .t-retard-txt { color: var(--orange); }
+  .kpi-note { font-size: 11px; color: var(--orange); font-weight: 600; margin: 2px 0 0; }
+  .t-gris { font-size: 12px; color: var(--gray-2); }
+  tr.t-inactif .t-mag { color: var(--gray); }
+  .feed-row { display: flex; gap: 12px; font-size: 13px; padding: 7px 0; border-block-end: 1px solid var(--line); }
+  .feed-row:last-child { border-block-end: none; }
+  .feed-h { font-weight: 700; min-width: 42px; }
+  .feed-par { color: var(--gray); }
+  .today-kpis { grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); }
+  table.today-table th:first-child, table.today-table td:first-child { position: sticky; inset-inline-start: 0; background: var(--surface); z-index: 1; min-width: 150px; }
+  .sticky-wrap { max-height: calc(100vh - 150px); overflow: auto; border-radius: 10px; border: 1px solid var(--line); }
+  .sticky-wrap table.dash-table { border-radius: 0; overflow: visible; }
+  .sticky-wrap table.dash-table thead th { position: sticky; top: 0; background: var(--surface); z-index: 2; box-shadow: inset 0 -1px 0 var(--line-2); }
+  .sticky-wrap table.dash-table thead th:first-child { inset-inline-start: 0; z-index: 3; }
+
+  /* ---- Score mensuel ---- */
+  .sm-banner { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 10px 14px; border-radius: 8px; font-size: 13px; margin: 0 0 12px; }
+  .sm-banner b { font-size: 14px; }
+  .sm-b-apercu { background: rgba(255,255,255,0.07); }
+  .sm-b-prov { background: var(--orange-bg); color: var(--orange); }
+  .sm-b-valide { background: var(--green-bg); color: var(--green); }
+  .sm-actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 14px; }
+  .sm-btn { background: var(--surface); border: 1px solid var(--line-2); border-radius: 6px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text); }
+  .sm-btn:hover { border-color: var(--text); }
+  .sm-btn-red { background: var(--red); border-color: var(--red); color: #fff; }
+  .sm-btn-red:hover { background: #b51a12; border-color: #b51a12; }
+  .sm-btn-sm { padding: 4px 10px; font-size: 12px; }
+  .sm-btn-danger { color: var(--red); border-color: rgba(226,35,26,0.4); }
+  .sm-props { margin: 0 0 14px; }
+  .sm-prop-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; padding: 8px 0; border-block-end: 1px solid var(--line); }
+  .sm-prop-row:last-child { border-block-end: none; }
+  .sm-prop-btns { display: flex; gap: 6px 14px; flex-shrink: 0; }
+  .sm-v { font-weight: 700; font-size: 13px; }
+  .sm-ok { color: var(--green); } .sm-moy { color: var(--orange); } .sm-bas { color: var(--red); }
+  .sm-n { display: inline-block; background: rgba(255,255,255,0.1); color: var(--gray); font-weight: 700; font-size: 11px; padding: 1px 6px; border-radius: 4px; }
+  .sm-up { color: var(--green); font-weight: 700; font-size: 12px; } .sm-down { color: var(--red); font-weight: 700; font-size: 12px; }
+  .sm-legende { font-size: 12px; color: var(--gray); margin: 10px 2px 0; line-height: 1.6; }
+  .sm-modal-box { width: 560px; max-height: 88vh; overflow-y: auto; }
+  .sm-dim-row { display: grid; grid-template-columns: 1fr 44px; gap: 2px 10px; padding: 8px 0; border-block-end: 1px solid var(--line); font-size: 13px; }
+  .sm-dim-row label { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .sm-dim-v { text-align: end; font-weight: 700; }
+  .sm-dim-etat { grid-column: 1 / -1; padding-inline-start: 19px; }
+  .sm-dim-etat .sv-meta { display: inline; }
+  .sm-neutra-form { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .sm-neutra-form input[type=text], .sm-neutra-form select { padding: 9px 10px; border: 1px solid var(--line-2); border-radius: 6px; font-size: 13px; background: var(--bg); color: var(--text); }
+  .sm-entier { font-size: 13px; display: flex; gap: 6px; align-items: center; }
+  .sm-modal-box a { color: var(--red); }
+  .advice-btn { background: var(--red); color: #fff; border: none; border-radius: 6px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .advice-btn:disabled { opacity: .6; }
+  .advice-content { margin-top: 12px; font-size: 13px; line-height: 1.6; white-space: pre-wrap; }
+
+  @media (max-width: 480px) {
+    main { padding: 14px 10px 50px; }
+    header.topbar { padding: 12px 14px; }
+    header.topbar h1 { font-size: 15px; }
+    .detail-header h2 { font-size: 18px; }
+    .card, .kpi-card { padding: 12px; }
+    .main-tabs button { padding: 10px 10px; font-size: 13px; }
+    .today-kpis { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .today-kpis .kpi-card { padding: 8px; }
+    .today-kpis .kpi-card .lbl { font-size: 10px; }
+    .today-kpis .kpi-card .val { font-size: 17px; }
+    table.today-table td:first-child, table.today-table th:first-child { min-width: 120px; max-width: 140px; }
+  }
 </style>
 </head>
 <body>
 
-<div id="login-screen">
-  <h1>Dashboard <span style="color:#E2231A">international</span></h1>
-  <select id="login-ar-select" onchange="onLoginArChange(this.value)"><option value="">Chargement des animateurs…</option></select>
-  <input id="login-user" type="text" placeholder="prenom.nom@optical-center.com" style="display:none">
-  <input id="login-pass" type="password" placeholder="Mot de passe Zimbra">
-  <div id="login-error"></div>
-  <button class="btn" id="login-btn" onclick="doLogin()">Se connecter</button>
+<div id="login-screen" style="display:none">
+  <div class="login-card">
+    <h2>Dashboard <span id="login-title-inter">international</span></h2>
+    <p class="sub" data-i18n="login_sub">Connexion avec ton identifiant Zimbra</p>
+    <label for="login-user" data-i18n="login_user">Identifiant</label>
+    <input type="text" id="login-user" placeholder="prenom.nom@optical-center.com" autocomplete="username">
+    <label for="login-pass" data-i18n="login_pass">Mot de passe</label>
+    <input type="password" id="login-pass" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="submit" id="login-btn" onclick="doLogin()" data-i18n="login_btn">Se connecter</button>
+    <p class="login-error" id="login-error"></p>
+    <div class="login-lang"><select class="lang-select" id="login-lang" onchange="setLang(this.value)"></select></div>
+  </div>
 </div>
 
-<div id="app-wrap">
-  <div class="topbar">
-    <h1 style="margin:0">Dashboard <span style="color:#E2231A">international</span></h1>
-    <a href="#" onclick="logout();return false">déconnexion</a>
-  </div>
-  <p class="sub" id="scope-label">—</p>
+<div id="app-screen" style="display:none">
+  <header class="topbar">
+    <h1>Dashboard <span id="topbar-inter">international</span></h1>
+    <div class="topbar-actions">
+      <select class="lang-select" id="topbar-lang" onchange="setLang(this.value)"></select>
+      <button onclick="logout()" data-i18n="logout">Déconnexion</button>
+    </div>
+  </header>
+  <main>
+    <p class="scope-label" id="scope-label"></p>
+    <nav class="main-tabs" id="main-tabs">
+      <button data-tab="network" class="active" onclick="showNetworkView()" data-i18n="tab_network">Santé réseau</button>
+      <button data-tab="today" onclick="showTodayView()" data-i18n="tab_today">Aujourd'hui</button>
+      <button data-tab="mensuel" onclick="showMonthlyView()" data-i18n="tab_monthly">Score mensuel</button>
+    </nav>
+    <div id="view-network"></div>
+    <div id="view-today" style="display:none"></div>
+    <div id="view-mensuel" style="display:none"></div>
+    <div id="view-detail" style="display:none"></div>
+    <div id="view-ar" style="display:none"></div>
+  </main>
+</div>
 
-  <div id="list-screen">
-    <div class="kpi-row">
-      <div class="kpi"><div class="v" id="kpi-score">—</div><div class="l">Score moyen</div></div>
-      <div class="kpi"><div class="v" id="kpi-nb">—</div><div class="l">Magasins</div></div>
-      <div class="kpi"><div class="v" id="kpi-overdue">—</div><div class="l">En retard de visite</div></div>
-    </div>
-    <div class="card">
-      <div id="store-list" class="store-list"><div class="loading-msg">Chargement...</div></div>
-    </div>
+<div class="modal-overlay" id="sm-modal" onclick="if (event.target === this) smFermer()">
+  <div class="modal-box sm-modal-box">
+    <button class="modal-close" onclick="smFermer()">&times;</button>
+    <div id="sm-modal-content"></div>
   </div>
+</div>
 
-  <div id="detail-screen">
-    <button class="back-btn" onclick="showList()">← Retour à la liste</button>
-    <div class="card">
-      <h2 id="detail-name" style="margin:0 0 4px;font-family:'Montserrat',sans-serif"></h2>
-      <p class="sub" id="detail-sub" style="margin:0 0 10px"></p>
-      <div class="subscore-grid" id="detail-subscores"></div>
-      <p class="sub" style="margin-top:18px;margin-bottom:2px">Évolution du score (26 dernières semaines)</p>
-      <div class="hist-bars" id="detail-history"></div>
-    </div>
+<div class="modal-overlay" id="kl-modal" onclick="if (event.target === this) klFermer()">
+  <div class="modal-box kl-box">
+    <button class="modal-close" onclick="klFermer()" aria-label="×">&times;</button>
+    <h3 id="kl-titre"></h3>
+    <div id="kl-contenu"></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-overlay" onclick="if (event.target === this) closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3 id="modal-title"></h3>
+    <div class="chart-box" id="modal-chart-box"><canvas id="modal-chart"></canvas></div>
+    <div id="modal-list" style="display:none;font-size:13px;line-height:1.8"></div>
   </div>
 </div>
 
 <script>
+
+// ---------------------------------------------------------------- Dictionnaire
+// Une ligne par clé : [français, anglais, espagnol, néerlandais]. L'hébreu
+// s'ajoutera en 5e colonne (LANGS, LOCALES et dir="rtl" sont déjà prêts).
+const T_DASH = {
+  page_title: ['Dashboard international — Optical Center', 'International dashboard — Optical Center', 'Panel internacional — Optical Center', 'Internationaal dashboard — Optical Center'],
+  international: ['international', 'international', 'internacional', 'internationaal'],
+  login_sub: ['Connexion avec ton identifiant Zimbra', 'Sign in with your Zimbra account', 'Conéctate con tu cuenta Zimbra', 'Log in met je Zimbra-account'],
+  login_user: ['Identifiant', 'Username', 'Usuario', 'Gebruikersnaam'],
+  login_pass: ['Mot de passe', 'Password', 'Contraseña', 'Wachtwoord'],
+  login_btn: ['Se connecter', 'Sign in', 'Conectarse', 'Inloggen'],
+  login_requis: ['Identifiant et mot de passe requis', 'Username and password required', 'Usuario y contraseña obligatorios', 'Gebruikersnaam en wachtwoord verplicht'],
+  connexion_en_cours: ['Connexion…', 'Signing in…', 'Conectando…', 'Bezig met inloggen…'],
+  session_expiree: ['Session expirée, reconnecte-toi.', 'Session expired, please sign in again.', 'Sesión caducada, vuelve a conectarte.', 'Sessie verlopen, log opnieuw in.'],
+  logout: ['Déconnexion', 'Sign out', 'Cerrar sesión', 'Uitloggen'],
+  erreur: ['Erreur', 'Error', 'Error', 'Fout'],
+  chargement: ['Chargement…', 'Loading…', 'Cargando…', 'Laden…'],
+  retour: ['Retour', 'Back', 'Volver', 'Terug'],
+  perimetre: ['Périmètre', 'Scope', 'Perímetro', 'Bereik'],
+  tout_reseau: ['Tout le réseau', 'Whole network', 'Toda la red', 'Hele netwerk'],
+  pays_x: ['Pays : {x}', 'Country: {x}', 'País: {x}', 'Land: {x}'],
+  tab_network: ['Santé réseau', 'Network health', 'Salud de la red', 'Netwerkgezondheid'],
+  tab_today: ["Aujourd'hui", 'Today', 'Hoy', 'Vandaag'],
+  tab_monthly: ['Score mensuel', 'Monthly score', 'Puntuación mensual', 'Maandscore'],
+  tous_pays: ['Tous les pays', 'All countries', 'Todos los países', 'Alle landen'],
+  tous_animateurs: ['Tous les animateurs', 'All area managers', 'Todos los animadores', 'Alle regiomanagers'],
+  rechercher_magasin: ['Rechercher un magasin', 'Search a store', 'Buscar una tienda', 'Winkel zoeken'],
+  vue_agregee: ['Vue agrégée', 'Summary view', 'Vista agregada', 'Totaaloverzicht'],
+  col_magasin: ['Magasin', 'Store', 'Tienda', 'Winkel'],
+  col_pays: ['Pays', 'Country', 'País', 'Land'],
+  col_responsable: ['Responsable', 'Manager', 'Responsable', 'Verantwoordelijke'],
+  col_sante: ['Santé', 'Health', 'Salud', 'Gezondheid'],
+  col_actions: ['Actions', 'Actions', 'Acciones', 'Acties'],
+  col_derniere_visite: ['Dernière visite', 'Last visit', 'Última visita', 'Laatste bezoek'],
+  col_score: ['Score', 'Score', 'Puntuación', 'Score'],
+  col_evol: ['Évol.', 'Trend', 'Evol.', 'Evol.'],
+  col_couv: ['Couv.', 'Cov.', 'Cob.', 'Dekk.'],
+  evol_title: ['Évolution vs mois précédent', 'Change vs previous month', 'Evolución vs mes anterior', 'Verschil met vorige maand'],
+  couverture: ['Couverture', 'Coverage', 'Cobertura', 'Dekking'],
+  trier: ['trier', 'sort', 'ordenar', 'sorteren'],
+  trier_maj: ['Trier', 'Sort', 'Ordenar', 'Sorteren'],
+  kpi_vert: ['Magasins au vert', 'Stores in the green', 'Tiendas en verde', 'Winkels in het groen'],
+  kpi_orange: ['À surveiller', 'To watch', 'A vigilar', 'In de gaten houden'],
+  kpi_rouge: ['En alerte', 'Alert', 'En alerta', 'Alarm'],
+  kpi_sans: ['Sans données', 'No data', 'Sin datos', 'Geen gegevens'],
+  kl_vert: ['Magasins au vert (≥ 80)', 'Stores in the green (≥ 80)', 'Tiendas en verde (≥ 80)', 'Winkels in het groen (≥ 80)'],
+  kl_orange: ['À surveiller (60 à 79)', 'To watch (60 to 79)', 'A vigilar (60 a 79)', 'In de gaten houden (60 tot 79)'],
+  kl_rouge: ['En alerte (< 60)', 'Alert (< 60)', 'En alerta (< 60)', 'Alarm (< 60)'],
+  visite_il_y_a: ['visite il y a {n} j', 'visited {n} d ago', 'visita hace {n} d', 'bezoek {n} d geleden'],
+  jamais_visite: ['jamais visité', 'never visited', 'nunca visitada', 'nooit bezocht'],
+  jamais: ['jamais', 'never', 'nunca', 'nooit'],
+  n_j: ['{n} j', '{n} d', '{n} d', '{n} d'],
+  aucun_magasin: ['Aucun magasin.', 'No store.', 'Ninguna tienda.', 'Geen winkel.'],
+  pas_historique_tendance: ["Pas encore assez d'historique pour une courbe de tendance.", 'Not enough history yet for a trend line.', 'Aún no hay suficiente historial para una curva de tendencia.', 'Nog niet genoeg historiek voor een trendlijn.'],
+  pas_historique: ["Pas encore assez d'historique.", 'Not enough history yet.', 'Aún no hay suficiente historial.', 'Nog niet genoeg historiek.'],
+  pas_historique_hebdo: ["Pas encore d'historique : le premier relevé hebdomadaire arrive le dimanche.", 'No history yet: the first weekly snapshot comes on Sunday.', 'Aún no hay historial: el primer registro semanal llega el domingo.', 'Nog geen historiek: de eerste wekelijkse meting komt op zondag.'],
+  pas_historique_sous_score: ["Pas encore d'historique pour ce sous-score.", 'No history yet for this sub-score.', 'Aún no hay historial para esta subpuntuación.', 'Nog geen historiek voor deze deelscore.'],
+  historique: ['historique', 'history', 'historial', 'historiek'],
+  n_magasins: ['{n} magasin', '{n} store', '{n} tienda', '{n} winkel'],
+  n_magasins_p: ['{n} magasins', '{n} stores', '{n} tiendas', '{n} winkels'],
+  n_magasins_sur: ['{n} magasin(s) sur {m}', '{n} store(s) out of {m}', '{n} tienda(s) de {m}', '{n} winkel(s) van {m}'],
+  n_visite_retard: ['{n} en retard de visite', '{n} overdue for a visit', '{n} con visita atrasada', '{n} met achterstallig bezoek'],
+  score_moyen: ['Score moyen', 'Average score', 'Puntuación media', 'Gemiddelde score'],
+  score_sante: ['Score santé', 'Health score', 'Puntuación de salud', 'Gezondheidsscore'],
+  pos_annuel_moyen: ['Positionnement annuel moyen', 'Average yearly positioning', 'Posicionamiento anual medio', 'Gemiddelde jaarpositie'],
+  objectif_annuel_total: ['Objectif annuel total', 'Total yearly target', 'Objetivo anual total', 'Totale jaardoelstelling'],
+  ca_prev_total: ['CA prévisionnel annuel total', 'Total forecast yearly sales', 'Facturación anual prevista total', 'Totale verwachte jaaromzet'],
+  montants: ['Montants', 'Amounts', 'Importes', 'Bedragen'],
+  plusieurs_devises: ['plusieurs devises, pas de total', 'several currencies, no total', 'varias divisas, sin total', 'meerdere valuta, geen totaal'],
+  vue_ensemble_moyenne: ["Vue d'ensemble (moyenne du périmètre)", 'Overview (scope average)', 'Visión general (media del perímetro)', 'Overzicht (gemiddelde van het bereik)'],
+  vue_ensemble: ["Vue d'ensemble", 'Overview', 'Visión general', 'Overzicht'],
+  evolution_score_moyen: ['Évolution du score moyen — historique', 'Average score — history', 'Evolución de la puntuación media — historial', 'Evolutie gemiddelde score — historiek'],
+  evolution_score: ['Évolution du score — historique', 'Score — history', 'Evolución de la puntuación — historial', 'Evolutie score — historiek'],
+  terrain_tous: ['Terrain (tous magasins)', 'Field (all stores)', 'Terreno (todas las tiendas)', 'Terrein (alle winkels)'],
+  terrain: ['Terrain', 'Field', 'Terreno', 'Terrein'],
+  actions_non_soldees: ['Actions non soldées (bilan de passage)', 'Open actions (store visit report)', 'Acciones pendientes (informe de visita)', 'Openstaande acties (bezoekrapport)'],
+  actions_bilan: ['Actions du bilan de passage', 'Store visit report actions', 'Acciones del informe de visita', 'Acties uit het bezoekrapport'],
+  kaizen_non_resolus: ['Kaizen — points non résolus', 'Kaizen — unresolved points', 'Kaizen — puntos sin resolver', 'Kaizen — onopgeloste punten'],
+  aucune_action_non_soldee: ['Aucune action non soldée.', 'No open action.', 'Ninguna acción pendiente.', 'Geen openstaande actie.'],
+  aucun_point_non_resolu: ['Aucun point non résolu.', 'No unresolved point.', 'Ningún punto sin resolver.', 'Geen onopgelost punt.'],
+  n_visites: ['{n} visite', '{n} visit', '{n} visita', '{n} bezoek'],
+  n_visites_p: ['{n} visites', '{n} visits', '{n} visitas', '{n} bezoeken'],
+  n_mois: ['{n} mois', '{n} mo.', '{n} meses', '{n} mnd'],
+  pedlv_secteur: ['Performance commerciale — PEDLV (moyenne du périmètre)', 'Sales performance — PEDLV (scope average)', 'Rendimiento comercial — PEDLV (media del perímetro)', 'Commerciële prestaties — PEDLV (gemiddelde van het bereik)'],
+  pedlv_titre: ['Performance commerciale — PEDLV', 'Sales performance — PEDLV', 'Rendimiento comercial — PEDLV', 'Commerciële prestaties — PEDLV'],
+  indicateur: ['Indicateur', 'Indicator', 'Indicador', 'Indicator'],
+  valeur_moy: ['Valeur moy.', 'Avg value', 'Valor medio', 'Gem. waarde'],
+  objectif_moy: ['Objectif', 'Target', 'Objetivo', 'Doel'],
+  valeur: ['Valeur', 'Value', 'Valor', 'Waarde'],
+  objectif: ['Objectif', 'Target', 'Objetivo', 'Doel'],
+  n_sur_m_rouge: ['{n}/{m} magasins au rouge', '{n}/{m} stores in the red', '{n}/{m} tiendas en rojo', '{n}/{m} winkels in het rood'],
+  pas_pedlv_secteur: ['Pas de données PEDLV récentes sur le périmètre.', 'No recent PEDLV data for this scope.', 'No hay datos PEDLV recientes en el perímetro.', 'Geen recente PEDLV-gegevens voor dit bereik.'],
+  pas_pedlv: ['Pas de données PEDLV récentes.', 'No recent PEDLV data.', 'No hay datos PEDLV recientes.', 'Geen recente PEDLV-gegevens.'],
+  eval_secteur: ['Évaluation équipe (périmètre)', 'Team assessment (scope)', 'Evaluación del equipo (perímetro)', 'Teamevaluatie (bereik)'],
+  note_equipe_secteur: ['Note moyenne équipe (périmètre)', 'Average team score (scope)', 'Nota media del equipo (perímetro)', 'Gemiddelde teamscore (bereik)'],
+  note_equipe: ['Note moyenne équipe', 'Average team score', 'Nota media del equipo', 'Gemiddelde teamscore'],
+  pas_de_donnee: ['Pas de donnée.', 'No data.', 'Sin datos.', 'Geen gegevens.'],
+  pas_detail_tache: ['Pas de détail par tâche.', 'No detail per task.', 'Sin detalle por tarea.', 'Geen detail per taak.'],
+  n_sur_m_vacant: ['{n}/{m} sans responsable', '{n}/{m} without owner', '{n}/{m} sin responsable', '{n}/{m} zonder verantwoordelijke'],
+  effectif_secteur: ['Effectif (périmètre)', 'Headcount (scope)', 'Plantilla (perímetro)', 'Personeel (bereik)'],
+  sous_effectif_soutenu: ['Sous-effectif soutenu (3 mois)', 'Sustained understaffing (3 months)', 'Falta de personal sostenida (3 meses)', 'Aanhoudende onderbezetting (3 maanden)'],
+  aucun_sous_effectif: ['Aucun magasin en sous-effectif soutenu.', 'No store with sustained understaffing.', 'Ninguna tienda con falta de personal sostenida.', 'Geen winkel met aanhoudende onderbezetting.'],
+  sur_effectif: ['Sur-effectif', 'Overstaffing', 'Exceso de personal', 'Overbezetting'],
+  aucun_sur_effectif: ['Aucun magasin en sur-effectif.', 'No overstaffed store.', 'Ninguna tienda con exceso de personal.', 'Geen overbezette winkel.'],
+  taux_absenteisme_moyen: ["Taux d'absentéisme moyen", 'Average absenteeism rate', 'Tasa media de absentismo', 'Gemiddeld ziekteverzuim'],
+  taux_absenteisme: ["Taux d'absentéisme", 'Absenteeism rate', 'Tasa de absentismo', 'Ziekteverzuim'],
+  conseils: ['Conseils', 'Advice', 'Consejos', 'Advies'],
+  generer_priorites: ['Générer les priorités de la semaine', "Generate this week's priorities", 'Generar las prioridades de la semana', 'Prioriteiten van de week genereren'],
+  generer_conseils: ["Générer des conseils d'action", 'Generate action advice', 'Generar consejos de acción', 'Actieadvies genereren'],
+  generation_en_cours: ['Génération en cours…', 'Generating…', 'Generando…', 'Bezig met genereren…'],
+  regenerer: ['Régénérer', 'Regenerate', 'Regenerar', 'Opnieuw genereren'],
+  magasins_perimetre: ['Magasins du périmètre', 'Stores in scope', 'Tiendas del perímetro', 'Winkels in het bereik'],
+  echeance_d: ['échéance {d}', 'due {d}', 'vence {d}', 'deadline {d}'],
+  depassee_de_j: ['dépassée de {n} j', '{n} d overdue', 'superada en {n} d', '{n} d over tijd'],
+  impactent_score: ['Impactent le score santé', 'Affect the health score', 'Afectan a la puntuación de salud', 'Tellen mee in de gezondheidsscore'],
+  aucune_action_reportee: ['Aucune action reportée sans être soldée.', 'No action carried over without being closed.', 'Ninguna acción aplazada sin cerrar.', 'Geen actie overgedragen zonder afsluiting.'],
+  echeance_depassee_hors_score: ['Échéance dépassée — sans impact sur le score', 'Past due — no impact on the score', 'Plazo vencido — sin impacto en la puntuación', 'Deadline verstreken — geen invloed op de score'],
+  a_reprendre: ['à reprendre au prochain passage', 'to review at the next visit', 'a retomar en la próxima visita', 'opnemen bij het volgende bezoek'],
+  aucune_action_en_retard: ['Aucune action du dernier bilan en retard.', 'No overdue action from the last report.', 'Ninguna acción del último informe con retraso.', 'Geen achterstallige actie uit het laatste rapport.'],
+  kaizen_mois_en_cours: ['Score du mois en cours', 'Current month score', 'Puntuación del mes en curso', 'Score van de lopende maand'],
+  pas_encore_cloture: ['en cours, pas encore clôturé', 'in progress, not closed yet', 'en curso, aún no cerrado', 'lopend, nog niet afgesloten'],
+  pas_audit_mois: ["Pas encore d'audit ce mois-ci.", 'No audit yet this month.', 'Aún no hay auditoría este mes.', 'Nog geen audit deze maand.'],
+  cumul_annuel: ['Cumul annuel', 'Year to date', 'Acumulado anual', 'Jaartotaal'],
+  checklist_reseau: ['Checklist réseau — derniers passages', 'Network checklist — latest visits', 'Checklist de red — últimas visitas', 'Netwerkchecklist — laatste bezoeken'],
+  oublie: ['Oublié', 'Missed', 'Olvidado', 'Vergeten'],
+  aucune_checklist: ["Aucun passage avec checklist réseau pour l'instant.", 'No visit with a network checklist yet.', 'Aún no hay visitas con checklist de red.', 'Nog geen bezoek met netwerkchecklist.'],
+  statut_vert: ['vert', 'green', 'verde', 'groen'],
+  statut_orange: ['orange', 'amber', 'naranja', 'oranje'],
+  statut_rouge: ['rouge', 'red', 'rojo', 'rood'],
+  n_sem: ['{n} sem.', '{n} wk', '{n} sem.', '{n} wk'],
+  non_assigne: ['non assigné', 'unassigned', 'sin asignar', 'niet toegewezen'],
+  pas_donnee_effectif: ['Pas de donnée effectif', 'No headcount data', 'Sin datos de plantilla', 'Geen personeelsgegevens'],
+  ecart_theorique: ['Écart vs théorique', 'Gap vs target headcount', 'Diferencia vs teórico', 'Verschil met theoretisch'],
+  sous_effectif_3_mois: ['sous-effectif soutenu, 3 mois', 'sustained understaffing, 3 months', 'falta de personal sostenida, 3 meses', 'aanhoudende onderbezetting, 3 maanden'],
+  collab_vus_entretien: ['Collaborateurs vus en entretien individuel', 'Employees seen in one-to-one', 'Empleados vistos en entrevista individual', 'Medewerkers gezien in individueel gesprek'],
+  attendus_detail: ['Attendus : {e} collaborateurs hors manager − {a} absence(s) longue durée ({s})', 'Expected: {e} employees excluding manager − {a} long-term absence(s) ({s})', 'Previstos: {e} empleados sin el responsable − {a} ausencia(s) de larga duración ({s})', 'Verwacht: {e} medewerkers zonder manager − {a} langdurige afwezigheid ({s})'],
+  import_rh: ['import RH', 'HR import', 'importación RR. HH.', 'HR-import'],
+  entretiens_types: ['Entretiens pilotage / valorisation / remotivation', 'Performance / recognition / re-motivation talks', 'Entrevistas de seguimiento / valoración / remotivación', 'Gesprekken sturing / waardering / remotivatie'],
+  lancements_journee: ['Lancements de journée', 'Daily kick-offs', 'Lanzamientos de jornada', 'Dagstarts'],
+  hors_score: ['hors score', 'not scored', 'fuera de puntuación', 'telt niet mee'],
+  entretiens_recadrage: ['Entretiens de recadrage', 'Corrective talks', 'Entrevistas de reencuadre', 'Bijsturingsgesprekken'],
+  comptes_pilotage: ['comptés dans le pilotage', 'counted as performance talks', 'contadas en el seguimiento', 'tellen als sturing'],
+  animateur: ['Animateur', 'Area manager', 'Animador', 'Regiomanager'],
+  directeur_pays: ['Directeur pays', 'Country director', 'Director de país', 'Landendirecteur'],
+  jours_sans_visite: ['{n} jours sans visite ({d})', '{n} days without a visit ({d})', '{n} días sin visita ({d})', '{n} dagen zonder bezoek ({d})'],
+  pos_mensuel: ['Positionnement mensuel', 'Monthly positioning', 'Posicionamiento mensual', 'Maandpositie'],
+  pos_annuel: ['Positionnement annuel', 'Yearly positioning', 'Posicionamiento anual', 'Jaarpositie'],
+  objectif_annuel: ['Objectif annuel', 'Yearly target', 'Objetivo anual', 'Jaardoelstelling'],
+  ca_prev: ['CA prévisionnel annuel', 'Forecast yearly sales', 'Facturación anual prevista', 'Verwachte jaaromzet'],
+  equipe: ['Équipe', 'Team', 'Equipo', 'Team'],
+  manager: ['Manager', 'Manager', 'Responsable', 'Manager'],
+  suivi_manager_titre: ['Suivi manager — actions et échéances', 'Manager follow-up — actions and deadlines', 'Seguimiento del responsable — acciones y plazos', 'Opvolging manager — acties en deadlines'],
+  non_compte: ['non compté', 'not counted', 'no cuenta', 'telt niet'],
+  poids_x: ['poids {x}', 'weight {x}', 'peso {x}', 'gewicht {x}'],
+  magasins_sans_responsable: ['magasins sans responsable', 'stores without an owner', 'tiendas sin responsable', 'winkels zonder verantwoordelijke'],
+  aucun_vacant: ['Aucun magasin sans responsable sur cette tâche.', 'No store without an owner on this task.', 'Ninguna tienda sin responsable en esta tarea.', 'Geen winkel zonder verantwoordelijke voor deze taak.'],
+  sv_titre: ['Entretiens Suivi Managers', 'Suivi Managers talks', 'Entrevistas Suivi Managers', 'Gesprekken Suivi Managers'],
+  sv_aucun: ["Aucune action ni objectif daté fixé en entretien pour l'instant.", 'No dated action or goal set in a talk yet.', 'Aún no hay acciones ni objetivos con fecha fijados en entrevista.', 'Nog geen gedateerde actie of doel vastgelegd in een gesprek.'],
+  sv_fixe_le: ['fixé le {d}', 'set on {d}', 'fijado el {d}', 'vastgelegd op {d}'],
+  par_x: ['par {x}', 'by {x}', 'por {x}', 'door {x}'],
+  sv_en_cours: ['{n} action en cours', '{n} open action', '{n} acción en curso', '{n} lopende actie'],
+  sv_en_cours_p: ['{n} actions en cours', '{n} open actions', '{n} acciones en curso', '{n} lopende acties'],
+  n_en_retard: ['{n} en retard', '{n} overdue', '{n} con retraso', '{n} te laat'],
+  sans_date: ['sans date', 'no date', 'sin fecha', 'geen datum'],
+  retard_de_j: ['en retard de {n} j', '{n} d overdue', 'con {n} d de retraso', '{n} d te laat'],
+  aujourdhui_min: ["aujourd'hui", 'today', 'hoy', 'vandaag'],
+  dans_j: ['dans {n} j', 'in {n} d', 'en {n} d', 'over {n} d'],
+  sv_aucune_en_cours: ['Aucune action en cours.', 'No open action.', 'Ninguna acción en curso.', 'Geen lopende actie.'],
+  sv_clotures: ['Clôturées ces 30 derniers jours ({n})', 'Closed in the last 30 days ({n})', 'Cerradas en los últimos 30 días ({n})', 'Afgesloten in de laatste 30 dagen ({n})'],
+  fait: ['Fait', 'Done', 'Hecho', 'Gedaan'],
+  pas_fait: ['Pas fait', 'Not done', 'No hecho', 'Niet gedaan'],
+  le_d: ['le {d}', 'on {d}', 'el {d}', 'op {d}'],
+  donnees_indispo: ['Données indisponibles.', 'Data unavailable.', 'Datos no disponibles.', 'Gegevens niet beschikbaar.'],
+  sv_ecoute_fb: ['Écoute & Feedback', 'Listening & Feedback', 'Escucha y Feedback', 'Luisteren & Feedback'],
+  sv_pilotage_optique: ['Pilotage Optique', 'Optical performance', 'Seguimiento Óptica', 'Sturing Optiek'],
+  sv_pilotage_audio: ['Pilotage Audio', 'Audio performance', 'Seguimiento Audio', 'Sturing Audio'],
+  sv_valorisation: ['Valorisation', 'Recognition', 'Valoración', 'Waardering'],
+  sv_remotivation: ['Remotivation', 'Re-motivation', 'Remotivación', 'Remotivatie'],
+  sv_recadrage: ['Recadrage', 'Corrective talk', 'Reencuadre', 'Bijsturing'],
+  dim_actions: ['Actions', 'Actions', 'Acciones', 'Acties'],
+  dim_effectif: ['Effectif', 'Headcount', 'Plantilla', 'Personeel'],
+  dim_absenteisme: ['Absentéisme', 'Absenteeism', 'Absentismo', 'Verzuim'],
+  dim_positionnement: ['Positionnement', 'Positioning', 'Posicionamiento', 'Positie'],
+  dim_pedlv: ['PEDLV', 'PEDLV', 'PEDLV', 'PEDLV'],
+  dim_avis: ['Avis Google', 'Google reviews', 'Reseñas Google', 'Google-reviews'],
+  dim_equipe: ['Équipe', 'Team', 'Equipo', 'Team'],
+  dim_kaizen: ['Kaizen', 'Kaizen', 'Kaizen', 'Kaizen'],
+  dim_entretiens: ['Entretiens', 'One-to-ones', 'Entrevistas', 'Gesprekken'],
+  dim_lancements: ['Lancements', 'Kick-offs', 'Lanzamientos', 'Dagstarts'],
+  dimc_actions: ['Act.', 'Act.', 'Acc.', 'Act.'],
+  dimc_effectif: ['Eff.', 'HC', 'Plant.', 'Pers.'],
+  dimc_absenteisme: ['Abs.', 'Abs.', 'Abs.', 'Verz.'],
+  dimc_positionnement: ['Pos.', 'Pos.', 'Pos.', 'Pos.'],
+  dimc_pedlv: ['PEDLV', 'PEDLV', 'PEDLV', 'PEDLV'],
+  dimc_avis: ['Avis', 'Rev.', 'Reseñas', 'Rev.'],
+  dimc_equipe: ['Équipe', 'Team', 'Equipo', 'Team'],
+  dimc_kaizen: ['Kaizen', 'Kaizen', 'Kaizen', 'Kaizen'],
+  dimc_entretiens: ['Entr.', '1:1', 'Entr.', 'Gespr.'],
+  dimc_lancements: ['Lanc.', 'Kick.', 'Lanz.', 'Start'],
+  pedlv_pm: ['Panier moyen', 'Average basket', 'Precio medio', 'Gemiddelde besteding'],
+  pedlv_tc: ['% TC', '% Conversion', '% Conversión', '% Conversie'],
+  pedlv_sop: ['% SOP', '% Warranty', '% Garantía', '% Garantie'],
+  pedlv_mdc: ['% MdC', '% House brands', '% Marcas excl.', '% Huismerken'],
+  pedlv_pack: ['% Pack Confort', '% Comfort Pack', '% Pack Confort', '% Comfort Pack'],
+  pedlv_pmpc: ['PM Pack Confort', 'Comfort Pack avg.', 'PM Pack Confort', 'Gem. Comfort Pack'],
+  pedlv_ta: ['% Test auditif', '% Hearing test', '% Test auditivo', '% Gehoortest'],
+  pedlv_tva: ['% Vente additionnelle', '% Add-on sales', '% Venta adicional', '% Bijverkoop'],
+  app_bilan: ['Bilan de Passage', 'Store visit report', 'Informe de visita', 'Bezoekrapport'],
+  app_suivi: ['Suivi Managers', 'Suivi Managers', 'Suivi Managers', 'Suivi Managers'],
+  app_pedlv: ['Analyse statistique', 'Statistical analysis', 'Análisis estadístico', 'Statistische analyse'],
+  app_kaizen: ['Kaizen', 'Kaizen', 'Kaizen', 'Kaizen'],
+  app_eval: ['Évaluation Équipe', 'Team assessment', 'Evaluación del equipo', 'Teamevaluatie'],
+  app_obs: ['Observations Terrain', 'Field observations', 'Observaciones de terreno', 'Terreinobservaties'],
+  outil_lancement: ['Lancement de journée', 'Daily kick-off', 'Lanzamiento de jornada', 'Dagstart'],
+  outil_bilan: ['Bilan de passage', 'Store visit report', 'Informe de visita', 'Bezoekrapport'],
+  outil_pedlv: ['Pour être dans le vert', 'Pour être dans le vert', 'Pour être dans le vert', 'Pour être dans le vert'],
+  outil_kaizen: ['Kaizen', 'Kaizen', 'Kaizen', 'Kaizen'],
+  outil_entretien: ['Entretien', 'One-to-one', 'Entrevista', 'Gesprek'],
+  outil_observation: ['Observation', 'Observation', 'Observación', 'Observatie'],
+  outil_equipe: ['Évaluation équipe', 'Team assessment', 'Evaluación del equipo', 'Teamevaluatie'],
+  outil_court_lancement: ['Lancement', 'Kick-off', 'Lanzam.', 'Dagstart'],
+  outil_court_bilan: ['Bilan', 'Report', 'Informe', 'Rapport'],
+  outil_court_pedlv: ['PEDLV', 'PEDLV', 'PEDLV', 'PEDLV'],
+  outil_court_kaizen: ['Kaizen', 'Kaizen', 'Kaizen', 'Kaizen'],
+  outil_court_entretien: ['Entretien', '1:1', 'Entrev.', 'Gesprek'],
+  outil_court_observation: ['Obs.', 'Obs.', 'Obs.', 'Obs.'],
+  outil_court_equipe: ['Éval. équipe', 'Team ass.', 'Eval. equipo', 'Teameval.'],
+  kpi_lancements: ['Lancements', 'Kick-offs', 'Lanzamientos', 'Dagstarts'],
+  kpi_bilan: ['Bilans', 'Reports', 'Informes', 'Rapporten'],
+  kpi_pedlv: ['PEDLV', 'PEDLV', 'PEDLV', 'PEDLV'],
+  kpi_kaizen: ['Kaizen', 'Kaizen', 'Kaizen', 'Kaizen'],
+  kpi_entretien: ['Entretiens', 'One-to-ones', 'Entrevistas', 'Gesprekken'],
+  kpi_observation: ['Observations', 'Observations', 'Observaciones', 'Observaties'],
+  kpi_equipe: ['Éval. équipe', 'Team ass.', 'Eval. equipo', 'Teameval.'],
+  aujourdhui: ["Aujourd'hui", 'Today', 'Hoy', 'Vandaag'],
+  hier: ['Hier', 'Yesterday', 'Ayer', 'Gisteren'],
+  tri_magasin: ['Tri : magasin', 'Sort: store', 'Orden: tienda', 'Sorteren: winkel'],
+  tri_moins_actifs: ["Tri : moins actifs d'abord", 'Sort: least active first', 'Orden: menos activas primero', 'Sorteren: minst actief eerst'],
+  tri_plus_actifs: ["Tri : plus actifs d'abord", 'Sort: most active first', 'Orden: más activas primero', 'Sorteren: meest actief eerst'],
+  tri_colonne: ['Tri : par colonne', 'Sort: by column', 'Orden: por columna', 'Sorteren: per kolom'],
+  en_direct: ['En direct · actualisé à {h} · lancement attendu avant {b} (heure locale du magasin)', 'Live · updated at {h} · kick-off expected before {b} (store local time)', 'En directo · actualizado a las {h} · lanzamiento previsto antes de las {b} (hora local de la tienda)', 'Live · bijgewerkt om {h} · dagstart verwacht vóór {b} (lokale tijd winkel)'],
+  journee_du: ['Journée du {d}', 'Day of {d}', 'Jornada del {d}', 'Dag van {d}'],
+  actualiser: ['Actualiser', 'Refresh', 'Actualizar', 'Vernieuwen'],
+  fil_journee: ['Fil de la journée', "Today's feed", 'Actividad del día', 'Tijdlijn van de dag'],
+  rien_saisi: ['Rien de saisi pour le moment.', 'Nothing entered yet.', 'Nada registrado por ahora.', 'Nog niets ingevoerd.'],
+  magasins_actifs: ['Magasins actifs', 'Active stores', 'Tiendas activas', 'Actieve winkels'],
+  dont_n_retard: ['dont {n} en retard', 'incl. {n} late', 'de ellos {n} con retraso', 'waarvan {n} te laat'],
+  en_retard: ['en retard', 'late', 'con retraso', 'te laat'],
+  manquant: ['manquant', 'missing', 'falta', 'ontbreekt'],
+  avant_h: ['avant {h}', 'before {h}', 'antes de {h}', 'vóór {h}'],
+  attendu_avant: ['attendu avant {h}', 'expected before {h}', 'previsto antes de {h}', 'verwacht vóór {h}'],
+  pas_attendu: ['pas attendu', 'not expected', 'no previsto', 'niet verwacht'],
+  lancement_non_attendu: ['Pas de lancement attendu (jour de repos ou fermeture)', 'No kick-off expected (rest day or closure)', 'No se espera lanzamiento (día de descanso o cierre)', 'Geen dagstart verwacht (rustdag of sluiting)'],
+  lancement_retard_title: ['Lancement en retard — {h} (attendu avant {b})', 'Late kick-off — {h} (expected before {b})', 'Lanzamiento con retraso — {h} (previsto antes de {b})', 'Dagstart te laat — {h} (verwacht vóór {b})'],
+  reunion_court: ['réunion', 'meeting', 'reunión', 'vergadering'],
+  feed_reunion: ['Réunion mensuelle (vaut lancement de journée)', 'Monthly meeting (counts as daily kick-off)', 'Reunión mensual (cuenta como lanzamiento de jornada)', 'Maandvergadering (telt als dagstart)'],
+  aucun_envoi_pedlv: ['Aucun envoi PEDLV récent', 'No recent PEDLV upload', 'Ningún envío PEDLV reciente', 'Geen recente PEDLV-zending'],
+  pedlv_envoye: ['PEDLV envoyé', 'PEDLV sent', 'PEDLV enviado', 'PEDLV verzonden'],
+  il_y_a_j: ['il y a {n} j', '{n} d ago', 'hace {n} d', '{n} d geleden'],
+  dernier_envoi_pedlv: ['Dernier envoi PEDLV il y a {n} jour(s)', 'Last PEDLV upload {n} day(s) ago', 'Último envío PEDLV hace {n} día(s)', 'Laatste PEDLV-zending {n} dag(en) geleden'],
+  aucun_audit_kaizen: ['Aucun audit Kaizen ouvert ce mois-ci', 'No Kaizen audit open this month', 'Ninguna auditoría Kaizen abierta este mes', 'Geen Kaizen-audit geopend deze maand'],
+  kaizen_items: ['Kaizen — {n} point(s) contrôlé(s)', 'Kaizen — {n} item(s) checked', 'Kaizen — {n} punto(s) controlado(s)', 'Kaizen — {n} punt(en) gecontroleerd'],
+  kaizen_rien_ce_jour: ['Audit du mois en cours, rien de contrôlé ce jour', 'Current month audit, nothing checked that day', 'Auditoría del mes en curso, nada controlado ese día', 'Audit van de lopende maand, niets gecontroleerd die dag'],
+  aucun_bilan: ['Aucun bilan de passage enregistré', 'No store visit report recorded', 'Ningún informe de visita registrado', 'Geen bezoekrapport geregistreerd'],
+  aucune_eval: ['Aucune évaluation équipe enregistrée', 'No team assessment recorded', 'Ninguna evaluación del equipo registrada', 'Geen teamevaluatie geregistreerd'],
+  dernier_bilan_j: ['Dernier bilan de passage il y a {n} jour(s)', 'Last store visit report {n} day(s) ago', 'Último informe de visita hace {n} día(s)', 'Laatste bezoekrapport {n} dag(en) geleden'],
+  derniere_eval_j: ['Dernière évaluation équipe il y a {n} jour(s)', 'Last team assessment {n} day(s) ago', 'Última evaluación del equipo hace {n} día(s)', 'Laatste teamevaluatie {n} dag(en) geleden'],
+  n_entretiens: ['{n} entretien(s)', '{n} one-to-one(s)', '{n} entrevista(s)', '{n} gesprek(ken)'],
+  n_obs: ['{n} obs.', '{n} obs.', '{n} obs.', '{n} obs.'],
+  n_observations: ['{n} observation(s)', '{n} observation(s)', '{n} observación(es)', '{n} observatie(s)'],
+  n_controles_eval: ['{n} contrôle(s) Évaluation équipe', '{n} team assessment check(s)', '{n} control(es) de evaluación', '{n} teamevaluatiecontrole(s)'],
+  entretien: ['Entretien', 'One-to-one', 'Entrevista', 'Gesprek'],
+  visite_du: ['visite du {d}', 'visit of {d}', 'visita del {d}', 'bezoek van {d}'],
+  kl_actifs: ["Magasins actifs aujourd'hui", 'Active stores today', 'Tiendas activas hoy', 'Actieve winkels vandaag'],
+  voir_sans_saisie: ['Voir les magasins sans saisie', 'Show stores with no entry', 'Ver tiendas sin registros', 'Winkels zonder invoer tonen'],
+  voir_sans_lancement: ['Voir les magasins sans lancement', 'Show stores without a kick-off', 'Ver tiendas sin lanzamiento', 'Winkels zonder dagstart tonen'],
+  voir_non_concernes: ['Voir les magasins non concernés', 'Show other stores', 'Ver las demás tiendas', 'Overige winkels tonen'],
+  sm_prompt_revision: ['Ce mois est validé. Toute modification est une révision tracée.\nMotif de la révision :', 'This month is approved. Any change is a tracked revision.\nReason for the revision:', 'Este mes está validado. Cualquier cambio es una revisión registrada.\nMotivo de la revisión:', 'Deze maand is gevalideerd. Elke wijziging is een geregistreerde revisie.\nReden van de revisie:'],
+  sm_prompt_rh: ["L'import RH de ce mois n'a pas été fait (effectif et absentéisme sont exclus du calcul).\nPour valider quand même, indique le motif :", "This month's HR import has not been done (headcount and absenteeism are excluded).\nTo approve anyway, give the reason:", 'La importación de RR. HH. de este mes no se ha hecho (plantilla y absentismo quedan excluidos).\nPara validar igualmente, indica el motivo:', 'De HR-import van deze maand is niet gebeurd (personeel en verzuim tellen niet mee).\nOm toch te valideren, geef de reden:'],
+  neutralise: ['Neutralisé', 'Neutralised', 'Neutralizado', 'Geneutraliseerd'],
+  exclu: ['Exclu', 'Excluded', 'Excluido', 'Uitgesloten'],
+  sm_apercu_en_cours: ['Mois en cours — aperçu indicatif', 'Current month — indicative preview', 'Mes en curso — vista previa indicativa', 'Lopende maand — indicatief voorbeeld'],
+  sm_apercu_non_calcule: ['Mois non encore calculé — aperçu indicatif', 'Month not calculated yet — indicative preview', 'Mes aún no calculado — vista previa indicativa', 'Maand nog niet berekend — indicatief voorbeeld'],
+  sm_apercu_txt: ["Rien n'est enregistré, les chiffres évoluent jusqu'au calcul. Non opposable.", 'Nothing is saved; figures change until the calculation. Not binding.', 'No se guarda nada; las cifras cambian hasta el cálculo. No vinculante.', 'Er wordt niets opgeslagen; de cijfers wijzigen tot de berekening. Niet bindend.'],
+  sm_valide: ['Validé', 'Approved', 'Validado', 'Gevalideerd'],
+  sm_valide_txt: ['le {d} par {p} · version {v}', 'on {d} by {p} · version {v}', 'el {d} por {p} · versión {v}', 'op {d} door {p} · versie {v}'],
+  sm_revise_le: ['révisé le {d}', 'revised on {d}', 'revisado el {d}', 'herzien op {d}'],
+  sm_provisoire: ['Provisoire — version {v}', 'Provisional — version {v}', 'Provisional — versión {v}', 'Voorlopig — versie {v}'],
+  sm_provisoire_txt: ["Calculé le {d} ({p}) · contestation jusqu'au {l}", 'Calculated on {d} ({p}) · disputes until {l}', 'Calculado el {d} ({p}) · reclamaciones hasta el {l}', 'Berekend op {d} ({p}) · bezwaar tot {l}'],
+  sm_calculer: ['Calculer le mois', 'Calculate the month', 'Calcular el mes', 'Maand berekenen'],
+  sm_recalculer: ['Recalculer', 'Recalculate', 'Recalcular', 'Herberekenen'],
+  sm_valider: ['Valider le mois', 'Approve the month', 'Validar el mes', 'Maand valideren'],
+  sm_ar_absent: ['Animateur absent…', 'Area manager absent…', 'Animador ausente…', 'Regiomanager afwezig…'],
+  sm_exporter: ['Exporter Excel', 'Export to Excel', 'Exportar a Excel', 'Exporteren naar Excel'],
+  sm_supprimer: ['Supprimer le calcul', 'Delete the calculation', 'Eliminar el cálculo', 'Berekening verwijderen'],
+  sm_propositions: ['Propositions de neutralisation ({n})', 'Neutralisation requests ({n})', 'Propuestas de neutralización ({n})', 'Neutralisatievoorstellen ({n})'],
+  tout_accepter: ['Tout accepter', 'Accept all', 'Aceptar todo', 'Alles aanvaarden'],
+  tout_refuser: ['Tout refuser', 'Reject all', 'Rechazar todo', 'Alles weigeren'],
+  magasin_entier: ['Magasin entier', 'Whole store', 'Tienda completa', 'Hele winkel'],
+  propose_par: ['proposé par {p}', 'requested by {p}', 'propuesto por {p}', 'voorgesteld door {p}'],
+  accepter: ['Accepter', 'Accept', 'Aceptar', 'Aanvaarden'],
+  refuser: ['Refuser', 'Reject', 'Rechazar', 'Weigeren'],
+  en_attente_admin: ['en attente de la direction', 'awaiting management', 'pendiente de la dirección', 'wacht op directie'],
+  valide_min: ['validé', 'approved', 'validado', 'gevalideerd'],
+  provisoire_min: ['provisoire', 'provisional', 'provisional', 'voorlopig'],
+  en_cours_min: ['en cours', 'in progress', 'en curso', 'lopend'],
+  sm_legende: ['neutralisé (motif au survol) · — exclu, donnée réseau absente · Couv. = part du poids total réellement comptée (score attribué à partir de 50 %). Clic sur un magasin pour le détail{suite}.', 'neutralised (reason on hover) · — excluded, network data missing · Cov. = share of the total weight actually counted (score given from 50%). Click a store for the detail{suite}.', 'neutralizado (motivo al pasar el ratón) · — excluido, falta dato de red · Cob. = parte del peso total realmente contada (puntuación a partir del 50 %). Clic en una tienda para el detalle{suite}.', 'geneutraliseerd (reden bij aanwijzen) · — uitgesloten, netwerkgegevens ontbreken · Dekk. = deel van het totale gewicht dat echt meetelt (score vanaf 50 %). Klik op een winkel voor het detail{suite}.'],
+  sm_legende_admin: [' et les neutralisations', ' and neutralisations', ' y las neutralizaciones', ' en de neutralisaties'],
+  sm_legende_ar: [' et proposer une neutralisation', ' and to request a neutralisation', ' y proponer una neutralización', ' en een neutralisatie voor te stellen'],
+  magasins_notes: ['Magasins notés', 'Scored stores', 'Tiendas puntuadas', 'Gescoorde winkels'],
+  avec_neutralisation: ['Avec neutralisation', 'With neutralisation', 'Con neutralización', 'Met neutralisatie'],
+  propositions_attente: ['Propositions en attente', 'Pending requests', 'Propuestas pendientes', 'Openstaande voorstellen'],
+  pas_score_couverture: ['Pas de score : moins de 50 % du poids couvert', 'No score: less than 50% of the weight covered', 'Sin puntuación: menos del 50 % del peso cubierto', 'Geen score: minder dan 50 % van het gewicht gedekt'],
+  ex_actions: ['Bilan du {d} : {n} action(s) reportée(s), dont {a} « à faire » (−25) et {c} « en cours » (−15).', 'Report of {d}: {n} action(s) carried over, {a} "to do" (−25) and {c} "in progress" (−15).', 'Informe del {d}: {n} acción(es) aplazada(s), {a} «por hacer» (−25) y {c} «en curso» (−15).', 'Rapport van {d}: {n} overgedragen actie(s), {a} "te doen" (−25) en {c} "lopend" (−15).'],
+  ex_aucun_bilan: ['Aucun bilan de passage dans le mois.', 'No store visit report this month.', 'Ningún informe de visita en el mes.', 'Geen bezoekrapport deze maand.'],
+  ex_positionnement: ['Positionnement annuel saisi dans le bilan du {d} : {v} %.', 'Yearly positioning entered in the report of {d}: {v}%.', 'Posicionamiento anual registrado en el informe del {d}: {v} %.', 'Jaarpositie ingevoerd in het rapport van {d}: {v} %.'],
+  ex_equipe: ['Niveau Évaluation équipe au dernier jour du mois : {v}/10 ({n} tâche(s)).', 'Team assessment level on the last day of the month: {v}/10 ({n} task(s)).', 'Nivel de evaluación del equipo el último día del mes: {v}/10 ({n} tarea(s)).', 'Teamevaluatieniveau op de laatste dag van de maand: {v}/10 ({n} taak/taken).'],
+  ex_aucune_eval: ['Aucune évaluation équipe cette année.', 'No team assessment this year.', 'Ninguna evaluación del equipo este año.', 'Geen teamevaluatie dit jaar.'],
+  ex_eff_bilan: ['Effectif saisi dans le bilan du {d}', 'Headcount entered in the report of {d}', 'Plantilla registrada en el informe del {d}', 'Personeel ingevoerd in het rapport van {d}'],
+  ex_eff_rh: ['Effectif disponible (RH{m}, hors longue durée)', 'Available headcount (HR{m}, excluding long-term absence)', 'Plantilla disponible (RR. HH.{m}, sin larga duración)', 'Beschikbaar personeel (HR{m}, zonder langdurige afwezigheid)'],
+  ex_effectif: ['{s} : {v} pour {th} théorique (écart {e})', '{s}: {v} for {th} target (gap {e})', '{s}: {v} para {th} teórico (diferencia {e})', '{s}: {v} voor {th} theoretisch (verschil {e})'],
+  ex_sous_eff: ['sous-effectif RH soutenu 3 mois (écart moyen {e})', 'sustained HR understaffing over 3 months (average gap {e})', 'falta de personal sostenida 3 meses (diferencia media {e})', 'aanhoudende onderbezetting 3 maanden (gemiddeld verschil {e})'],
+  indicatif: ['Aperçu, indicatif', 'Preview, indicative', 'Vista previa, indicativo', 'Voorbeeld, indicatief'],
+  ex_abs_dernier: ['Dernier import RH ({m})', 'Latest HR import ({m})', 'Última importación RR. HH. ({m})', 'Laatste HR-import ({m})'],
+  ex_abs_mois: ["Taux d'absentéisme du mois", 'Absenteeism rate for the month', 'Tasa de absentismo del mes', 'Verzuim van de maand'],
+  ex_pedlv: ['Envoi PEDLV du {d} (période {p}) : {r} indicateur(s) rouge(s) sur {n}.', 'PEDLV upload of {d} (period {p}): {r} red indicator(s) out of {n}.', 'Envío PEDLV del {d} (periodo {p}): {r} indicador(es) en rojo de {n}.', 'PEDLV-zending van {d} (periode {p}): {r} rode indicator(en) van {n}.'],
+  ex_aucun_pedlv: ['Aucun envoi PEDLV pour ce mois.', 'No PEDLV upload for this month.', 'Ningún envío PEDLV para este mes.', 'Geen PEDLV-zending voor deze maand.'],
+  ex_avis: ['Note Google {r}/5 ({n} avis), mise à jour le {d}.', 'Google rating {r}/5 ({n} reviews), updated on {d}.', 'Nota Google {r}/5 ({n} reseñas), actualizada el {d}.', 'Google-score {r}/5 ({n} reviews), bijgewerkt op {d}.'],
+  ex_kaizen: ['Audit Kaizen du mois : {s}/{m}', 'Kaizen audit for the month: {s}/{m}', 'Auditoría Kaizen del mes: {s}/{m}', 'Kaizen-audit van de maand: {s}/{m}'],
+  cloture: ['clôturé', 'closed', 'cerrado', 'afgesloten'],
+  non_cloture: ['non clôturé', 'not closed', 'no cerrado', 'niet afgesloten'],
+  ex_aucun_kaizen: ['Aucun audit Kaizen ce mois-ci.', 'No Kaizen audit this month.', 'Ninguna auditoría Kaizen este mes.', 'Geen Kaizen-audit deze maand.'],
+  ex_entretiens: ['{v} collaborateur(s) vu(s) en entretien sur {e} attendu(s) (RH {m}).', '{v} employee(s) seen out of {e} expected (HR {m}).', '{v} empleado(s) visto(s) de {e} previsto(s) (RR. HH. {m}).', '{v} medewerker(s) gezien van {e} verwacht (HR {m}).'],
+  ex_lancements: ['{l} jour(s) lancé(s) sur {o} jour(s) ouvert(s).', '{l} day(s) kicked off out of {o} open day(s).', '{l} día(s) lanzado(s) de {o} día(s) abierto(s).', '{l} dag(en) gestart van {o} openingsdag(en).'],
+  retirer: ['retirer', 'remove', 'retirar', 'verwijderen'],
+  sm_neutra_apres_calcul: ['Les neutralisations se font une fois le mois calculé.', 'Neutralisations are made once the month is calculated.', 'Las neutralizaciones se hacen una vez calculado el mes.', 'Neutralisaties gebeuren zodra de maand berekend is.'],
+  sm_neutra_entier: ['Neutraliser le magasin entier (pas de score ce mois-ci)', 'Neutralise the whole store (no score this month)', 'Neutralizar la tienda completa (sin puntuación este mes)', 'Hele winkel neutraliseren (geen score deze maand)'],
+  motif_obligatoire: ['Motif (obligatoire)', 'Reason (required)', 'Motivo (obligatorio)', 'Reden (verplicht)'],
+  sm_neutraliser: ['Neutraliser la sélection', 'Neutralise the selection', 'Neutralizar la selección', 'Selectie neutraliseren'],
+  sm_proposer: ['Proposer la neutralisation', 'Request neutralisation', 'Proponer la neutralización', 'Neutralisatie voorstellen'],
+  sm_proposition_effet: ["Ta proposition n'aura d'effet qu'après validation par la direction (accès réseau complet).", 'Your request only takes effect once approved by management (full network access).', 'Tu propuesta solo tendrá efecto tras la validación de la dirección (acceso completo a la red).', 'Je voorstel heeft pas effect na goedkeuring door de directie (volledige netwerktoegang).'],
+  magasin_neutralise: ['magasin neutralisé', 'store neutralised', 'tienda neutralizada', 'winkel geneutraliseerd'],
+  sm_coche_dim: ['Coche au moins une dimension (ou le magasin entier).', 'Tick at least one dimension (or the whole store).', 'Marca al menos una dimensión (o la tienda completa).', 'Vink minstens één dimensie aan (of de hele winkel).'],
+  sm_proposition_envoyee: ['Proposition envoyée à la direction.', 'Request sent to management.', 'Propuesta enviada a la dirección.', 'Voorstel naar de directie gestuurd.'],
+  sm_confirm_retirer: ['Retirer cette neutralisation ? La dimension sera de nouveau comptée.', 'Remove this neutralisation? The dimension will be counted again.', '¿Retirar esta neutralización? La dimensión volverá a contar.', 'Deze neutralisatie verwijderen? De dimensie telt dan weer mee.'],
+  sm_confirm_accepter_tout: ['Accepter les {n} proposition(s) ?', 'Accept the {n} request(s)?', '¿Aceptar las {n} propuesta(s)?', 'De {n} voorstel(len) aanvaarden?'],
+  sm_confirm_refuser_tout: ['Refuser les {n} proposition(s) ? Les dimensions concernées resteront comptées normalement.', 'Reject the {n} request(s)? The dimensions will stay counted normally.', '¿Rechazar las {n} propuesta(s)? Las dimensiones seguirán contando normalmente.', 'De {n} voorstel(len) weigeren? De dimensies blijven normaal meetellen.'],
+  sm_confirm_calcul: ['Calculer le score de {m} ? Les poids actuels seront figés pour ce mois.', 'Calculate the score for {m}? Current weights will be frozen for this month.', '¿Calcular la puntuación de {m}? Los pesos actuales quedarán fijados para este mes.', 'De score van {m} berekenen? De huidige gewichten worden voor deze maand vastgezet.'],
+  sm_confirm_recalcul: ['Recalculer {m} à partir des données actuelles ? Une nouvelle version sera créée (la précédente est conservée), avec les mêmes poids.', 'Recalculate {m} from current data? A new version will be created (the previous one is kept), with the same weights.', '¿Recalcular {m} con los datos actuales? Se creará una nueva versión (se conserva la anterior), con los mismos pesos.', '{m} herberekenen met de huidige gegevens? Er wordt een nieuwe versie gemaakt (de vorige blijft bewaard), met dezelfde gewichten.'],
+  sm_confirm_supprimer: ['Supprimer le calcul de {m} ? Toutes les versions, neutralisations et propositions de ce mois seront effacées (le journal garde la trace). Le mois repassera en aperçu.', 'Delete the calculation for {m}? All versions, neutralisations and requests for this month will be erased (the log keeps a trace). The month goes back to preview.', '¿Eliminar el cálculo de {m}? Se borrarán todas las versiones, neutralizaciones y propuestas del mes (el registro guarda la traza). El mes vuelve a vista previa.', 'De berekening van {m} verwijderen? Alle versies, neutralisaties en voorstellen van deze maand worden gewist (het logboek bewaart een spoor). De maand gaat terug naar voorbeeld.'],
+  sm_confirm_valider: ['Valider définitivement {m} ? Le score sera gelé ; toute modification ultérieure sera une révision tracée avec motif.', 'Approve {m} for good? The score will be frozen; any later change will be a tracked revision with a reason.', '¿Validar definitivamente {m}? La puntuación quedará congelada; cualquier cambio posterior será una revisión registrada con motivo.', '{m} definitief valideren? De score wordt bevroren; elke latere wijziging is een geregistreerde revisie met reden.'],
+  sm_ar_absent_titre: ['Animateur absent', 'Area manager absent', 'Animador ausente', 'Regiomanager afwezig'],
+  sm_ar_absent_txt: ["Neutralise, pour tous les magasins de l'animateur, ce qui vient de Bilan de Passage et d'Évaluation équipe : {d}.", "Neutralises, for all the area manager's stores, what comes from the store visit report and team assessment: {d}.", 'Neutraliza, para todas las tiendas del animador, lo que procede del informe de visita y de la evaluación del equipo: {d}.', 'Neutraliseert voor alle winkels van de regiomanager wat uit het bezoekrapport en de teamevaluatie komt: {d}.'],
+  aucun_animateur: ['Aucun animateur sur ce périmètre.', 'No area manager in this scope.', 'Ningún animador en este perímetro.', 'Geen regiomanager in dit bereik.'],
+  xlsx_ko: ['Impossible de charger le module Excel', 'Unable to load the Excel module', 'No se puede cargar el módulo Excel', 'Kan de Excel-module niet laden'],
+  compte: ['Compté', 'Counted', 'Contado', 'Meegeteld'],
+  pas_de_score: ['Pas de score', 'No score', 'Sin puntuación', 'Geen score'],
+  x_statut_apercu: ['APERÇU (non enregistré)', 'PREVIEW (not saved)', 'VISTA PREVIA (no guardada)', 'VOORBEELD (niet opgeslagen)'],
+  x_statut_valide: ['VALIDÉ', 'APPROVED', 'VALIDADO', 'GEVALIDEERD'],
+  x_statut_provisoire: ['PROVISOIRE', 'PROVISIONAL', 'PROVISIONAL', 'VOORLOPIG'],
+  x_seuil_val: ['50 % du poids total', '50% of the total weight', '50 % del peso total', '50 % van het totale gewicht'],
+  x_aucune_neutra: ['Aucune neutralisation', 'No neutralisation', 'Ninguna neutralización', 'Geen neutralisatie'],
+  x_aucune_action: ['Aucune action enregistrée', 'No action recorded', 'Ninguna acción registrada', 'Geen actie geregistreerd'],
+  x_mois: ['Mois', 'Month', 'Mes', 'Maand'],
+  x_statut: ['Statut', 'Status', 'Estado', 'Status'],
+  x_version: ['Version', 'Version', 'Versión', 'Versie'],
+  x_code: ['Code', 'Code', 'Código', 'Code'],
+  x_magasin: ['Magasin', 'Store', 'Tienda', 'Winkel'],
+  x_pays: ['Pays', 'Country', 'País', 'Land'],
+  x_animateur: ['Animateur', 'Area manager', 'Animador', 'Regiomanager'],
+  x_score: ['Score du mois', 'Month score', 'Puntuación del mes', 'Maandscore'],
+  x_score_prec: ['Score mois précédent', 'Previous month score', 'Puntuación mes anterior', 'Score vorige maand'],
+  x_evolution: ['Évolution', 'Change', 'Evolución', 'Evolutie'],
+  x_couverture: ['Couverture %', 'Coverage %', 'Cobertura %', 'Dekking %'],
+  x_rang_reseau: ['Rang réseau', 'Network rank', 'Puesto en la red', 'Rang netwerk'],
+  x_rang_pays: ['Rang pays', 'Country rank', 'Puesto en el país', 'Rang land'],
+  x_sous_score: ['sous-score', 'sub-score', 'subpuntuación', 'deelscore'],
+  x_poids: ['Poids', 'Weight', 'Peso', 'Gewicht'],
+  x_etat: ['état', 'status', 'estado', 'status'],
+  x_justification: ['justification', 'explanation', 'justificación', 'toelichting'],
+  x_dimension: ['Dimension', 'Dimension', 'Dimensión', 'Dimensie'],
+  x_origine: ['Origine', 'Origin', 'Origen', 'Oorsprong'],
+  x_motif: ['Motif', 'Reason', 'Motivo', 'Reden'],
+  x_propose_par: ['Proposé par', 'Requested by', 'Propuesto por', 'Voorgesteld door'],
+  x_propose_le: ['Proposé le', 'Requested on', 'Propuesto el', 'Voorgesteld op'],
+  x_decide_par: ['Décidé par', 'Decided by', 'Decidido por', 'Beslist door'],
+  x_decide_le: ['Décidé le', 'Decided on', 'Decidido el', 'Beslist op'],
+  x_date: ['Date', 'Date', 'Fecha', 'Datum'],
+  x_action: ['Action', 'Action', 'Acción', 'Actie'],
+  x_auteur: ['Auteur', 'Author', 'Autor', 'Auteur'],
+  x_detail: ['Détail', 'Detail', 'Detalle', 'Detail'],
+  x_parametre: ['Paramètre', 'Setting', 'Parámetro', 'Parameter'],
+  x_valeur: ['Valeur', 'Value', 'Valor', 'Waarde'],
+  x_calcule_le: ['Calculé le', 'Calculated on', 'Calculado el', 'Berekend op'],
+  x_valide_le: ['Validé le', 'Approved on', 'Validado el', 'Gevalideerd op'],
+  x_valide_par: ['Validé par', 'Approved by', 'Validado por', 'Gevalideerd door'],
+  x_revise_le: ['Révisé le', 'Revised on', 'Revisado el', 'Herzien op'],
+  x_date_limite: ['Date limite de contestation', 'Dispute deadline', 'Fecha límite de reclamación', 'Uiterste bezwaardatum'],
+  x_regles: ['Version des règles', 'Rules version', 'Versión de las reglas', 'Versie van de regels'],
+  x_seuil: ['Seuil de couverture', 'Coverage threshold', 'Umbral de cobertura', 'Dekkingsdrempel'],
+  x_f_synthese: ['Synthèse', 'Summary', 'Resumen', 'Samenvatting'],
+  x_f_detail: ['Détail', 'Detail', 'Detalle', 'Detail'],
+  x_f_neutralisations: ['Neutralisations', 'Neutralisations', 'Neutralizaciones', 'Neutralisaties'],
+  x_f_journal: ['Journal', 'Log', 'Registro', 'Logboek'],
+  acces_complet: ['Accès réseau complet', 'Full network access', 'Acceso completo a la red', 'Volledige netwerktoegang'],
+  calcul_auto: ['Calcul automatique (1er du mois)', 'Automatic calculation (1st of the month)', 'Cálculo automático (día 1 del mes)', 'Automatische berekening (1e van de maand)'],
+  systeme: ['Système', 'System', 'Sistema', 'Systeem'],
+  x_f_parametres: ['Paramètres', 'Settings', 'Parámetros', 'Parameters'],
+};
+const I18N = { fr: {}, en: {}, es: {}, nl: {} };
+Object.entries(T_DASH).forEach(([k, v]) => { ['fr', 'en', 'es', 'nl'].forEach((l, i) => { I18N[l][k] = v[i]; }); });
+
+// ============================================================================
+// Dashboard international — lot 6 (25/10/2026)
+// Reprise du dashboard France (onglets Santé réseau, Aujourd'hui, Score
+// mensuel, fiche magasin, vue agrégée) adaptée à l'international :
+// - Worker oc-inter-relay, session animateur partagée avec Bilan de Passage
+//   et Suivi Managers (localStorage 'bilan_ar_session') ;
+// - périmètres animateur, directeur pays (PAYS:…) et réseau complet ;
+// - filtres pays + animateur, devise du magasin, fuseau horaire du magasin ;
+// - interface FR / EN / ES / NL (hébreu préparé : dir, Heebo, propriétés logiques) ;
+// - liens directs vers chaque appli (?magasin=CODE).
+// ============================================================================
+
+function escDash(x) { return String(x == null ? '' : x).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function escJs(x) { return String(x == null ? '' : x).replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
+
 const RELAY = 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
-const MAGASINS_CSV_URL = 'https://raw.githubusercontent.com/oc-inter/bilan-passage/main/magasins_inter.csv';
-var arSession = null;
-var currentScope = 'ALL';
-var lastResults = [];
+const APPS_BASE = 'https://oc-inter.github.io/';
+const K_SESSION = 'bilan_ar_session';
+const K_LANG = 'dash_lang';
+const K_USER = 'dash_zimbra_user';
 
-function loadSession(){
-  try{
-    var raw = localStorage.getItem('dash_ar_session');
-    if(raw){ var s = JSON.parse(raw); if(s.exp > Date.now()) arSession = s; }
-  }catch(e){}
+// ---------------------------------------------------------------- Langue
+const LANGS = ['fr', 'en', 'es', 'nl'];
+const LANG_NOMS = { fr: 'Français', en: 'English', es: 'Español', nl: 'Nederlands' };
+const LOCALES = { fr: 'fr-FR', en: 'en-GB', es: 'es-ES', nl: 'nl-NL', he: 'he-IL' };
+let LANG = 'fr';
+function t(k, vars) {
+  let s = (I18N[LANG] && I18N[LANG][k] != null) ? I18N[LANG][k] : (I18N.fr[k] != null ? I18N.fr[k] : k);
+  if (vars) s = s.replace(/\{(\w+)\}/g, (m, n) => vars[n] != null ? vars[n] : '');
+  return s;
 }
-function logout(){ localStorage.removeItem('dash_ar_session'); location.reload(); }
+// Pluriel simple : clé + '_p' au-delà de 1.
+function tn(k, n, vars) { return t(Math.abs(n) > 1 ? k + '_p' : k, Object.assign({ n }, vars || {})); }
+function SEP() { return LANG === 'fr' ? ' : ' : ': '; }
+function auteurLabel(a) { return a === 'Accès réseau complet' ? t('acces_complet') : a === 'Calcul automatique (1er du mois)' ? t('calcul_auto') : a === 'Système' ? t('systeme') : (a || ''); }
+function loc() { return LOCALES[LANG] || 'fr-FR'; }
+function initLang() {
+  let l = null;
+  try { l = localStorage.getItem(K_LANG); } catch (e) {}
+  if (!l) l = (navigator.language || 'fr').slice(0, 2).toLowerCase();
+  LANG = LANGS.includes(l) ? l : 'fr';
+  appliquerLang();
+}
+function appliquerLang() {
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG === 'he' ? 'rtl' : 'ltr';
+  document.title = t('page_title');
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.getElementById('login-title-inter').textContent = t('international');
+  document.getElementById('topbar-inter').textContent = t('international');
+  const opts = LANGS.map(l => '<option value="' + l + '"' + (l === LANG ? ' selected' : '') + '>' + LANG_NOMS[l] + '</option>').join('');
+  document.getElementById('login-lang').innerHTML = opts;
+  document.getElementById('topbar-lang').innerHTML = opts;
+}
+function setLang(l) {
+  LANG = LANGS.includes(l) ? l : 'fr';
+  try { localStorage.setItem(K_LANG, LANG); } catch (e) {}
+  appliquerLang();
+  if (session) { majScopeLabel(); rerenderVueCourante(); }
+}
 
-function parseMagasinsCSV(text){
-  var lines = text.split(/\r?\n/).filter(Boolean);
-  var header = lines[0].split(';');
-  function idx(name){ return header.indexOf(name); }
-  var iAnimateur = idx('animateur'), iAnimateurEmail = idx('animateur_email');
-  return lines.slice(1).map(function(line){
-    var c = line.split(';');
-    return { animateur: (c[iAnimateur]||'').trim(), animateurEmail: (c[iAnimateurEmail]||'').trim() };
+// ---------------------------------------------------------------- Libellés métier
+function SUB_LABEL(k) { return t('dim_' + k); }
+const SUB_KEYS = ['actions', 'effectif', 'absenteisme', 'positionnement', 'pedlv', 'avis', 'equipe', 'kaizen', 'entretiens', 'lancements'];
+function SV_TYPE(k) { return I18N.fr['sv_' + k] != null ? t('sv_' + k) : (k || ''); }
+function PEDLV_LABEL(cle) { return I18N.fr['pedlv_' + cle] != null ? t('pedlv_' + cle) : cle; }
+const DEVISES = { EUR: '€', GBP: '£', CHF: 'CHF', CAD: '$ CA', ILS: '₪', USD: '$' };
+function deviseSymbole(d) { return DEVISES[String(d || '').toUpperCase()] || (d || ''); }
+function fmtKMontant(v, devise) {
+  if (v === null || v === undefined || v === '' || isNaN(Number(v))) return '—';
+  return Number(v).toLocaleString(loc(), { maximumFractionDigits: 1 }) + ' k' + (devise ? ' ' + deviseSymbole(devise) : '');
+}
+function fmtNombre(v, dec) {
+  if (v === null || v === undefined || v === '' || isNaN(Number(v))) return '—';
+  return Number(v).toLocaleString(loc(), { maximumFractionDigits: dec == null ? 1 : dec });
+}
+
+// Liens directs vers les applis : chaque appli lit la session du dashboard
+// (localStorage 'bilan_ar_session', même domaine oc-inter.github.io) et se
+// positionne sur le magasin passé en ?magasin=CODE.
+const APPS = [
+  { repo: 'bilan-passage', nom: 'app_bilan' },
+  { repo: 'suivi-managers', nom: 'app_suivi' },
+  { repo: 'pedlv', nom: 'app_pedlv' },
+  { repo: 'kaizen', nom: 'app_kaizen' },
+  { repo: 'eval-equipe', nom: 'app_eval' },
+  { repo: 'observations-terrain', nom: 'app_obs' },
+];
+function appUrl(repo, code) { return APPS_BASE + repo + '/' + (code ? '?magasin=' + encodeURIComponent(code) : ''); }
+function appLink(repo, code, label) {
+  return '<a class="app-link" href="' + appUrl(repo, code) + '" target="_blank" rel="noopener">' + escDash(label) + ' &#8599;</a>';
+}
+function appsBar(code, concept) {
+  return '<div class="apps-bar">' + APPS.filter(a => a.repo !== 'kaizen' || concept).map(a =>
+    '<a href="' + appUrl(a.repo, code) + '" target="_blank" rel="noopener">' + escDash(t(a.nom)) + ' &#8599;</a>').join('') + '</div>';
+}
+
+function svDateFr(iso) { if (!iso) return '—'; const d = new Date(String(iso).slice(0, 10) + 'T12:00:00Z'); return isNaN(d) ? '—' : d.toLocaleDateString(loc(), { timeZone: 'UTC' }); }
+function svJours(fromIso, toIso) { return Math.round((Date.parse(toIso + 'T00:00:00Z') - Date.parse(fromIso + 'T00:00:00Z')) / 86400000); }
+function fmtDate(iso) { return svDateFr(iso); }
+function heureLoc(h) { return h ? (LANG === 'fr' ? String(h).replace(':', 'h') : String(h)) : ''; }
+
+// Section « Suivi manager » : actions / objectifs datés posés en entretien.
+function renderSuiviManagerHtml(sm) {
+  if (!sm) return '<p class="muted" style="font-size:13px;margin:0">' + t('donnees_indispo') + '</p>';
+  const titre = '<p class="sv-sub">' + t('sv_titre') + '</p>';
+  const today = sm.today || new Date().toISOString().slice(0, 10);
+  const ouverts = sm.ouverts || [];
+  const clotures = sm.clotures || [];
+  if (!ouverts.length && !clotures.length) return titre + '<p class="muted" style="font-size:13px;margin:0">' + t('sv_aucun') + '</p>';
+  const meta = s => [s.collaborateur, SV_TYPE(s.type), s.poseLe ? t('sv_fixe_le', { d: svDateFr(s.poseLe) }) + (s.posePar ? ' ' + t('par_x', { x: s.posePar }) : '') : ''].filter(Boolean).map(escDash).join(' · ');
+  const nbRetard = ouverts.filter(s => s.echeance && s.echeance < today).length;
+  let html = titre + '<p class="sv-summary">' + tn('sv_en_cours', ouverts.length).replace(/^(\d+)/, '<b>$1</b>')
+    + (nbRetard ? ' · <b class="sv-retard">' + t('n_en_retard', { n: nbRetard }) + '</b>' : '') + '</p>';
+  html += ouverts.length ? ouverts.map(s => {
+    const j = s.echeance ? svJours(today, s.echeance) : null;
+    let cls = 'sv-later', txt = '';
+    if (j === null) txt = t('sans_date');
+    else if (j < 0) { cls = 'sv-retard'; txt = t('retard_de_j', { n: -j }); }
+    else if (j === 0) { cls = 'sv-bientot'; txt = t('aujourdhui_min'); }
+    else { cls = j <= 7 ? 'sv-bientot' : 'sv-later'; txt = t('dans_j', { n: j }); }
+    return '<div class="sv-row"><span><span class="sv-lib">' + escDash(s.libelle) + '</span><span class="sv-meta">' + meta(s) + '</span></span>'
+      + '<span class="sv-ech ' + cls + '"><b>' + svDateFr(s.echeance) + '</b>' + txt + '</span></div>';
+  }).join('') : '<p class="muted" style="font-size:13px;margin:0">' + t('sv_aucune_en_cours') + '</p>';
+  if (clotures.length) {
+    html += '<details class="sv-clos"><summary>' + t('sv_clotures', { n: clotures.length }) + '</summary>'
+      + clotures.map(s => {
+        const fait = s.statut === 'fait';
+        return '<div class="sv-row"><span><span class="sv-lib">' + escDash(s.libelle) + '</span><span class="sv-meta">' + meta(s) + '</span></span>'
+          + '<span class="sv-ech" style="color:' + (fait ? 'var(--green)' : 'var(--red)') + '"><b>' + (fait ? '✓ ' + t('fait') : '✗ ' + t('pas_fait')) + '</b>'
+          + t('le_d', { d: svDateFr(s.clotureLe) }) + (s.cloturePar ? ' · ' + escDash(s.cloturePar) : '') + '<br>' + t('echeance_d', { d: svDateFr(s.echeance) }) + '</span></div>';
+      }).join('') + '</details>';
+  }
+  return html;
+}
+
+let session = null;
+let allResults = [];
+let networkTrend = [];
+let poidsCourants = null;
+let networkChart = null;
+let detailChart = null;
+let currentDetailHistory = [];
+let modalChartInstance = null;
+let lastDetail = null;
+let lastArData = null;
+
+function loadSession() {
+  try {
+    const s = JSON.parse(localStorage.getItem(K_SESSION) || 'null');
+    if (s && s.token && s.ar && s.exp > Date.now()) { session = s; return s; }
+  } catch (e) {}
+  session = null;
+  return null;
+}
+function logout() {
+  try { localStorage.removeItem(K_SESSION); } catch (e) {}
+  session = null;
+  stopTodayTimer();
+  document.getElementById('app-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+async function doLogin() {
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  errEl.style.display = 'none';
+  const zimbraUser = document.getElementById('login-user').value.trim();
+  const zimbraPass = document.getElementById('login-pass').value;
+  if (!zimbraUser || !zimbraPass) { errEl.textContent = t('login_requis'); errEl.style.display = 'block'; return; }
+  try { localStorage.setItem(K_USER, zimbraUser); } catch (e) {}
+  btn.disabled = true; btn.textContent = t('connexion_en_cours');
+  try {
+    const resp = await fetch(RELAY + '/ar-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ zimbraUser, zimbraPass }) });
+    const data = await resp.json();
+    if (!resp.ok || data.error) throw new Error(data.error || (t('erreur') + ' ' + resp.status));
+    session = { token: data.sessionToken, ar: data.ar, exp: Date.now() + data.expiresInMs };
+    try { localStorage.setItem(K_SESSION, JSON.stringify(session)); } catch (e) {}
+    // Première connexion sans langue choisie : langue de l'utilisateur côté réseau.
+    let choisie = null; try { choisie = localStorage.getItem(K_LANG); } catch (e) {}
+    const lu = String(data.langue || data.langueUI || '').toLowerCase();
+    if (!choisie && LANGS.includes(lu)) { LANG = lu; appliquerLang(); }
+    document.getElementById('login-pass').value = '';
+    startApp();
+  } catch (e) {
+    errEl.textContent = e.message; errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = t('login_btn');
+  }
+}
+function authHeaders() { return { 'X-AR-Session': session ? session.token : '' }; }
+async function fetchJson(path, opts) {
+  const resp = await fetch(RELAY + path, Object.assign({ headers: authHeaders() }, opts || {}));
+  const data = await resp.json().catch(() => ({}));
+  if (resp.status === 401) { logout(); throw new Error(t('session_expiree')); }
+  if (!resp.ok || !data.ok) throw new Error(data.error || (t('erreur') + ' ' + resp.status));
+  return data;
+}
+
+function perimetreLabel(ar) {
+  if (!ar) return '—';
+  if (ar === 'ALL') return t('tout_reseau');
+  if (String(ar).startsWith('PAYS:')) return t('pays_x', { x: ar.slice(5).split('|').join(', ') });
+  return ar;
+}
+function majScopeLabel() {
+  document.getElementById('scope-label').textContent = t('perimetre') + SEP() + perimetreLabel(session && session.ar);
+}
+function startApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display = 'block';
+  majScopeLabel();
+  const code = (new URLSearchParams(location.search).get('magasin') || '').trim();
+  if (code) { currentListView = 'network'; showDetailView(code); return; }
+  showNetworkView();
+}
+
+function scoreClass(score) {
+  if (score === null || score === undefined) return 'badge-neutre';
+  if (score >= 80) return 'badge-vert';
+  if (score >= 60) return 'badge-orange';
+  return 'badge-rouge';
+}
+function couleurScore(v) { return v === null || v === undefined ? 'var(--gray-2)' : (v >= 80 ? 'var(--green)' : v >= 60 ? 'var(--orange)' : 'var(--red)'); }
+function responsable(r) { return r.animateur || r.directeurPays || r.directriceInter || ''; }
+function joursVisite(r) { return r.daysSinceVisit !== null && r.daysSinceVisit !== undefined ? t('n_j', { n: r.daysSinceVisit }) : t('jamais'); }
+
+// Courbe (Chart.js) aux couleurs de la charte, fond noir.
+function chartLigne(ctx, labels, data, pointRadius) {
+  return new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets: [{ data, borderColor: '#E2231A', backgroundColor: 'rgba(226,35,26,0.12)', fill: true, tension: 0.3, pointRadius: pointRadius || 0, borderWidth: 2 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { min: 0, max: 100, ticks: { color: '#9A9993' }, grid: { color: 'rgba(255,255,255,0.06)' } },
+        x: { ticks: { color: '#9A9993', maxRotation: 0, autoSkip: true }, grid: { display: false } },
+      },
+    },
   });
 }
 
-async function populateLoginArSelect(savedUser){
-  var sel = document.getElementById('login-ar-select');
-  try{
-    var r = await fetch(MAGASINS_CSV_URL, {cache:'no-store'});
-    var text = await r.text();
-    var rows = parseMagasinsCSV(text).filter(function(m){ return m.animateur && m.animateurEmail; });
-    var seen = {}, list = [];
-    rows.forEach(function(m){ if(!seen[m.animateur]){ seen[m.animateur]=1; list.push([m.animateur, m.animateurEmail]); } });
-    list.sort(function(a,b){ return a[0].localeCompare(b[0]); });
-    var h = '<option value="">— Choisir un animateur —</option>';
-    list.forEach(function(p){ h += '<option value="'+p[1]+'">'+p[0]+'</option>'; });
-    h += '<option value="__manual__">Autre identifiant Zimbra…</option>';
-    sel.innerHTML = h;
-    if(savedUser){ sel.value = list.some(function(p){return p[1]===savedUser;}) ? savedUser : '__manual__'; onLoginArChange(sel.value); }
-  }catch(e){
-    sel.innerHTML = '<option value="__manual__">Identifiant Zimbra…</option>';
-    sel.value = '__manual__'; onLoginArChange('__manual__');
+// ---------------------------------------------------------------- Vue réseau
+function masquerVues(sauf) {
+  ['view-network', 'view-today', 'view-mensuel', 'view-detail', 'view-ar'].forEach(id => { if (id !== sauf) document.getElementById(id).style.display = 'none'; });
+}
+async function showNetworkView() {
+  currentListView = 'network';
+  setTabs('network');
+  masquerVues('view-network');
+  const el = document.getElementById('view-network');
+  el.style.display = 'block';
+  el.innerHTML = '<div class="loading">' + t('chargement') + '</div>';
+  try {
+    const data = await fetchJson('/store-health');
+    allResults = data.results || [];
+    networkTrend = data.networkTrend || [];
+    poidsCourants = data.poids || null;
+    renderNetworkView();
+  } catch (e) {
+    el.innerHTML = '<div class="loading">' + t('erreur') + SEP() + escDash(e.message) + '</div>';
   }
 }
 
-function onLoginArChange(val){
-  var m = document.getElementById('login-user');
-  if(val === '__manual__'){ m.style.display='block'; if(!m.value||m.value==='__manual__') m.value=''; m.focus(); }
-  else { m.style.display='none'; m.value = val; }
-}
-
-async function doLogin(){
-  var errEl = document.getElementById('login-error');
-  errEl.style.display = 'none';
-  var zimbraUser = document.getElementById('login-user').value.trim();
-  var zimbraPass = document.getElementById('login-pass').value;
-  var btn = document.getElementById('login-btn');
-  if(!zimbraUser){ errEl.textContent='Identifiant Zimbra requis'; errEl.style.display='block'; return; }
-  if(!zimbraPass){ errEl.textContent='Mot de passe requis'; errEl.style.display='block'; return; }
-  localStorage.setItem('dash_zimbra_user', zimbraUser);
-  btn.disabled = true; btn.textContent = 'Connexion...';
-  try{
-    var resp = await fetch(RELAY + '/ar-login', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({zimbraUser: zimbraUser, zimbraPass: zimbraPass})
-    });
-    var data = await resp.json();
-    if(!resp.ok || data.error) throw new Error(data.error || ('Erreur '+resp.status));
-    arSession = {token: data.sessionToken, ar: data.ar, exp: Date.now() + data.expiresInMs};
-    localStorage.setItem('dash_ar_session', JSON.stringify(arSession));
-    document.getElementById('login-pass').value = '';
-    startApp();
-  }catch(e){
-    errEl.textContent = e.message; errEl.style.display = 'block';
-  }finally{
-    btn.disabled = false; btn.textContent = 'Se connecter';
-  }
-}
-
-function startApp(){
-  currentScope = arSession.ar;
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app-wrap').style.display = 'block';
-  document.getElementById('scope-label').textContent =
-    currentScope === 'ALL' ? 'Tout le réseau' :
-    (currentScope.indexOf('PAYS:') === 0 ? 'Périmètre pays' : 'Périmètre : ' + currentScope);
-  loadDashboard();
-}
-
-function responsableAffiche(r){
-  return r.animateur || r.directeurPays || r.directriceInter || '—';
-}
-
-function scoreColor(score){
-  if(score === null || score === undefined) return '#5F5E5A';
-  if(score >= 80) return '#2ecc71';
-  if(score >= 60) return '#f0b414';
-  return '#E2231A';
-}
-
-async function loadDashboard(){
-  var listEl = document.getElementById('store-list');
-  listEl.innerHTML = '<div class="loading-msg">Chargement...</div>';
-  try{
-    var url = currentScope === 'ALL'
-      ? RELAY + '/store-health'
-      : RELAY + '/ar-dashboard?ar=' + encodeURIComponent(currentScope);
-    var resp = await fetch(url, { headers: {'X-AR-Session': arSession.token} });
-    var data = await resp.json();
-    if(!resp.ok || data.error) throw new Error(data.error || 'Erreur inconnue');
-    lastResults = data.results || [];
-
-    var scoreMoyen = data.scoreMoyen;
-    if(scoreMoyen === undefined){
-      var valids = lastResults.map(function(r){return r.score;}).filter(function(s){return s !== null;});
-      scoreMoyen = valids.length ? Math.round(valids.reduce(function(a,b){return a+b;},0)/valids.length) : null;
-    }
-    document.getElementById('kpi-score').textContent = scoreMoyen !== null ? scoreMoyen : '—';
-    document.getElementById('kpi-nb').textContent = lastResults.length;
-    document.getElementById('kpi-overdue').textContent = data.magasinsEnRetard !== undefined ? data.magasinsEnRetard : lastResults.filter(function(r){return r.overdue;}).length;
-
-    if(!lastResults.length){ listEl.innerHTML = '<div class="empty">Aucun magasin trouvé.</div>'; return; }
-    var h = '';
-    lastResults.forEach(function(r){
-      var color = scoreColor(r.score);
-      h += '<div class="store-row" onclick="showDetail(\'' + r.code + '\')">'
-        + '<div class="score-dot'+(r.score===null?' na':'')+'" style="background:'+(r.score===null?'':color+'22')+';color:'+color+'">'+(r.score!==null?r.score:'—')+'</div>'
-        + '<div class="store-name"><div class="n">'+r.libelle+'</div><div class="sub">'+responsableAffiche(r)+'</div></div>'
-        + (r.overdue ? '<span class="overdue-badge">'+(r.daysSinceVisit!==null?r.daysSinceVisit+'j':'jamais visité')+'</span>' : '')
-        + '</div>';
-    });
-    listEl.innerHTML = h;
-  }catch(e){
-    listEl.innerHTML = '<div class="empty">Erreur de chargement : '+e.message+'</div>';
-  }
-}
-
-function showList(){
-  document.getElementById('list-screen').style.display = 'block';
-  document.getElementById('detail-screen').style.display = 'none';
-}
-
-const SOUS_SCORE_LABELS = {
-  actions: 'Actions', effectif: 'Effectif', absenteisme: 'Absentéisme',
-  positionnement: 'Position.', pedlv: 'PEDLV', avis: 'Avis Google', equipe: 'Équipe', kaizen: 'Kaizen',
+// ---------------------------------------------------------------- Tri des tableaux
+const SORT_GETTERS = {
+  libelle: r => r.libelle || null,
+  pays: r => r.pays || null,
+  animateur: r => responsable(r) || null,
+  score: r => (r.score === null || r.score === undefined) ? null : Number(r.score),
+  kaizen: r => (r.kaizenDernierScoreCloture !== null && r.kaizenDernierScoreCloture !== undefined && r.kaizenDernierScoreMax) ? r.kaizenDernierScoreCloture / r.kaizenDernierScoreMax : null,
+  actions: r => r.actionsNonSoldees ? r.actionsNonSoldees.count : 0,
+  visite: r => (r.daysSinceVisit === null || r.daysSinceVisit === undefined) ? Infinity : r.daysSinceVisit,
 };
+const tableSorts = { network: { key: 'score', dir: 1 }, ar: { key: 'score', dir: 1 }, today: { key: 'libelle', dir: 1 }, mensuel: { key: 'score', dir: -1 } };
+const LANCEMENT_RANG = { manquant: 1, attendu: 2, non_attendu: null };
+const TODAY_GETTERS = {
+  libelle: m => m.libelle || null,
+  lancement: m => m.lancement.statut === 'fait' ? (m.lancement.enRetard ? 3 : 4) : (LANCEMENT_RANG[m.lancement.statut] ?? null),
+  bilan: m => m.bilan ? 0 : (m.bilanJours ?? null),
+  pedlv: m => m.pedlv ? (m.pedlv.fait ? 0 : m.pedlv.joursDepuis) : null,
+  kaizen: m => !m.kaizen ? null : (m.kaizen.fait ? 100 + m.kaizen.nbItems : (m.kaizen.scoreMax ? (m.kaizen.score || 0) / m.kaizen.scoreMax * 100 : 0)),
+  entretien: m => m.entretien ? m.entretien.nb : 0,
+  observation: m => m.observation ? m.observation.nb : 0,
+  equipe: m => m.equipe ? 0 : (m.equipeJours ?? null),
+  activite: m => nbOutilsFaits(m) * 10 + (m.lancement.statut === 'manquant' ? 0 : m.lancement.enRetard ? 1 : 2),
+};
+function smValeurDim(m, k) {
+  const n = m.neutralisations || {};
+  if (n[k] || n['*'] || (m.exclusions && m.exclusions[k])) return null;
+  const v = m.sous ? m.sous[k] : null;
+  return v === null || v === undefined ? null : v;
+}
+const SM_GETTERS = {
+  libelle: m => m.libelle || null,
+  score: m => m.score ?? null,
+  evol: m => (m.score != null && m.scorePrecedent != null) ? m.score - m.scorePrecedent : null,
+  couv: m => m.couverture ?? null,
+};
+SUB_KEYS.forEach(k => { SM_GETTERS[k] = m => smValeurDim(m, k); });
 
-async function showDetail(code){
-  document.getElementById('list-screen').style.display = 'none';
-  document.getElementById('detail-screen').style.display = 'block';
-  document.getElementById('detail-name').textContent = 'Chargement...';
-  document.getElementById('detail-sub').textContent = '';
-  document.getElementById('detail-subscores').innerHTML = '';
-  document.getElementById('detail-history').innerHTML = '';
-  try{
-    var resp = await fetch(RELAY + '/store-health-detail?magasin_code=' + encodeURIComponent(code), { headers: {'X-AR-Session': arSession.token} });
-    var d = await resp.json();
-    if(!resp.ok || d.error) throw new Error(d.error || 'Erreur inconnue');
-
-    document.getElementById('detail-name').textContent = d.libelle;
-    document.getElementById('detail-sub').textContent = 'Score ' + (d.score !== null ? d.score : '—') + ' · Dernière visite : ' + (d.lastVisitDate || 'jamais');
-
-    var subH = '';
-    Object.keys(SOUS_SCORE_LABELS).forEach(function(k){
-      var v = d.subScores ? d.subScores[k] : null;
-      subH += '<div class="subscore"><div class="v" style="color:'+scoreColor(v)+'">'+(v!==null&&v!==undefined?Math.round(v):'—')+'</div><div class="l">'+SOUS_SCORE_LABELS[k]+'</div></div>';
-    });
-    document.getElementById('detail-subscores').innerHTML = subH;
-
-    var hist = d.history || [];
-    if(!hist.length){
-      document.getElementById('detail-history').innerHTML = '<p class="sub">Pas encore d\'historique (le premier snapshot hebdomadaire arrivera dimanche prochain).</p>';
-    } else {
-      var barsH = '';
-      hist.forEach(function(h){
-        var pct = h.score !== null ? Math.max(4, h.score) : 4;
-        barsH += '<div class="hist-bar" style="height:'+pct+'%;background:'+(h.score!==null?scoreColor(h.score):'#2C2C2A')+'" title="'+h.periode+' : '+(h.score!==null?h.score:'—')+'"></div>';
-      });
-      document.getElementById('detail-history').innerHTML = barsH;
-    }
-  }catch(e){
-    document.getElementById('detail-name').textContent = 'Erreur';
-    document.getElementById('detail-sub').textContent = e.message;
-  }
+function sortRows(rows, sort, getters) {
+  const get = (getters || SORT_GETTERS)[sort.key];
+  const cmpLib = (a, b) => String(a.libelle || '').localeCompare(String(b.libelle || ''), loc(), { numeric: true });
+  return rows.slice().sort((a, b) => {
+    const va = get(a), vb = get(b);
+    if (va === null && vb === null) return cmpLib(a, b);
+    if (va === null) return 1;
+    if (vb === null) return -1;
+    const cmp = (typeof va === 'string' || typeof vb === 'string')
+      ? String(va).localeCompare(String(vb), loc(), { sensitivity: 'base', numeric: true })
+      : (va === vb ? 0 : (va < vb ? -1 : 1));
+    return cmp * sort.dir || cmpLib(a, b);
+  });
+}
+function thSort(table, key, label, cls, title) {
+  const s = tableSorts[table];
+  const active = s.key === key;
+  return '<th class="sortable' + (cls ? ' ' + cls : '') + (active ? ' sorted' : '') + '" data-table="' + table + '" data-key="' + key + '" onclick="setTableSort(\'' + table + '\', \'' + key + '\')" title="' + escDash(title ? title + ' — ' + t('trier') : t('trier_maj')) + '">'
+    + escDash(label) + '<span class="sort-ind">' + (active ? (s.dir === 1 ? '▲' : '▼') : '↕') + '</span></th>';
+}
+function majIndicateursTri(table) {
+  const s = tableSorts[table];
+  document.querySelectorAll('th.sortable[data-table="' + table + '"]').forEach(th => {
+    const active = th.dataset.key === s.key;
+    th.classList.toggle('sorted', active);
+    th.querySelector('.sort-ind').textContent = active ? (s.dir === 1 ? '▲' : '▼') : '↕';
+  });
+}
+function setTableSort(table, key) {
+  const s = tableSorts[table];
+  if (s.key === key) s.dir = -s.dir; else { s.key = key; s.dir = 1; }
+  majIndicateursTri(table);
+  if (table === 'network') renderTable();
+  else if (table === 'ar') renderArStoresRows();
+  else if (table === 'today') { syncTodaySortSelect(); renderTodayBody(); }
+  else if (table === 'mensuel') renderMonthlyBody();
 }
 
-loadSession();
-var savedZimbraUser = localStorage.getItem('dash_zimbra_user') || '';
-document.getElementById('login-user').value = savedZimbraUser;
-populateLoginArSelect(savedZimbraUser);
-if(arSession && arSession.exp > Date.now()){ startApp(); }
+// Filtres pays / animateur communs aux trois onglets.
+function optionsFiltres(rows, prefix, prevPays, prevAr) {
+  const pays = [...new Set(rows.map(r => r.pays).filter(Boolean))].sort((a, b) => a.localeCompare(b, loc()));
+  const ars = [...new Set(rows.map(r => r.animateur).filter(Boolean))].sort((a, b) => a.localeCompare(b, loc()));
+  let h = '';
+  if (pays.length > 1) h += '<select id="' + prefix + '-pays" onchange="' + prefix + 'FiltreChange()"><option value="">' + t('tous_pays') + '</option>' + pays.map(p => '<option value="' + escDash(p) + '"' + (p === prevPays ? ' selected' : '') + '>' + escDash(p) + '</option>').join('') + '</select>';
+  if (ars.length) h += '<select id="' + prefix + '-ar" onchange="' + prefix + 'FiltreChange()"><option value="">' + t('tous_animateurs') + '</option>' + ars.map(a => '<option value="' + escDash(a) + '"' + (a === prevAr ? ' selected' : '') + '>' + escDash(a) + '</option>').join('') + '</select>';
+  return h;
+}
+function lireFiltres(prefix) {
+  const p = document.getElementById(prefix + '-pays'), a = document.getElementById(prefix + '-ar'), s = document.getElementById(prefix + '-search');
+  return { pays: p ? p.value : '', ar: a ? a.value : '', search: s ? (s.value || '').trim().toLowerCase() : '' };
+}
+function filtrer(rows, f, avecRecherche) {
+  let out = rows;
+  if (f.pays) out = out.filter(r => r.pays === f.pays);
+  if (f.ar) out = out.filter(r => r.animateur === f.ar);
+  if (avecRecherche && f.search) out = out.filter(r => String(r.libelle || '').toLowerCase().includes(f.search) || String(r.code || '').includes(f.search));
+  return out;
+}
+function suffixeFiltre(f) { return [f.pays, f.ar].filter(Boolean).map(x => ' — ' + x).join(''); }
+
+function renderNetworkView() {
+  const el = document.getElementById('view-network');
+  const prev = document.getElementById('net-search') ? lireFiltres('net') : { pays: '', ar: '', search: '' };
+  el.innerHTML = `
+    <div class="filters">
+      ${optionsFiltres(allResults, 'net', prev.pays, prev.ar)}
+      <input type="text" id="net-search" placeholder="${escDash(t('rechercher_magasin'))}" value="${escDash(prev.search)}" oninput="renderTable()">
+      <button class="btn-dark" id="agg-btn" onclick="ouvrirVueAgregee()"></button>
+    </div>
+    <div class="kpi-row" id="kpi-row"></div>
+    <div class="chart-box" style="height:150px"><canvas id="network-chart"></canvas></div>
+    <div class="table-wrap sticky-wrap" style="margin-top:14px">
+    <table class="dash-table">
+      <thead><tr>
+        ${thSort('network', 'libelle', t('col_magasin'))}${thSort('network', 'pays', t('col_pays'))}${thSort('network', 'animateur', t('col_responsable'))}${thSort('network', 'score', t('col_sante'))}${thSort('network', 'kaizen', 'Kaizen')}${thSort('network', 'actions', t('col_actions'))}${thSort('network', 'visite', t('col_derniere_visite'))}
+      </tr></thead>
+      <tbody id="table-body"></tbody>
+    </table>
+    </div>
+  `;
+  renderNetworkChart();
+  netFiltreChange();
+}
+function netFiltreChange() {
+  const f = lireFiltres('net');
+  const btn = document.getElementById('agg-btn');
+  if (btn) btn.textContent = t('vue_agregee') + ' — ' + perimetreLabel(perimetreFiltre(f));
+  renderKpis();
+  renderTable();
+}
+// Périmètre de la vue agrégée : animateur > pays > périmètre de la session.
+function perimetreFiltre(f) { return f.ar ? f.ar : (f.pays ? 'PAYS:' + f.pays : (session ? session.ar : 'ALL')); }
+function ouvrirVueAgregee() { showArView(perimetreFiltre(lireFiltres('net'))); }
+
+function renderKpis() {
+  const rows = filtrer(allResults, lireFiltres('net'), false);
+  const vert = rows.filter(r => r.score !== null && r.score >= 80).length;
+  const orange = rows.filter(r => r.score !== null && r.score >= 60 && r.score < 80).length;
+  const rouge = rows.filter(r => r.score !== null && r.score < 60).length;
+  const sans = rows.filter(r => r.score === null).length;
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi-card kpi-click" ${klAttr("klSante('vert')")}><p class="lbl">${t('kpi_vert')}</p><p class="val" style="color:var(--green)">${vert}</p></div>
+    <div class="kpi-card kpi-click" ${klAttr("klSante('orange')")}><p class="lbl">${t('kpi_orange')}</p><p class="val" style="color:var(--orange)">${orange}</p></div>
+    <div class="kpi-card kpi-click" ${klAttr("klSante('rouge')")}><p class="lbl">${t('kpi_rouge')}</p><p class="val" style="color:var(--red)">${rouge}</p></div>
+    <div class="kpi-card kpi-click" ${klAttr("klSante('sans')")}><p class="lbl">${t('kpi_sans')}</p><p class="val">${sans}</p></div>
+  `;
+}
+
+// ---------------------------------------------------------------- Vignettes cliquables
+function klAttr(action) {
+  return 'role="button" tabindex="0" onclick="' + action + '" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();' + action + '}"';
+}
+function klOuvrir(titre, html) {
+  document.getElementById('kl-titre').textContent = titre;
+  document.getElementById('kl-contenu').innerHTML = html;
+  document.getElementById('kl-modal').style.display = 'flex';
+}
+function klFermer() { document.getElementById('kl-modal').style.display = 'none'; }
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  ['kl-modal', 'sm-modal', 'modal-overlay'].forEach(id => { const m = document.getElementById(id); if (m) m.style.display = 'none'; });
+});
+function klOuvrirFiche(code) { klFermer(); showDetailView(code); }
+function klLignes(items, info) {
+  if (!items.length) return '<p class="kl-vide">' + t('aucun_magasin') + '</p>';
+  return items.map(m => `<div class="kl-row" role="button" tabindex="0" onclick="klOuvrirFiche('${escJs(m.code)}')" onkeydown="if(event.key==='Enter'){klOuvrirFiche('${escJs(m.code)}')}">
+      <span>${escDash(m.libelle)}${responsable(m) ? '<span class="kl-ar">' + escDash([m.pays, responsable(m)].filter(Boolean).join(' · ')) + '</span>' : ''}</span>
+      <span class="kl-info">${info ? info(m) : ''}</span></div>`).join('');
+}
+const klParLibelle = (a, b) => String(a.libelle || '').localeCompare(String(b.libelle || ''), loc());
+
+function klSante(cat) {
+  const defs = {
+    vert: [t('kl_vert'), r => r.score !== null && r.score >= 80],
+    orange: [t('kl_orange'), r => r.score !== null && r.score >= 60 && r.score < 80],
+    rouge: [t('kl_rouge'), r => r.score !== null && r.score < 60],
+    sans: [t('kpi_sans'), r => r.score === null],
+  };
+  const [titre, filtre] = defs[cat];
+  const f = lireFiltres('net');
+  const items = filtrer(allResults, f, false).filter(filtre).sort(cat === 'sans' ? klParLibelle : (a, b) => a.score - b.score || klParLibelle(a, b));
+  const visite = r => r.daysSinceVisit !== null && r.daysSinceVisit !== undefined ? t('visite_il_y_a', { n: r.daysSinceVisit }) : t('jamais_visite');
+  klOuvrir(titre + suffixeFiltre(f), klLignes(items, r => (r.score !== null ? '<span class="badge ' + scoreClass(r.score) + '">' + r.score + '</span> · ' : '') + visite(r)));
+}
+
+function renderNetworkChart() {
+  if (networkChart) { networkChart.destroy(); networkChart = null; }
+  const ctx = document.getElementById('network-chart');
+  if (!networkTrend.length) {
+    ctx.parentElement.style.height = 'auto';
+    ctx.parentElement.innerHTML = '<p class="muted" style="font-size:13px;margin:0">' + t('pas_historique_tendance') + '</p>';
+    return;
+  }
+  networkChart = chartLigne(ctx, networkTrend.map(p => fmtDate(p.periode)), networkTrend.map(p => p.score), 0);
+}
+
+function renderTable() {
+  const f = lireFiltres('net');
+  const rows = sortRows(filtrer(allResults, f, true), tableSorts.network);
+  document.getElementById('table-body').innerHTML = rows.length ? rows.map(r => `
+    <tr class="row-clickable" onclick="showDetailView('${escJs(r.code)}')">
+      <td>${escDash(r.libelle)}</td>
+      <td class="muted">${escDash(r.pays || '—')}</td>
+      <td class="muted">${escDash(responsable(r) || '—')}</td>
+      <td><span class="badge ${scoreClass(r.score)}">${r.score !== null ? r.score : '—'}</span></td>
+      <td class="muted">${r.kaizenDernierScoreCloture !== null && r.kaizenDernierScoreMax ? r.kaizenDernierScoreCloture + '/' + r.kaizenDernierScoreMax : '—'}</td>
+      <td style="color:${r.actionsNonSoldees && r.actionsNonSoldees.count > 0 ? 'var(--red)' : 'var(--gray)'}">${r.actionsNonSoldees ? r.actionsNonSoldees.count : 0}</td>
+      <td class="muted">${joursVisite(r)}</td>
+    </tr>`).join('') : '<tr><td colspan="7" class="muted">' + t('aucun_magasin') + '</td></tr>';
+}
+
+// ---------------------------------------------------------------- Vue agrégée (« Mon dashboard »)
+let lastArContext = null;
+let currentArResults = [];
+function renderArStoresRows() {
+  const body = document.getElementById('ar-stores-body');
+  if (!body) return;
+  body.innerHTML = sortRows(currentArResults, tableSorts.ar).map(r => `
+    <tr class="row-clickable" onclick="showDetailView('${escJs(r.code)}')">
+      <td>${escDash(r.libelle)}</td>
+      <td><span class="badge ${scoreClass(r.score)}">${r.score !== null ? r.score : '—'}</span></td>
+      <td style="color:${r.actionsNonSoldees && r.actionsNonSoldees.count > 0 ? 'var(--red)' : 'var(--gray)'}">${r.actionsNonSoldees ? r.actionsNonSoldees.count : 0}</td>
+      <td class="muted">${joursVisite(r)}</td>
+    </tr>`).join('');
+}
+async function showArView(arName) {
+  if (!arName) return;
+  lastArContext = arName;
+  setTabs(null);
+  masquerVues('view-ar');
+  const el = document.getElementById('view-ar');
+  el.style.display = 'block';
+  el.innerHTML = '<div class="loading">' + t('chargement') + '</div>';
+  try {
+    const data = await fetchJson('/ar-dashboard?ar=' + encodeURIComponent(arName));
+    lastArData = data;
+    renderArView(data);
+  } catch (e) {
+    el.innerHTML = '<button class="back-btn" onclick="goBack()">&larr; ' + t('retour') + '</button><div class="loading">' + t('erreur') + SEP() + escDash(e.message) + '</div>';
+  }
+}
+function couleurNote(v) { return v >= 8 ? 'var(--green)' : (v < 7 ? 'var(--red)' : 'var(--orange)'); }
+function renderArView(d) {
+  const el = document.getElementById('view-ar');
+  currentEquipeTaches = d.equipeTachesAgregees || [];
+  currentArResults = d.results || [];
+  const vide = txt => '<p class="muted" style="font-size:13px;margin:0">' + txt + '</p>';
+  const actionsHtml = (d.actionsAgregees && d.actionsAgregees.length)
+    ? d.actionsAgregees.map(a => '<div class="item-row"><span>' + escDash(a.magasin) + ' — ' + escDash(a.text) + '</span><span style="color:var(--red);white-space:nowrap">' + tn('n_visites', a.repriseCount + 1) + '</span></div>').join('')
+    : vide(t('aucune_action_non_soldee'));
+  const kaizenHtml = (d.kaizenAgreges && d.kaizenAgreges.length)
+    ? d.kaizenAgreges.map(k => '<div class="item-row"><span>' + escDash(k.magasin) + ' — ' + escDash(k.label) + (k.zoneNom ? ' (' + escDash(k.zoneNom) + ')' : '') + '</span><span style="color:var(--red);white-space:nowrap">' + t('n_mois', { n: k.moisConsecutifs }) + '</span></div>').join('')
+    : vide(t('aucun_point_non_resolu'));
+  const pedlvRowsAr = (d.pedlvIndicateursAgreges || []).map(i => {
+    const val = i.valeurMoyenne === null || i.valeurMoyenne === undefined ? '—' : fmtNombre(i.valeurMoyenne, i.cle === 'tva' ? 0 : 1);
+    return '<tr><td style="font-weight:600">' + escDash(PEDLV_LABEL(i.cle)) + '</td><td class="num">' + val + '</td><td class="num muted">' + (i.objectifMoyen ?? '—') + '</td>'
+      + '<td class="num" style="color:' + (i.nbRouge > 0 ? 'var(--red)' : 'var(--gray)') + '">' + t('n_sur_m_rouge', { n: i.nbRouge, m: i.nbTotal }) + '</td></tr>';
+  }).join('');
+  let niveauEquipeArHtml = '<p class="muted" style="font-size:13px;margin:0 0 10px">' + t('pas_de_donnee') + '</p>';
+  if (d.niveauEquipeMoyen !== null && d.niveauEquipeMoyen !== undefined) {
+    niveauEquipeArHtml = '<p style="font-size:14px;margin:0 0 10px">' + t('note_equipe_secteur') + SEP() + '<span style="color:' + couleurNote(d.niveauEquipeMoyen) + ';font-weight:700">' + fmtNombre(d.niveauEquipeMoyen) + '/10</span></p>';
+  }
+  const equipeRowsAr = (d.equipeTachesAgregees || []).map(tk => {
+    const moy = tk.moyenne !== null && tk.moyenne !== undefined ? '<span style="color:' + couleurNote(tk.moyenne) + ';font-weight:700">' + fmtNombre(tk.moyenne) + '</span>' : '—';
+    const vacant = tk.nbVacant > 0
+      ? '<span onclick="openVacantModal(\'' + escJs(tk.tache) + '\')" style="cursor:pointer;text-decoration:underline;color:var(--red)">' + t('n_sur_m_vacant', { n: tk.nbVacant, m: tk.nbTotal }) + '</span>'
+      : '<span class="muted">' + t('n_sur_m_vacant', { n: 0, m: tk.nbTotal }) + '</span>';
+    return '<tr><td>' + escDash(tk.tache) + '</td><td class="num">' + moy + '</td><td class="num">' + vacant + '</td></tr>';
+  }).join('');
+  const sousEff = (d.sousEffectifSoutenu && d.sousEffectifSoutenu.length)
+    ? '<p style="font-size:13px;color:var(--red);margin:0 0 6px;font-weight:600">' + t('sous_effectif_soutenu') + SEP() + d.sousEffectifSoutenu.map(escDash).join(', ') + '</p>'
+    : '<p class="muted" style="font-size:13px;margin:0 0 6px">' + t('aucun_sous_effectif') + '</p>';
+  const surEff = (d.sureffectif && d.sureffectif.length)
+    ? '<p style="font-size:13px;color:var(--orange);margin:0 0 6px;font-weight:600">' + t('sur_effectif') + ' (' + d.sureffectif.length + ') : ' + d.sureffectif.map(escDash).join(', ') + '</p>'
+    : '<p class="muted" style="font-size:13px;margin:0 0 6px">' + t('aucun_sur_effectif') + '</p>';
+  const devise = d.devise || null;
+
+  el.innerHTML = `
+    <button class="back-btn" onclick="goBack()">&larr; ${t('retour')}</button>
+    <div class="detail-header">
+      <div>
+        <h2>${escDash(perimetreLabel(d.ar))}</h2>
+        <p class="sub">${tn('n_magasins', d.nbMagasins)}${d.magasinsEnRetard ? ' · ' + t('n_visite_retard', { n: d.magasinsEnRetard }) : ''}</p>
+      </div>
+      <span class="badge ${scoreClass(d.scoreMoyen)}">${t('score_moyen')} ${d.scoreMoyen !== null ? fmtNombre(d.scoreMoyen) : '—'}</span>
+    </div>
+    <div class="pos-row">
+      <div class="pos-chip">${t('pos_annuel_moyen')} <span class="v">${d.positionnementAnnuelMoyen !== null ? fmtNombre(d.positionnementAnnuelMoyen) + ' %' : '—'}</span></div>
+      ${devise ? `<div class="pos-chip">${t('objectif_annuel_total')} <span class="v">${d.objectifAnnuelTotal ? fmtKMontant(d.objectifAnnuelTotal, devise) : '—'}</span></div>
+      <div class="pos-chip">${t('ca_prev_total')} <span class="v">${d.caPrevisionnelTotal ? fmtKMontant(d.caPrevisionnelTotal, devise) : '—'}</span></div>` : `<div class="pos-chip">${t('montants')} <span class="v" style="font-size:13px;font-weight:500">${t('plusieurs_devises')}</span></div>`}
+    </div>
+    <p class="section-label">${t('vue_ensemble_moyenne')}</p>
+    <div class="sub-grid" id="ar-sub-grid"></div>
+    <p class="section-label">${t('evolution_score_moyen')}</p>
+    <div class="chart-box"><canvas id="ar-chart"></canvas></div>
+    <p class="section-label">${t('terrain_tous')}</p>
+    <div class="two-col">
+      <div class="card"><h4>${t('actions_non_soldees')}</h4>${actionsHtml}</div>
+      <div class="card"><h4>${t('kaizen_non_resolus')}</h4>${kaizenHtml}</div>
+    </div>
+    <p class="section-label">${t('pedlv_secteur')}</p>
+    <div class="card">
+      ${pedlvRowsAr ? '<div class="table-wrap"><table class="mini-table"><thead><tr><th>' + t('indicateur') + '</th><th class="num">' + t('valeur_moy') + '</th><th class="num">' + t('objectif_moy') + '</th><th></th></tr></thead><tbody>' + pedlvRowsAr + '</tbody></table></div>' : vide(t('pas_pedlv_secteur'))}
+    </div>
+    <p class="section-label">${t('eval_secteur')}</p>
+    <div class="card">
+      ${niveauEquipeArHtml}
+      ${equipeRowsAr ? '<div class="table-wrap"><table class="mini-table"><tbody>' + equipeRowsAr + '</tbody></table></div>' : vide(t('pas_detail_tache'))}
+    </div>
+    <p class="section-label">${t('effectif_secteur')}</p>
+    <div class="card">
+      ${sousEff}${surEff}
+      <p style="font-size:13px;margin:0">${d.tauxAbsenteismeMoyen !== null && d.tauxAbsenteismeMoyen !== undefined ? t('taux_absenteisme_moyen') + SEP() + '<b>' + fmtNombre(d.tauxAbsenteismeMoyen) + ' %</b>' : ''}</p>
+    </div>
+    <p class="section-label">${t('conseils')}</p>
+    <div class="card">
+      <button class="advice-btn" id="ar-advice-btn" onclick="generateArAdvice('${escJs(d.ar)}')">${t('generer_priorites')}</button>
+      <div id="ar-advice-content" class="advice-content"></div>
+    </div>
+    <p class="section-label">${t('magasins_perimetre')}</p>
+    <div class="table-wrap sticky-wrap">
+    <table class="dash-table">
+      <thead><tr>${thSort('ar', 'libelle', t('col_magasin'))}${thSort('ar', 'score', t('col_sante'))}${thSort('ar', 'actions', t('col_actions'))}${thSort('ar', 'visite', t('col_derniere_visite'))}</tr></thead>
+      <tbody id="ar-stores-body"></tbody>
+    </table>
+    </div>
+  `;
+  renderArStoresRows();
+  renderSubGridInto('ar-sub-grid', d.subScoresMoyens || {});
+  if (detailChart) { detailChart.destroy(); detailChart = null; }
+  const ctx = document.getElementById('ar-chart');
+  const history = d.history || [];
+  if (history.length) detailChart = chartLigne(ctx, history.map(h => fmtDate(h.periode)), history.map(h => h.score), 2);
+  else { ctx.parentElement.style.height = 'auto'; ctx.parentElement.innerHTML = '<p class="muted" style="font-size:13px;margin:0">' + t('pas_historique') + '</p>'; }
+  currentDetailHistory = history;
+}
+async function generateAdviceCommun(btnId, contentId, path, body, libBtn) {
+  const btn = document.getElementById(btnId);
+  const content = document.getElementById(contentId);
+  btn.disabled = true; btn.textContent = t('generation_en_cours'); content.textContent = '';
+  try {
+    const data = await fetchJson(path, { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders()), body: JSON.stringify(Object.assign({ langue: LANG }, body)) });
+    content.textContent = data.conseils;
+    btn.textContent = t('regenerer');
+  } catch (e) {
+    content.textContent = t('erreur') + SEP() + e.message;
+    btn.textContent = libBtn;
+  } finally { btn.disabled = false; }
+}
+function generateArAdvice(arName) { return generateAdviceCommun('ar-advice-btn', 'ar-advice-content', '/ar-advice', { ar: arName }, t('generer_priorites')); }
+function generateAdvice(code) { return generateAdviceCommun('advice-btn', 'advice-content', '/store-advice', { magasin_code: code }, t('generer_conseils')); }
+
+// ---------------------------------------------------------------- Fiche magasin
+async function showDetailView(code) {
+  setTabs(null);
+  masquerVues('view-detail');
+  const el = document.getElementById('view-detail');
+  el.style.display = 'block';
+  el.innerHTML = '<div class="loading">' + t('chargement') + '</div>';
+  try {
+    const data = await fetchJson('/store-health-detail?magasin_code=' + encodeURIComponent(code));
+    lastDetail = data;
+    renderDetailView(data);
+  } catch (e) {
+    el.innerHTML = '<button class="back-btn" onclick="goBack()">&larr; ' + t('retour') + '</button><div class="loading">' + t('erreur') + SEP() + escDash(e.message) + '</div>';
+  }
+}
+function renderDetailView(d) {
+  const el = document.getElementById('view-detail');
+  const mag = d.magasin || {};
+  const devise = mag.devise || null;
+  const vide = txt => '<p class="muted" style="font-size:13px;margin:0">' + txt + '</p>';
+  const todayIso = (d.suivisManager && d.suivisManager.today) || new Date().toISOString().slice(0, 10);
+  const actItems = (d.actionsNonSoldees && d.actionsNonSoldees.items) || [];
+  const actScore = actItems.filter(a => a.fromPrevious);
+  const actDepassees = actItems.filter(a => !a.fromPrevious && a.date && a.date < todayIso);
+  const actEch = a => a.date ? '<span class="sv-meta">' + t('echeance_d', { d: svDateFr(a.date) }) + (a.date < todayIso ? ' · <span class="sv-retard">' + t('depassee_de_j', { n: svJours(a.date, todayIso) }) + '</span>' : '') + (a.who ? ' · ' + escDash(a.who) : '') + '</span>' : (a.who ? '<span class="sv-meta">' + escDash(a.who) + '</span>' : '');
+  const actionsHtml = '<p class="sv-sub">' + t('impactent_score') + '</p>'
+    + (actScore.length ? actScore.map(a => '<div class="item-row"><span>' + escDash(a.text) + actEch(a) + '</span><span style="color:var(--red);white-space:nowrap">' + tn('n_visites', a.repriseCount + 1) + '</span></div>').join('')
+      : '<p class="muted" style="font-size:13px;margin:0 0 4px">' + t('aucune_action_reportee') + '</p>')
+    + '<p class="sv-sub" style="margin-top:14px">' + t('echeance_depassee_hors_score') + '</p>'
+    + (actDepassees.length ? actDepassees.map(a => '<div class="item-row"><span>' + escDash(a.text) + actEch(a) + '</span><span style="color:var(--orange);white-space:nowrap">' + t('a_reprendre') + '</span></div>').join('')
+      : vide(t('aucune_action_en_retard')));
+
+  const scoreMoisHtml = (d.kaizenScoreMois !== null && d.kaizenScoreMois !== undefined)
+    ? '<p style="font-size:14px;margin:0 0 10px">' + t('kaizen_mois_en_cours') + SEP() + '<span style="font-weight:700">' + d.kaizenScoreMois + (d.kaizenScoreMaxMois ? '/' + d.kaizenScoreMaxMois : '') + '</span>' + (d.kaizenClosedMois ? '' : ' <span class="muted" style="font-size:12px">(' + t('pas_encore_cloture') + ')</span>') + '</p>'
+    : '<p class="muted" style="font-size:13px;margin:0 0 10px">' + t('pas_audit_mois') + '</p>';
+  const kaizenHtml = (d.kaizenPointsNonResolus && d.kaizenPointsNonResolus.length)
+    ? d.kaizenPointsNonResolus.map(k => '<div class="item-row"><span>' + escDash(k.label) + (k.zoneNom ? ' — ' + escDash(k.zoneNom) : '') + '</span><span style="color:var(--red);white-space:nowrap">' + t('n_mois', { n: k.moisConsecutifs }) + '</span></div>').join('')
+    : vide(t('aucun_point_non_resolu'));
+  const cumulHtml = d.kaizenCumulAnnuel !== null && d.kaizenCumulAnnuel !== undefined ? '<p class="muted" style="font-size:12px;margin:10px 0 0">' + t('cumul_annuel') + SEP() + d.kaizenCumulAnnuel + '/400</p>' : '';
+
+  const ckPassages = d.checklistReseauPassages || [];
+  const checklistHtml = ckPassages.length
+    ? ckPassages.map(p => {
+        const complet = p.coches === p.total;
+        return '<div class="item-row" style="flex-wrap:wrap;gap:4px 10px"><span>' + svDateFr(p.date) + (p.ar ? ' · ' + escDash(p.ar) : '') + '</span>'
+          + '<span style="font-weight:700;color:' + (complet ? 'var(--green)' : 'var(--red)') + '">' + p.coches + '/' + p.total + '</span>'
+          + (p.oublis.length ? '<span class="muted" style="flex-basis:100%;font-size:12px">' + t('oublie') + SEP() + p.oublis.map(escDash).join(' · ') + '</span>' : '')
+          + '</div>';
+      }).join('')
+    : vide(t('aucune_checklist'));
+
+  const pedlvRows = (d.pedlvIndicateurs || []).map(i => {
+    const val = i.valeur === null || i.valeur === undefined ? '—' : fmtNombre(i.valeur, i.cle === 'tva' ? 0 : 1);
+    return '<tr><td style="font-weight:600">' + escDash(PEDLV_LABEL(i.cle)) + '</td><td class="num">' + val + '</td><td class="num muted">' + (i.objectif ?? '—') + '</td>'
+      + '<td class="num"><span class="badge badge-' + escDash(i.statut) + '">' + t('statut_' + i.statut) + (i.semainesRouge ? ' · ' + t('n_sem', { n: i.semainesRouge }) : '') + '</span></td></tr>';
+  }).join('');
+  const equipeRows = (d.equipeTaches || []).map(tk => {
+    const moy = tk.moyenne !== null && tk.moyenne !== undefined ? '<span style="color:' + couleurNote(tk.moyenne) + ';font-weight:700">' + fmtNombre(tk.moyenne) + '</span>' : '—';
+    return '<tr><td>' + escDash(tk.tache) + '</td><td>' + (tk.responsable ? escDash(tk.responsable) : '<span style="color:var(--red)">' + t('non_assigne') + '</span>') + '</td><td class="num">' + moy + '</td></tr>';
+  }).join('');
+
+  const eff = d.effectif || {};
+  const effRH = d.effectifRH || {};
+  let effHtml = t('pas_donnee_effectif');
+  if (eff.label && eff.label !== 'pas de données') {
+    let color = 'var(--gray)', bold = false;
+    if (effRH.soutenu) { color = 'var(--red)'; bold = true; }
+    else if (eff.delta !== null && eff.delta < 0) { color = 'var(--orange)'; bold = true; }
+    else if (eff.delta === 0) { color = 'var(--green)'; bold = true; }
+    const lbl = eff.label === 'OK' ? 'OK' : fmtNombre(eff.delta);
+    effHtml = t('ecart_theorique') + SEP() + '<span style="color:' + color + (bold ? ';font-weight:700' : '') + '">' + (eff.delta > 0 ? '+' : '') + lbl + '</span>' + (effRH.soutenu ? ' <span style="color:var(--red);font-size:12px">(' + t('sous_effectif_3_mois') + ')</span>' : '');
+  }
+  let moyenneEquipeHtml = '<p class="muted" style="font-size:13px;margin:0 0 10px">' + t('pas_de_donnee') + '</p>';
+  if (d.niveauEquipe !== null && d.niveauEquipe !== undefined) {
+    const nv = Number(d.niveauEquipe);
+    moyenneEquipeHtml = '<p style="font-size:14px;margin:0 0 10px">' + t('note_equipe') + SEP() + '<span style="color:' + couleurNote(nv) + ';font-weight:700">' + fmtNombre(nv) + '/10</span></p>';
+  }
+  const el2 = d.entretiensLancements || { nbVus: 0, nbEligibles: 0, joursLances: 0, joursOuverts: 0, nbPilotage: 0, nbValorisation: 0, nbRemotivation: 0, nbEcouteFb: 0, nbRecadrage: 0 };
+  const moisLabelCourt = new Date().toLocaleDateString(loc(), { month: 'long', year: 'numeric' });
+  const suiviManagersHtml = `
+    <p class="muted" style="font-size:11px;letter-spacing:.04em;margin:12px 0 6px">${t('app_suivi')} — ${escDash(moisLabelCourt)}</p>
+    <div class="item-row"><span>${t('collab_vus_entretien')}</span><span style="font-weight:700">${el2.nbVus}/${el2.nbEligibles}</span></div>
+    ${el2.nbAbsencesLd ? `<div class="item-row muted" style="padding-inline-start:12px;font-size:12px"><span>${t('attendus_detail', { e: el2.nbEffectif, a: el2.nbAbsencesLd, s: el2.sourceAbsencesLd === 'bilan' ? t('app_bilan') : t('import_rh') })}</span><span></span></div>` : ''}
+    <div class="item-row muted" style="padding-inline-start:12px;font-size:12px"><span>${t('entretiens_types')}</span><span>${el2.nbPilotage || 0} / ${el2.nbValorisation || 0} / ${el2.nbRemotivation || 0}</span></div>
+    <div class="item-row"><span>${t('lancements_journee')}</span><span style="font-weight:700">${el2.joursLances}/${el2.joursOuverts || '?'}</span></div>
+    <div class="item-row"><span>${t('sv_ecoute_fb')} <span class="muted" style="font-weight:400">(${t('hors_score')})</span></span><span style="font-weight:700">${el2.nbEcouteFb}</span></div>
+    <div class="item-row"><span>${t('entretiens_recadrage')} <span class="muted" style="font-weight:400">(${t('comptes_pilotage')})</span></span><span style="font-weight:700">${el2.nbRecadrage}</span></div>
+  `;
+  const absTxt = d.absenteisme && d.absenteisme.score !== null && d.absenteisme.score !== undefined ? t('taux_absenteisme') + SEP() + fmtNombre(Math.round((100 - d.absenteisme.score) * 10) / 10) + ' %' : '';
+
+  el.innerHTML = `
+    <button class="back-btn" onclick="goBack()">&larr; ${t('retour')}</button>
+    <div class="detail-header">
+      <div>
+        <h2>${escDash(mag.libelle)} <span class="muted" style="font-weight:400;font-size:14px"> — ${escDash(mag.code)}</span></h2>
+        <p class="sub">${escDash([mag.pays, mag.animateur ? t('animateur') + SEP() + mag.animateur : (d.directeurPays ? t('directeur_pays') + SEP() + d.directeurPays : '')].filter(Boolean).join(' · '))}</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="badge ${scoreClass(d.score)}">${t('score_sante')} ${d.score !== null ? d.score : '—'}</span>
+        <span class="badge badge-neutre">${d.daysSinceVisit !== null && d.daysSinceVisit !== undefined ? t('jours_sans_visite', { n: d.daysSinceVisit, d: fmtDate(d.lastVisitDate) }) : t('jamais_visite')}</span>
+      </div>
+    </div>
+    ${appsBar(mag.code, mag.concept)}
+    <div class="pos-row">
+      <div class="pos-chip">${t('pos_mensuel')} <span class="v">${d.positionnementMensuel !== null && d.positionnementMensuel !== undefined ? fmtNombre(d.positionnementMensuel) + ' %' : '—'}</span></div>
+      <div class="pos-chip">${t('pos_annuel')} <span class="v">${d.positionnementAnnuel !== null && d.positionnementAnnuel !== undefined ? fmtNombre(d.positionnementAnnuel) + ' %' : '—'}</span></div>
+      <div class="pos-chip">${t('objectif_annuel')} <span class="v">${fmtKMontant(d.objectifAnnuel, devise)}</span></div>
+      <div class="pos-chip">${t('ca_prev')} <span class="v">${fmtKMontant(d.caPrevisionnelAnnuel, devise)}</span></div>
+    </div>
+    <p class="section-label">${t('vue_ensemble')}</p>
+    <div class="sub-grid" id="sub-grid"></div>
+    <p class="section-label">${t('evolution_score')}</p>
+    <div class="chart-box"><canvas id="detail-chart"></canvas></div>
+    <p class="section-label">${t('terrain')}</p>
+    <div class="two-col">
+      <div class="card"><div class="card-head"><h4>${t('actions_bilan')}</h4>${appLink('bilan-passage', mag.code, t('app_bilan'))}</div>${actionsHtml}</div>
+      <div class="card"><div class="card-head"><h4>${t('kaizen_non_resolus')}</h4>${mag.concept ? appLink('kaizen', mag.code, 'Kaizen') : ''}</div>${scoreMoisHtml}${kaizenHtml}${cumulHtml}</div>
+    </div>
+    <div class="card" style="margin-top:12px"><h4>${t('checklist_reseau')}</h4>${checklistHtml}</div>
+    <div class="section-head"><p class="section-label">${t('pedlv_titre')}</p>${appLink('pedlv', mag.code, t('app_pedlv'))}</div>
+    <div class="card">
+      ${pedlvRows ? '<div class="table-wrap"><table class="mini-table"><thead><tr><th>' + t('indicateur') + '</th><th class="num">' + t('valeur') + '</th><th class="num">' + t('objectif') + '</th><th></th></tr></thead><tbody>' + pedlvRows + '</tbody></table></div>' : vide(t('pas_pedlv'))}
+    </div>
+    <p class="section-label">${t('equipe')}</p>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><h4>${t('app_eval')}</h4>${appLink('eval-equipe', mag.code, t('app_eval'))}</div>
+        ${moyenneEquipeHtml}
+        ${equipeRows ? '<table class="mini-table"><tbody>' + equipeRows + '</tbody></table>' : vide(t('pas_detail_tache'))}
+      </div>
+      <div class="card">
+        <h4>${t('dim_effectif')}</h4>
+        <p style="font-size:13px;margin:0 0 6px">${t('manager')}${SEP()}<b>${escDash(d.manager || '—')}</b></p>
+        <p style="font-size:13px;margin:0 0 6px">${effHtml}</p>
+        <p style="font-size:13px;margin:0">${absTxt}</p>
+        ${suiviManagersHtml}
+      </div>
+    </div>
+    <div class="section-head">
+      <p class="section-label">${t('suivi_manager_titre')}</p>
+      <div class="app-links">${appLink('suivi-managers', mag.code, t('app_suivi'))}</div>
+    </div>
+    <div class="card">${renderSuiviManagerHtml(d.suivisManager)}</div>
+    <p class="section-label">${t('conseils')}</p>
+    <div class="card">
+      <button class="advice-btn" id="advice-btn" onclick="generateAdvice('${escJs(mag.code)}')">${t('generer_conseils')}</button>
+      <div id="advice-content" class="advice-content"></div>
+    </div>
+  `;
+  renderSubGridInto('sub-grid', d.subScores || {});
+  renderDetailChart(d.history || []);
+  currentDetailHistory = d.history || [];
+}
+// Sous-scores avec leur poids (poids 0 = dimension affichée mais non comptée).
+function renderSubGridInto(id, sub) {
+  const grid = document.getElementById(id);
+  grid.innerHTML = SUB_KEYS.map(key => {
+    const val = sub[key];
+    const p = poidsCourants ? poidsCourants[key] : null;
+    return `<button class="sub-card" onclick="openSubModal('${key}')"${p === 0 ? ' style="opacity:.55"' : ''}>
+      <p class="lbl">${escDash(SUB_LABEL(key))}</p>
+      <p class="val" style="color:${couleurScore(val)}">${val !== null && val !== undefined ? Math.round(val) : '—'}</p>
+      ${p !== null && p !== undefined ? '<p class="poids">' + (p === 0 ? t('non_compte') : t('poids_x', { x: p })) + '</p>' : ''}
+    </button>`;
+  }).join('');
+}
+function renderDetailChart(history) {
+  if (detailChart) { detailChart.destroy(); detailChart = null; }
+  const ctx = document.getElementById('detail-chart');
+  if (!history.length) { ctx.parentElement.style.height = 'auto'; ctx.parentElement.innerHTML = '<p class="muted" style="font-size:13px;margin:0">' + t('pas_historique_hebdo') + '</p>'; return; }
+  detailChart = chartLigne(ctx, history.map(h => fmtDate(h.periode)), history.map(h => h.score), 2);
+}
+
+// ---------------------------------------------------------------- Fenêtre sous-score
+function openSubModal(key) {
+  const history = currentDetailHistory;
+  document.getElementById('modal-title').textContent = SUB_LABEL(key) + ' — ' + t('historique');
+  document.getElementById('modal-overlay').style.display = 'flex';
+  const box = document.getElementById('modal-chart-box');
+  box.style.display = 'block';
+  box.style.height = '200px';
+  box.innerHTML = '<canvas id="modal-chart"></canvas>';
+  document.getElementById('modal-list').style.display = 'none';
+  if (modalChartInstance) { modalChartInstance.destroy(); modalChartInstance = null; }
+  const points = history.map(h => ({ periode: h.periode, val: h.sousScores ? h.sousScores[key] : null })).filter(p => p.val !== null && p.val !== undefined);
+  if (!points.length) { box.style.height = 'auto'; box.innerHTML = '<p class="muted" style="font-size:13px;margin:10px">' + t('pas_historique_sous_score') + '</p>'; return; }
+  modalChartInstance = chartLigne(document.getElementById('modal-chart'), points.map(p => fmtDate(p.periode)), points.map(p => p.val), 2);
+}
+function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
+
+let currentEquipeTaches = [];
+function openVacantModal(tache) {
+  const entry = currentEquipeTaches.find(x => x.tache === tache);
+  const magasins = entry ? entry.magasinsVacants || [] : [];
+  document.getElementById('modal-title').textContent = tache + ' — ' + t('magasins_sans_responsable');
+  document.getElementById('modal-overlay').style.display = 'flex';
+  document.getElementById('modal-chart-box').style.display = 'none';
+  const list = document.getElementById('modal-list');
+  list.style.display = 'block';
+  list.innerHTML = magasins.length ? magasins.map(m => '<div style="padding:4px 0;border-block-end:1px solid var(--line)">' + escDash(m) + '</div>').join('') : '<p class="muted" style="margin:0">' + t('aucun_vacant') + '</p>';
+}
+
+// ---------------------------------------------------------------- Onglet « Aujourd'hui »
+// Activité du jour par magasin (route /activite-jour) ; heures et heure butoir
+// du lancement dans le fuseau horaire de chaque magasin.
+let currentListView = 'network';
+let todayData = null;
+let todayJour = null;
+let todayTimer = null;
+const TODAY_REFRESH_MS = 150000;
+const TODAY_OUTILS = ['lancement', 'bilan', 'pedlv', 'kaizen', 'entretien', 'observation', 'equipe'];
+function outilCourt(k) { return t('outil_court_' + k); }
+function outilLong(k) { return t('outil_' + k); }
+
+function setTabs(active) {
+  const nav = document.getElementById('main-tabs');
+  if (!nav) return;
+  nav.style.display = active ? 'flex' : 'none';
+  nav.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.tab === active));
+}
+function goBack() {
+  if (currentListView === 'today') showTodayView();
+  else if (currentListView === 'mensuel') showMonthlyView();
+  else if (allResults.length) { currentListView = 'network'; setTabs('network'); masquerVues('view-network'); document.getElementById('view-network').style.display = 'block'; }
+  else showNetworkView();
+}
+function rerenderVueCourante() {
+  if (document.getElementById('view-detail').style.display === 'block' && lastDetail) { renderDetailView(lastDetail); return; }
+  if (document.getElementById('view-ar').style.display === 'block' && lastArData) { renderArView(lastArData); return; }
+  setTabs(currentListView);
+  if (currentListView === 'today' && todayData) renderTodayView();
+  else if (currentListView === 'mensuel' && smData) renderMonthlyView();
+  else if (allResults.length) renderNetworkView();
+}
+
+function parisTodayIsoDash() { return new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Paris' }); }
+function addDaysIsoDash(iso, n) { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+function todayJoursDisponibles() {
+  const today = parisTodayIsoDash();
+  const jours = [];
+  for (let i = 0; i <= 30; i++) jours.push(addDaysIsoDash(today, -i));
+  return jours;
+}
+function jourLabel(iso, today) {
+  if (iso === today) return t('aujourdhui');
+  if (iso === addDaysIsoDash(today, -1)) return t('hier');
+  const s = new Date(iso + 'T12:00:00Z').toLocaleDateString(loc(), { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function stopTodayTimer() { if (todayTimer) { clearInterval(todayTimer); todayTimer = null; } }
+
+async function showTodayView() {
+  currentListView = 'today';
+  masquerVues('view-today');
+  setTabs('today');
+  const el = document.getElementById('view-today');
+  el.style.display = 'block';
+  if (!todayJour) todayJour = parisTodayIsoDash();
+  if (!todayData) el.innerHTML = '<div class="loading">' + t('chargement') + '</div>';
+  await loadToday();
+  stopTodayTimer();
+  todayTimer = setInterval(() => {
+    if (document.hidden || currentListView !== 'today' || document.getElementById('view-today').style.display === 'none') return;
+    if (todayJour !== parisTodayIsoDash()) return;
+    loadToday(true);
+  }, TODAY_REFRESH_MS);
+}
+async function loadToday(silent) {
+  const el = document.getElementById('view-today');
+  try {
+    todayData = await fetchJson('/activite-jour?jour=' + encodeURIComponent(todayJour));
+    renderTodayView();
+  } catch (e) {
+    if (silent && todayData) return;
+    el.innerHTML = '<div class="loading">' + t('erreur') + SEP() + escDash(e.message) + '</div>';
+  }
+}
+function changeTodayJour(v) { todayJour = v; todayData = null; showTodayView(); }
+function magasinActif(m) {
+  return (m.lancement && m.lancement.statut === 'fait') || !!m.bilan || (m.pedlv && m.pedlv.fait) || (m.kaizen && m.kaizen.fait) || !!m.entretien || !!m.observation || !!m.equipe;
+}
+function nbOutilsFaits(m) {
+  return [m.lancement && m.lancement.statut === 'fait', !!m.bilan, m.pedlv && m.pedlv.fait, m.kaizen && m.kaizen.fait, !!m.entretien, !!m.observation, !!m.equipe].filter(Boolean).length;
+}
+function renderTodayView() {
+  const el = document.getElementById('view-today');
+  const d = todayData;
+  const prev = document.getElementById('today-search') ? lireFiltres('today') : { pays: '', ar: '', search: '' };
+  const jours = todayJoursDisponibles();
+  if (!jours.includes(d.jour)) jours.push(d.jour);
+  const enDirect = d.jour === d.today;
+  el.innerHTML = `
+    <div class="filters">
+      <select id="today-jour" onchange="changeTodayJour(this.value)">
+        ${jours.map(j => '<option value="' + j + '"' + (j === d.jour ? ' selected' : '') + '>' + escDash(jourLabel(j, d.today)) + '</option>').join('')}
+      </select>
+      ${optionsFiltres(d.magasins, 'today', prev.pays, prev.ar)}
+      <select id="today-sort" onchange="applyTodaySortPreset(this.value)">
+        <option value="libelle">${t('tri_magasin')}</option>
+        <option value="moins">${t('tri_moins_actifs')}</option>
+        <option value="plus">${t('tri_plus_actifs')}</option>
+        <option value="col" disabled>${t('tri_colonne')}</option>
+      </select>
+      <input type="text" id="today-search" placeholder="${escDash(t('rechercher_magasin'))}" value="${escDash(prev.search)}" oninput="renderTodayBody()">
+    </div>
+    <p class="today-status">${enDirect
+      ? '<span><span class="live-dot"></span> ' + t('en_direct', { h: escDash(heureLoc(d.maintenant)), b: escDash(heureLoc(d.butoir)) }) + '</span>'
+      : '<span>' + t('journee_du', { d: escDash(svDateFr(d.jour)) }) + '</span>'}
+      <button class="link-btn" onclick="loadToday()">${t('actualiser')}</button></p>
+    <div class="kpi-row today-kpis" id="today-kpis"></div>
+    <div class="table-wrap sticky-wrap"><table class="dash-table today-table">
+      <thead><tr>${thSort('today', 'libelle', t('col_magasin'))}${TODAY_OUTILS.map(k => thSort('today', k, outilCourt(k), 'c')).join('')}</tr></thead>
+      <tbody id="today-body"></tbody>
+    </table></div>
+    <div class="card" style="margin-top:16px">
+      <h4>${t('fil_journee')}</h4>
+      <div id="today-feed"></div>
+    </div>
+  `;
+  syncTodaySortSelect();
+  renderTodayBody();
+}
+function todayFiltreChange() { renderTodayBody(); }
+function syncTodaySortSelect() {
+  const sel = document.getElementById('today-sort');
+  if (!sel) return;
+  const s = tableSorts.today;
+  sel.value = s.key === 'libelle' && s.dir === 1 ? 'libelle' : s.key === 'activite' ? (s.dir === 1 ? 'moins' : 'plus') : 'col';
+}
+function applyTodaySortPreset(v) {
+  tableSorts.today = v === 'moins' ? { key: 'activite', dir: 1 } : v === 'plus' ? { key: 'activite', dir: -1 } : { key: 'libelle', dir: 1 };
+  majIndicateursTri('today');
+  renderTodayBody();
+}
+function todayCell(key, m, jourEnCours) {
+  const v = m[key];
+  const ok = (heure, title) => '<td class="c" title="' + escDash(title) + '"><span class="t-ok">✓</span>' + (heure ? '<span class="t-h">' + escDash(heure) + '</span>' : '') + '</td>';
+  const gris = (txt, title) => '<td class="c" title="' + escDash(title || '') + '"><span class="t-gris">' + escDash(txt) + '</span></td>';
+  const vide = '<td class="c"></td>';
+  const butoir = heureLoc(todayData.butoir);
+  if (key === 'lancement') {
+    if (v.statut === 'fait' && v.enRetard) return '<td class="c" title="' + escDash(t('lancement_retard_title', { h: v.heure, b: butoir }) + (v.par ? ' — ' + v.par : '')) + '"><span class="t-retard">✓</span><span class="t-h t-retard-txt">' + escDash(v.heure) + ' · ' + t('en_retard') + '</span></td>';
+    if (v.statut === 'fait') return ok(v.reunion ? t('reunion_court') : v.heure, outilLong('lancement') + (v.reunion ? ' (' + t('feed_reunion') + ')' : '') + (v.heure ? ' — ' + v.heure : '') + (v.par ? ', ' + v.par : ''));
+    if (v.statut === 'manquant') return '<td class="c"><span class="t-ko">✕</span><span class="t-h t-ko-txt">' + t('manquant') + '</span></td>';
+    if (v.statut === 'attendu') return gris(jourEnCours ? t('avant_h', { h: butoir }) : '…', t('attendu_avant', { h: butoir }));
+    return gris('—', t('lancement_non_attendu'));
+  }
+  if (key === 'pedlv') {
+    if (!v) return gris('—', t('aucun_envoi_pedlv'));
+    if (v.fait) return ok(v.heure, t('pedlv_envoye') + (v.heure ? ' — ' + v.heure : ''));
+    return gris(t('il_y_a_j', { n: v.joursDepuis }), t('dernier_envoi_pedlv', { n: v.joursDepuis }));
+  }
+  if (key === 'kaizen') {
+    if (!v) return gris('—', t('aucun_audit_kaizen'));
+    if (v.fait) return ok(v.heure, t('kaizen_items', { n: v.nbItems }) + (v.par ? ', ' + v.par : ''));
+    return gris((v.score != null ? v.score : 0) + '/' + (v.scoreMax || 50), t('kaizen_rien_ce_jour'));
+  }
+  if (!v && (key === 'bilan' || key === 'equipe')) {
+    const j = key === 'bilan' ? m.bilanJours : m.equipeJours;
+    if (j === null || j === undefined) return gris('—', t(key === 'bilan' ? 'aucun_bilan' : 'aucune_eval'));
+    return gris(t('il_y_a_j', { n: j }), t(key === 'bilan' ? 'dernier_bilan_j' : 'derniere_eval_j', { n: j }));
+  }
+  if (!v) return vide;
+  if (key === 'entretien') return ok((v.nb > 1 ? v.nb + ' · ' : '') + (v.heure || ''), t('n_entretiens', { n: v.nb }) + SEP() + (v.types || []).map(SV_TYPE).join(', ') + (v.par ? ' — ' + v.par : ''));
+  if (key === 'bilan') return ok(v.heure, outilLong('bilan') + (v.heure ? ' — ' + v.heure : '') + (v.par ? ', ' + v.par : ''));
+  if (key === 'observation') return ok(v.nb > 1 ? t('n_obs', { n: v.nb }) : v.heure, t('n_observations', { n: v.nb }));
+  if (key === 'equipe') return ok(v.heure, t('n_controles_eval', { n: v.nb }) + (v.par ? ' — ' + v.par : ''));
+  return vide;
+}
+function libelleEvenement(e) {
+  switch (e.outil) {
+    case 'lancement': return e.detail === 'reunion' ? t('feed_reunion') : outilLong('lancement') + (e.detail === 'en_retard' ? ' (' + t('en_retard') + ')' : '');
+    case 'bilan': return outilLong('bilan') + (e.detail ? ' (' + t('visite_du', { d: svDateFr(e.detail) }) + ')' : '');
+    case 'entretien': return t('entretien') + ' ' + SV_TYPE(e.detail);
+    case 'equipe': return outilLong('equipe') + (e.detail ? ' — ' + e.detail : '');
+    case 'observation': return outilLong('observation') + (e.detail ? ' — ' + e.detail : '');
+    case 'kaizen': return t('kaizen_items', { n: e.detail || 1 });
+    case 'pedlv': return outilLong('pedlv');
+  }
+  return e.detail || e.outil;
+}
+function renderTodayBody() {
+  const d = todayData;
+  if (!d) return;
+  const f = lireFiltres('today');
+  const rows = sortRows(filtrer(d.magasins, f, true), tableSorts.today, TODAY_GETTERS);
+  const jourEnCours = d.jour === d.today;
+  const perim = filtrer(d.magasins, f, false);
+  const actifs = perim.filter(magasinActif).length;
+  const lancAttendus = perim.filter(m => m.lancement.statut !== 'non_attendu').length;
+  const lancFaits = perim.filter(m => m.lancement.statut === 'fait').length;
+  const lancManquants = perim.filter(m => m.lancement.statut === 'manquant').length;
+  const lancRetard = perim.filter(m => m.lancement.enRetard).length;
+  const nb = key => perim.filter(m => key === 'pedlv' || key === 'kaizen' ? (m[key] && m[key].fait) : !!m[key]).length;
+  document.getElementById('today-kpis').innerHTML = `
+    <div class="kpi-card kpi-click" ${klAttr("klToday('actifs')")}><p class="lbl">${t('magasins_actifs')}</p><p class="val">${actifs}<span class="kpi-sub"> / ${perim.length}</span></p></div>
+    <div class="kpi-card kpi-click" ${klAttr("klToday('lancement')")}><p class="lbl">${t('kpi_lancements')}</p><p class="val" style="color:${lancManquants ? 'var(--red)' : 'var(--green)'}">${lancFaits}<span class="kpi-sub"> / ${lancAttendus}</span></p>${lancRetard ? '<p class="kpi-note">' + t('dont_n_retard', { n: lancRetard }) + '</p>' : ''}</div>
+    ${['bilan', 'pedlv', 'kaizen', 'entretien', 'observation', 'equipe'].map(k => `<div class="kpi-card kpi-click" ${klAttr("klToday('" + k + "')")}><p class="lbl">${t('kpi_' + k)}</p><p class="val">${nb(k)}</p></div>`).join('')}
+  `;
+  document.getElementById('today-body').innerHTML = rows.length ? rows.map(m => `
+    <tr class="row-clickable${magasinActif(m) ? '' : ' t-inactif'}" onclick="showDetailView('${escJs(m.code)}')">
+      <td><span class="t-mag">${escDash(m.libelle)}</span><span class="t-ar">${escDash([m.pays, m.animateur].filter(Boolean).join(' · '))}</span></td>
+      ${TODAY_OUTILS.map(k => todayCell(k, m, jourEnCours)).join('')}
+    </tr>`).join('') : '<tr><td colspan="' + (TODAY_OUTILS.length + 1) + '" class="muted">' + t('aucun_magasin') + '</td></tr>';
+  const codes = new Set(rows.map(m => m.code));
+  const events = (d.events || []).filter(e => codes.has(e.code));
+  document.getElementById('today-feed').innerHTML = events.length ? events.slice(0, 150).map(e => `
+    <div class="feed-row">
+      <span class="feed-h">${e.heure ? escDash(e.heure) : '—'}</span>
+      <span class="feed-txt"><b>${escDash(e.libelle)}</b> · ${escDash(libelleEvenement(e))}${e.par ? ' <span class="feed-par">— ' + escDash(e.par) + '</span>' : ''}</span>
+    </div>`).join('') : '<p class="muted" style="font-size:13px;margin:0">' + t('rien_saisi') + '</p>';
+}
+function klToday(cle) {
+  const d = todayData;
+  if (!d) return;
+  const f = lireFiltres('today');
+  const perim = filtrer(d.magasins, f, false).slice().sort(klParLibelle);
+  const suffixe = suffixeFiltre(f);
+  const heurePar = v => v ? [v.heure, v.par].filter(Boolean).map(escDash).join(' · ') : '';
+  const compte = (n, total) => '<p class="kl-compte">' + t('n_magasins_sur', { n, m: total }) + '</p>';
+  const autres = (libelle, html, n) => n ? '<details class="kl-autres"><summary>' + escDash(libelle) + ' (' + n + ')</summary>' + html + '</details>' : '';
+  if (cle === 'actifs') {
+    const actifs = perim.filter(magasinActif), inactifs = perim.filter(m => !magasinActif(m));
+    const outils = m => TODAY_OUTILS.filter(k => {
+      const v = m[k];
+      if (k === 'lancement') return v && v.statut === 'fait';
+      if (k === 'pedlv' || k === 'kaizen') return v && v.fait;
+      return !!v;
+    }).map(k => escDash(outilCourt(k))).join(', ');
+    klOuvrir(t('kl_actifs') + suffixe, compte(actifs.length, perim.length) + klLignes(actifs, outils) + autres(t('voir_sans_saisie'), klLignes(inactifs), inactifs.length));
+    return;
+  }
+  if (cle === 'lancement') {
+    const st = s => perim.filter(m => m.lancement && m.lancement.statut === s);
+    const faits = st('fait');
+    const infoFait = m => (m.lancement.enRetard ? '<span class="kl-tag-retard">' + t('en_retard') + '</span> · ' : '') + heurePar(m.lancement);
+    const nonAttendus = st('non_attendu');
+    const nonFaits = st('manquant').concat(st('attendu'), nonAttendus);
+    const infoNonFait = m => m.lancement.statut === 'manquant' ? '<span class="kl-tag-ko">' + t('manquant') + '</span>' : m.lancement.statut === 'attendu' ? t('attendu_avant', { h: escDash(heureLoc(d.butoir)) }) : t('pas_attendu');
+    klOuvrir(t('kpi_lancements') + suffixe, compte(faits.length, perim.length - nonAttendus.length) + klLignes(faits, infoFait) + autres(t('voir_sans_lancement'), klLignes(nonFaits, infoNonFait), nonFaits.length));
+    return;
+  }
+  const fait = m => cle === 'pedlv' || cle === 'kaizen' ? !!(m[cle] && m[cle].fait) : !!m[cle];
+  const faits = perim.filter(fait), pasFaits = perim.filter(m => !fait(m));
+  const info = m => {
+    const v = m[cle];
+    if (cle === 'entretien') return (v.nb > 1 ? v.nb + ' · ' : '') + escDash((v.types || []).map(SV_TYPE).join(', ')) + (v.heure ? ' · ' + escDash(v.heure) : '');
+    if (cle === 'observation') return t('n_obs', { n: v.nb }) + (v.heure ? ' · ' + escDash(v.heure) : '');
+    if (cle === 'kaizen') return (v.nbItems ? t('kaizen_items', { n: v.nbItems }) + ' · ' : '') + heurePar(v);
+    if (cle === 'equipe') return (v.nb ? t('n_controles_eval', { n: v.nb }) + ' · ' : '') + heurePar(v);
+    return heurePar(v);
+  };
+  klOuvrir(t('kpi_' + cle) + ' — ' + t('aujourdhui_min') + suffixe, compte(faits.length, perim.length) + klLignes(faits, info) + autres(t('voir_non_concernes'), klLignes(pasFaits), pasFaits.length));
+}
+
+// ---------------------------------------------------------------- Onglet « Score mensuel »
+// Score mensuel « primes » (route /sante-mensuel). Accès réseau complet :
+// calcul, neutralisations, validation, export Excel. Animateurs et directeurs
+// pays : lecture de leur périmètre et propositions de neutralisation.
+let smData = null;
+let smMois = null;
+let smDetailCode = null;
+function smMoisLabel(m) { const [y, mm] = m.split('-').map(Number); const s = new Date(Date.UTC(y, mm - 1, 15)).toLocaleDateString(loc(), { month: 'long', year: 'numeric', timeZone: 'UTC' }); return s.charAt(0).toUpperCase() + s.slice(1); }
+function smDateFr(iso) { if (!iso) return '—'; const d = new Date(iso); return isNaN(d) ? svDateFr(iso) : d.toLocaleDateString(loc(), { timeZone: 'Europe/Paris' }) + ' ' + d.toLocaleTimeString(loc(), { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit' }); }
+function smMoisDecale(m, n) { const [y, mm] = m.split('-').map(Number); return new Date(Date.UTC(y, mm - 1 + n, 1)).toISOString().slice(0, 7); }
+
+async function showMonthlyView() {
+  currentListView = 'mensuel';
+  masquerVues('view-mensuel');
+  setTabs('mensuel');
+  const el = document.getElementById('view-mensuel');
+  el.style.display = 'block';
+  if (!smData) el.innerHTML = '<div class="loading">' + t('chargement') + '</div>';
+  await loadMonthly();
+}
+async function loadMonthly(withJournal) {
+  const el = document.getElementById('view-mensuel');
+  try {
+    const data = await fetchJson('/sante-mensuel' + (smMois ? '?mois=' + encodeURIComponent(smMois) : '') + (withJournal ? (smMois ? '&' : '?') + 'journal=1' : ''));
+    if (withJournal) return data;
+    smData = data; smMois = data.mois;
+    renderMonthlyView();
+    return data;
+  } catch (e) {
+    if (withJournal) { alert(t('erreur') + SEP() + e.message); return null; }
+    el.innerHTML = '<div class="loading">' + t('erreur') + SEP() + escDash(e.message) + '</div>';
+    return null;
+  }
+}
+async function smPost(body) {
+  const d = smData;
+  if (d && d.statut === 'valide' && !body.motifRevision && body.action !== 'valider') {
+    const motif = prompt(t('sm_prompt_revision'));
+    if (!motif || !motif.trim()) return null;
+    body.motifRevision = motif.trim();
+  }
+  const resp = await fetch(RELAY + '/sante-mensuel', { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders()), body: JSON.stringify(Object.assign({ mois: smMois }, body)) });
+  const data = await resp.json().catch(() => ({}));
+  if (resp.status === 401) { logout(); return null; }
+  if (!resp.ok || !data.ok) {
+    if (data.error === 'RH_ABSENT') {
+      const motif = prompt(t('sm_prompt_rh'));
+      if (motif && motif.trim()) return smPost(Object.assign({}, body, { motifSansRh: motif.trim() }));
+      return null;
+    }
+    alert(data.error || (t('erreur') + ' ' + resp.status));
+    return null;
+  }
+  return data;
+}
+function changeSmMois(v) { smMois = v; smData = null; showMonthlyView(); }
+function smCellule(m, dim) {
+  const n = (m.neutralisations || {})[dim] || (m.neutralisations || {})['*'];
+  if (n) return '<td class="c" title="' + escDash(t('neutralise') + SEP() + (n.motif || '')) + '"><span class="sm-n">N</span></td>';
+  if (m.exclusions && m.exclusions[dim]) return '<td class="c" title="' + escDash(t('exclu') + SEP() + m.exclusions[dim]) + '"><span class="t-gris">—</span></td>';
+  const v = m.sous ? m.sous[dim] : null;
+  if (v === null || v === undefined) return '<td class="c"><span class="t-gris">—</span></td>';
+  return '<td class="c"><span class="sm-v ' + (v >= 80 ? 'sm-ok' : v >= 60 ? 'sm-moy' : 'sm-bas') + '">' + Math.round(v) + '</span></td>';
+}
+function renderMonthlyView() {
+  const el = document.getElementById('view-mensuel');
+  const d = smData;
+  const prev = document.getElementById('sm-search') ? lireFiltres('sm') : { pays: '', ar: '', search: '' };
+  const moisOptions = [];
+  for (let i = 0; i <= 12; i++) moisOptions.push(smMoisDecale(d.moisCourant, -i));
+  (d.moisCalcules || []).forEach(m => { if (!moisOptions.includes(m.mois)) moisOptions.push(m.mois); });
+  moisOptions.sort().reverse();
+  const etatMois = {}; (d.moisCalcules || []).forEach(m => { etatMois[m.mois] = m.statut; });
+  const enCours = d.mois === d.moisCourant;
+  const admin = d.estAdmin || d.estOlivier;
+  let bandeau;
+  if (d.apercu) bandeau = '<div class="sm-banner sm-b-apercu"><b>' + (enCours ? t('sm_apercu_en_cours') : t('sm_apercu_non_calcule')) + '</b><span>' + t('sm_apercu_txt') + '</span></div>';
+  else if (d.statut === 'valide') bandeau = '<div class="sm-banner sm-b-valide"><b>' + t('sm_valide') + '</b><span>' + t('sm_valide_txt', { d: escDash(smDateFr(d.valideLe)), p: escDash(auteurLabel(d.validePar)), v: d.version }) + (d.reviseLe ? ' · ' + t('sm_revise_le', { d: escDash(smDateFr(d.reviseLe)) }) : '') + '</span></div>';
+  else bandeau = '<div class="sm-banner sm-b-prov"><b>' + t('sm_provisoire', { v: d.version }) + '</b><span>' + t('sm_provisoire_txt', { d: escDash(smDateFr(d.calculeLe)), p: escDash(auteurLabel(d.calculePar)), l: escDash(svDateFr(d.dateLimite)) }) + '</span></div>';
+  let actions = '';
+  if (admin) {
+    const btns = [];
+    if (!enCours) btns.push('<button class="sm-btn" onclick="smCalculer()">' + (d.apercu ? t('sm_calculer') : t('sm_recalculer')) + '</button>');
+    if (!d.apercu && d.statut !== 'valide') btns.push('<button class="sm-btn sm-btn-red" onclick="smValider()">' + t('sm_valider') + '</button>');
+    if (!d.apercu) btns.push('<button class="sm-btn" onclick="smArAbsentModal()">' + t('sm_ar_absent') + '</button>');
+    btns.push('<button class="sm-btn" onclick="smExporter()">' + t('sm_exporter') + '</button>');
+    if (!d.apercu && d.statut !== 'valide') btns.push('<button class="sm-btn sm-btn-danger" onclick="smSupprimer()">' + t('sm_supprimer') + '</button>');
+    actions = '<div class="sm-actions">' + btns.join('') + '</div>';
+  }
+  const props = d.propositions || [];
+  const propsHtml = props.length ? `
+    <div class="card sm-props">
+      <div class="card-head"><h4>${t('sm_propositions', { n: props.length })}</h4>${admin ? '<span class="sm-prop-btns"><button class="link-btn" onclick="smDecider(null, true)">' + t('tout_accepter') + '</button><button class="link-btn" onclick="smDecider(null, false)">' + t('tout_refuser') + '</button></span>' : ''}</div>
+      ${props.map(p => `<div class="sm-prop-row">
+        <span><b>${escDash(p.libelle)}</b> · ${escDash(p.dimension === '*' ? t('magasin_entier') : SUB_LABEL(p.dimension))}<span class="sv-meta">${escDash(p.motif || '')} — ${t('propose_par', { p: escDash(auteurLabel(p.propose_par)) })}</span></span>
+        ${admin ? '<span class="sm-prop-btns"><button class="sm-btn sm-btn-sm" onclick="smDecider(' + p.id + ', true)">' + t('accepter') + '</button><button class="sm-btn sm-btn-sm" onclick="smDecider(' + p.id + ', false)">' + t('refuser') + '</button></span>' : '<span class="t-gris">' + t('en_attente_admin') + '</span>'}
+      </div>`).join('')}
+    </div>` : '';
+  el.innerHTML = `
+    <div class="filters">
+      <select id="sm-mois" onchange="changeSmMois(this.value)">
+        ${moisOptions.map(m => '<option value="' + m + '"' + (m === d.mois ? ' selected' : '') + '>' + escDash(smMoisLabel(m)) + (etatMois[m] === 'valide' ? ' · ' + t('valide_min') : etatMois[m] ? ' · ' + t('provisoire_min') : (m === d.moisCourant ? ' · ' + t('en_cours_min') : '')) + '</option>').join('')}
+      </select>
+      ${optionsFiltres(d.magasins, 'sm', prev.pays, prev.ar)}
+      <input type="text" id="sm-search" placeholder="${escDash(t('rechercher_magasin'))}" value="${escDash(prev.search)}" oninput="renderMonthlyBody()">
+    </div>
+    ${bandeau}
+    ${actions}
+    ${propsHtml}
+    <div class="kpi-row" id="sm-kpis"></div>
+    <div class="table-wrap sticky-wrap"><table class="dash-table today-table sm-table">
+      <thead><tr>${thSort('mensuel', 'libelle', t('col_magasin'))}${thSort('mensuel', 'score', t('col_score'), 'c')}${thSort('mensuel', 'evol', t('col_evol'), 'c', t('evol_title'))}${d.dims.map(k => thSort('mensuel', k, t('dimc_' + k), 'c', SUB_LABEL(k) + ' — ' + t('poids_x', { x: d.poids[k] }))).join('')}${thSort('mensuel', 'couv', t('col_couv'), 'c', t('couverture'))}</tr></thead>
+      <tbody id="sm-body"></tbody>
+    </table></div>
+    <p class="sm-legende"><span class="sm-n">N</span> ${t('sm_legende', { suite: admin ? t('sm_legende_admin') : t('sm_legende_ar') })}</p>
+  `;
+  renderMonthlyBody();
+}
+function smFiltreChange() { renderMonthlyBody(); }
+function renderMonthlyBody() {
+  const d = smData;
+  const f = lireFiltres('sm');
+  const rows = sortRows(filtrer(d.magasins, f, true), tableSorts.mensuel, SM_GETTERS);
+  const perim = filtrer(d.magasins, f, false);
+  const notes = perim.filter(m => m.score !== null && m.score !== undefined);
+  const moy = notes.length ? Math.round(notes.reduce((s, m) => s + m.score, 0) / notes.length) : null;
+  const nbNeutra = perim.filter(m => Object.keys(m.neutralisations || {}).length).length;
+  document.getElementById('sm-kpis').innerHTML = `
+    <div class="kpi-card"><p class="lbl">${t('score_moyen')}</p><p class="val">${moy ?? '—'}</p></div>
+    <div class="kpi-card"><p class="lbl">${t('magasins_notes')}</p><p class="val">${notes.length}<span class="kpi-sub"> / ${perim.length}</span></p></div>
+    <div class="kpi-card"><p class="lbl">${t('avec_neutralisation')}</p><p class="val">${nbNeutra}</p></div>
+    <div class="kpi-card"><p class="lbl">${t('propositions_attente')}</p><p class="val" style="color:${(d.propositions || []).length ? 'var(--orange)' : 'inherit'}">${(d.propositions || []).length}</p></div>
+  `;
+  document.getElementById('sm-body').innerHTML = rows.length ? rows.map(m => {
+    const ev = (m.score !== null && m.score !== undefined && m.scorePrecedent !== null && m.scorePrecedent !== undefined) ? m.score - m.scorePrecedent : null;
+    const evHtml = ev === null ? '<span class="t-gris">—</span>' : (ev > 0 ? '<span class="sm-up">▲ ' + ev + '</span>' : ev < 0 ? '<span class="sm-down">▼ ' + (-ev) + '</span>' : '<span class="t-gris">=</span>');
+    return `<tr class="row-clickable" onclick="smDetail('${escJs(m.code)}')">
+      <td><span class="t-mag">${escDash(m.libelle)}</span><span class="t-ar">${escDash([m.pays, m.animateur].filter(Boolean).join(' · '))}</span></td>
+      <td class="c"><span class="badge ${scoreClass(m.score ?? null)}" title="${m.score === null || m.score === undefined ? escDash(t('pas_score_couverture')) : ''}">${m.score ?? '—'}</span></td>
+      <td class="c">${evHtml}</td>
+      ${d.dims.map(k => smCellule(m, k)).join('')}
+      <td class="c"><span class="t-gris">${m.couverture != null ? Math.round(m.couverture) + ' %' : '—'}</span></td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="14" class="muted">' + t('aucun_magasin') + '</td></tr>';
+}
+function smExplication(dim, e) {
+  e = e || {};
+  const f = x => x === null || x === undefined ? '—' : x;
+  switch (dim) {
+    case 'actions': return e.bilan ? t('ex_actions', { d: svDateFr(e.bilan.date), n: e.bilan.actionsReportees, a: e.bilan.actionsAFaire, c: e.bilan.actionsReportees - e.bilan.actionsAFaire }) : t('ex_aucun_bilan');
+    case 'positionnement': return e.bilan ? t('ex_positionnement', { d: svDateFr(e.bilan.date), v: f(e.bilan.positionnementAnnuel) }) : t('ex_aucun_bilan');
+    case 'equipe': return e.equipe ? t('ex_equipe', { v: e.equipe.niveau, n: e.equipe.nbTaches }) : t('ex_aucune_eval');
+    case 'effectif': {
+      if (!e.effectif) return '';
+      const val = e.effectif.effectif !== undefined ? e.effectif.effectif : e.effectif.effectifDispo;
+      const src = e.effectif.source === 'bilan' ? t('ex_eff_bilan', { d: svDateFr(e.effectif.bilanDate) }) : t('ex_eff_rh', { m: e.effectif.rhMois ? ' ' + smMoisLabel(e.effectif.rhMois) : '' });
+      return (e.effectif.indicatif ? '[' + t('indicatif') + '] ' : '') + t('ex_effectif', { s: src, v: val, th: f(e.effTheo), e: e.effectif.delta }) + (e.effectif.sousEffectifSoutenu ? ' · ' + t('ex_sous_eff', { e: e.effectif.ecartMoyen3Mois }) : '') + '.';
+    }
+    case 'absenteisme': return e.absenteisme ? (e.absenteisme.indicatif ? '[' + t('indicatif') + '] ' + t('ex_abs_dernier', { m: smMoisLabel(e.absenteisme.rhMois) }) : t('ex_abs_mois')) + SEP() + e.absenteisme.tauxPct + ' %.' : '';
+    case 'pedlv': return e.pedlv ? t('ex_pedlv', { d: smDateFr(e.pedlv.envoyeLe), p: e.pedlv.periode, r: e.pedlv.rouges, n: e.pedlv.total }) : t('ex_aucun_pedlv');
+    case 'avis': return e.avis && e.avis.rating ? t('ex_avis', { r: e.avis.rating, n: f(e.avis.reviews), d: smDateFr(e.avis.majLe) }) : '';
+    case 'kaizen': return e.kaizen ? t('ex_kaizen', { s: e.kaizen.score, m: e.kaizen.scoreMax }) + ' (' + (e.kaizen.cloture ? t('cloture') : t('non_cloture')) + ').' : t('ex_aucun_kaizen');
+    case 'entretiens': return e.entretiens ? t('ex_entretiens', { v: e.entretiens.vus, e: e.entretiens.eligibles, m: e.entretiens.rhMois }) : '';
+    case 'lancements': return e.lancements ? t('ex_lancements', { l: e.lancements.joursLances, o: e.lancements.joursOuverts }) : '';
+  }
+  return '';
+}
+function smDetail(code) {
+  smDetailCode = code;
+  const d = smData;
+  const admin = d.estAdmin || d.estOlivier;
+  const m = d.magasins.find(x => x.code === code);
+  if (!m) return;
+  const neutra = m.neutralisations || {};
+  const lignes = d.dims.map(k => {
+    const n = neutra[k];
+    const excl = m.exclusions && m.exclusions[k];
+    const v = m.sous ? m.sous[k] : null;
+    const etat = n ? '<span class="sm-n">' + t('neutralise') + '</span> <span class="sv-meta">' + escDash(n.motif || '') + ' — ' + escDash(auteurLabel(n.par)) + (admin && !d.apercu ? ' · <a href="#" onclick="smRetirer(' + n.id + ');return false">' + t('retirer') + '</a>' : '') + '</span>'
+      : excl ? '<span class="t-gris">' + t('exclu') + '</span> <span class="sv-meta">' + escDash(excl) + '</span>'
+      : '<span class="sv-meta">' + escDash(smExplication(k, m.entrees)) + '</span>';
+    const coche = (!n && !d.apercu) ? '<input type="checkbox" class="sm-dim-cb" value="' + k + '">' : '<span style="display:inline-block;width:13px"></span>';
+    return '<div class="sm-dim-row"><label>' + coche + ' <b>' + escDash(SUB_LABEL(k)) + '</b> <span class="t-gris">' + t('poids_x', { x: d.poids[k] }) + '</span></label><span class="sm-dim-v">' + (n || excl || v === null || v === undefined ? '—' : Math.round(v)) + '</span><div class="sm-dim-etat">' + etat + '</div></div>';
+  }).join('');
+  const entier = neutra['*'];
+  const form = d.apercu ? '<p class="sv-meta" style="margin-top:12px">' + t('sm_neutra_apres_calcul') + '</p>' : `
+    <div class="sm-neutra-form">
+      <label class="sm-entier"><input type="checkbox" id="sm-entier"> ${t('sm_neutra_entier')}</label>
+      <input type="text" id="sm-motif" placeholder="${escDash(t('motif_obligatoire'))}">
+      <button class="sm-btn sm-btn-red" onclick="smNeutraliser()">${admin ? t('sm_neutraliser') : t('sm_proposer')}</button>
+      ${admin ? '' : '<p class="sv-meta">' + t('sm_proposition_effet') + '</p>'}
+    </div>`;
+  document.getElementById('sm-modal-content').innerHTML = `
+    <h3>${escDash(m.libelle)}</h3>
+    <p class="sv-meta" style="margin:0 0 10px">${escDash([m.pays, m.animateur].filter(Boolean).join(' · '))} · ${escDash(smMoisLabel(d.mois))} · ${t('col_score')} <b>${m.score ?? '—'}</b> · ${t('couverture')} ${m.couverture != null ? Math.round(m.couverture) + ' %' : '—'}${entier ? ' · <span class="sm-n">' + t('magasin_neutralise') + '</span> (' + escDash(entier.motif || '') + (admin ? ', <a href="#" onclick="smRetirer(' + entier.id + ');return false">' + t('retirer') + '</a>' : '') + ')' : ''}</p>
+    <div style="margin-bottom:8px">${appLink('suivi-managers', m.code, t('app_suivi'))}</div>
+    ${lignes}
+    ${form}`;
+  document.getElementById('sm-modal').style.display = 'flex';
+}
+function smFermer() { document.getElementById('sm-modal').style.display = 'none'; smDetailCode = null; }
+async function smNeutraliser() {
+  const motif = (document.getElementById('sm-motif').value || '').trim();
+  const dims = [...document.querySelectorAll('.sm-dim-cb:checked')].map(c => c.value);
+  if (document.getElementById('sm-entier').checked) dims.push('*');
+  if (!dims.length) { alert(t('sm_coche_dim')); return; }
+  if (!motif) { alert(t('motif_obligatoire')); return; }
+  const r = await smPost({ action: 'neutraliser', magasins: [smDetailCode], dimensions: dims, motif });
+  if (!r) return;
+  const code = smDetailCode;
+  await loadMonthly();
+  if (r.statut === 'proposee') { alert(t('sm_proposition_envoyee')); smFermer(); } else smDetail(code);
+}
+async function smRetirer(id) {
+  if (!confirm(t('sm_confirm_retirer'))) return;
+  const code = smDetailCode;
+  if (await smPost({ action: 'retirer', id })) { await loadMonthly(); if (code) smDetail(code); }
+}
+async function smDecider(id, accepter) {
+  const ids = id ? [id] : (smData.propositions || []).map(p => p.id);
+  if (!id && !confirm(t(accepter ? 'sm_confirm_accepter_tout' : 'sm_confirm_refuser_tout', { n: ids.length }))) return;
+  if (await smPost({ action: 'decider', ids, accepter })) loadMonthly();
+}
+async function smCalculer() {
+  const d = smData;
+  if (!confirm(d.apercu ? t('sm_confirm_calcul', { m: smMoisLabel(d.mois) }) : t('sm_confirm_recalcul', { m: smMoisLabel(d.mois) }))) return;
+  if (await smPost({ action: 'calculer' })) loadMonthly();
+}
+async function smSupprimer() {
+  if (!confirm(t('sm_confirm_supprimer', { m: smMoisLabel(smData.mois) }))) return;
+  if (await smPost({ action: 'supprimer' })) loadMonthly();
+}
+async function smValider() {
+  if (!confirm(t('sm_confirm_valider', { m: smMoisLabel(smData.mois) }))) return;
+  if (await smPost({ action: 'valider' })) loadMonthly();
+}
+function smArAbsentModal() {
+  const ars = [...new Set(smData.magasins.map(m => m.animateur).filter(Boolean))].sort((a, b) => a.localeCompare(b, loc()));
+  document.getElementById('sm-modal-content').innerHTML = `
+    <h3>${t('sm_ar_absent_titre')} — ${escDash(smMoisLabel(smData.mois))}</h3>
+    <p class="sv-meta" style="margin:0 0 12px">${t('sm_ar_absent_txt', { d: smData.dimsArAbsent.map(k => escDash(SUB_LABEL(k))).join(', ') })}</p>
+    ${ars.length ? `<div class="sm-neutra-form">
+      <select id="sm-ar-absent">${ars.map(a => '<option value="' + escDash(a) + '">' + escDash(a) + '</option>').join('')}</select>
+      <input type="text" id="sm-motif-ar" placeholder="${escDash(t('motif_obligatoire'))}">
+      <button class="sm-btn sm-btn-red" onclick="smArAbsent()">${t('sm_neutraliser')}</button>
+    </div>` : '<p class="muted" style="font-size:13px">' + t('aucun_animateur') + '</p>'}`;
+  document.getElementById('sm-modal').style.display = 'flex';
+}
+async function smArAbsent() {
+  const ar = document.getElementById('sm-ar-absent').value;
+  const motif = (document.getElementById('sm-motif-ar').value || '').trim();
+  if (!motif) { alert(t('motif_obligatoire')); return; }
+  if (await smPost({ action: 'neutraliser', arAbsent: ar, motif })) { smFermer(); loadMonthly(); }
+}
+function smChargerXlsx() {
+  if (window.XLSX) return Promise.resolve();
+  return new Promise((ok, ko) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = ok; s.onerror = () => ko(new Error(t('xlsx_ko')));
+    document.head.appendChild(s);
+  });
+}
+async function smExporter() {
+  try { await smChargerXlsx(); } catch (e) { alert(e.message); return; }
+  const d = await loadMonthly(true);
+  if (!d) return;
+  const statut = d.apercu ? t('x_statut_apercu') : d.statut === 'valide' ? t('x_statut_valide') : t('x_statut_provisoire');
+  const mags = d.magasins.slice();
+  const notes = mags.filter(m => m.score !== null && m.score !== undefined).sort((a, b) => b.score - a.score);
+  const rangReseau = {}; notes.forEach((m, i) => { rangReseau[m.code] = i + 1; });
+  const rangPays = {}; const parPays = {};
+  notes.forEach(m => { (parPays[m.pays || ''] ??= []).push(m); });
+  Object.values(parPays).forEach(arr => arr.forEach((m, i) => { rangPays[m.code] = i + 1; }));
+  const etatDim = (m, k) => { const n = (m.neutralisations || {})[k] || (m.neutralisations || {})['*']; if (n) return t('neutralise') + SEP() + (n.motif || ''); if (m.exclusions && m.exclusions[k]) return t('exclu') + SEP() + m.exclusions[k]; return t('compte'); };
+  const C = k => t('x_' + k);
+  const synthese = mags.sort((a, b) => String(a.libelle).localeCompare(String(b.libelle), loc())).map(m => ({
+    [C('mois')]: d.mois, [C('statut')]: statut, [C('version')]: d.version ?? '', [C('code')]: m.code, [C('magasin')]: m.libelle, [C('pays')]: m.pays || '', [C('animateur')]: m.animateur || '',
+    [C('score')]: m.score ?? t('pas_de_score'), [C('score_prec')]: m.scorePrecedent ?? '',
+    [C('evolution')]: (m.score != null && m.scorePrecedent != null) ? m.score - m.scorePrecedent : '',
+    [C('couverture')]: m.couverture ?? '', [C('rang_reseau')]: rangReseau[m.code] ?? '', [C('rang_pays')]: rangPays[m.code] ?? '',
+  }));
+  const detail = mags.map(m => {
+    const row = { [C('mois')]: d.mois, [C('statut')]: statut, [C('code')]: m.code, [C('magasin')]: m.libelle, [C('pays')]: m.pays || '', [C('animateur')]: m.animateur || '', [C('score')]: m.score ?? t('pas_de_score') };
+    d.dims.forEach(k => {
+      const v = m.sous ? m.sous[k] : null;
+      row[SUB_LABEL(k) + ' — ' + C('sous_score')] = (v === null || v === undefined) ? '' : Math.round(v * 10) / 10;
+      row[SUB_LABEL(k) + ' — ' + C('poids')] = d.poids[k];
+      row[SUB_LABEL(k) + ' — ' + C('etat')] = etatDim(m, k);
+      row[SUB_LABEL(k) + ' — ' + C('justification')] = smExplication(k, m.entrees);
+    });
+    return row;
+  });
+  const neutra = (d.neutralisationsHistorique || []).map(n => ({
+    [C('code')]: n.magasin_code, [C('magasin')]: (mags.find(m => m.code === n.magasin_code) || {}).libelle || '', [C('dimension')]: n.dimension === '*' ? t('magasin_entier') : SUB_LABEL(n.dimension),
+    [C('statut')]: n.statut, [C('origine')]: n.origine, [C('motif')]: n.motif || '', [C('propose_par')]: n.propose_par || '', [C('propose_le')]: n.propose_le || '', [C('decide_par')]: n.decide_par || '', [C('decide_le')]: n.decide_le || '',
+  }));
+  const journal = (d.journal || []).map(j => ({ [C('date')]: j.le, [C('action')]: j.action, [C('auteur')]: j.auteur || '', [C('magasin')]: j.magasin_code || '', [C('motif')]: j.motif || '', [C('detail')]: j.detail || '' }));
+  const P = (k, v) => ({ [C('parametre')]: k, [C('valeur')]: v });
+  const params = [
+    P(C('mois'), d.mois), P(C('statut'), statut), P(C('version'), d.version ?? ''),
+    P(C('calcule_le'), d.calculeLe || ''), P(C('valide_le'), d.valideLe || ''), P(C('valide_par'), d.validePar || ''),
+    P(C('revise_le'), d.reviseLe || ''), P(C('date_limite'), d.dateLimite),
+    P(C('regles'), d.reglesVersion), P(C('seuil'), t('x_seuil_val')),
+    ...d.dims.map(k => P(C('poids') + ' — ' + SUB_LABEL(k), d.poids[k])),
+  ];
+  const wb = XLSX.utils.book_new();
+  const ajouter = (rows, nom, videTxt) => XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows.length ? rows : [{ '': videTxt }]), nom.slice(0, 31));
+  ajouter(synthese, C('f_synthese'), t('aucun_magasin'));
+  ajouter(detail, C('f_detail'), t('aucun_magasin'));
+  ajouter(neutra, C('f_neutralisations'), t('x_aucune_neutra'));
+  ajouter(journal, C('f_journal'), t('x_aucune_action'));
+  ajouter(params, C('f_parametres'), '');
+  XLSX.writeFile(wb, 'score-sante-mensuel-inter-' + d.mois + (d.version ? '-v' + d.version : '-apercu') + (d.statut === 'valide' ? '-valide' : '') + '.xlsx');
+}
+
+// ---------------------------------------------------------------- Démarrage
+(function boot() {
+  initLang();
+  try { document.getElementById('login-user').value = localStorage.getItem(K_USER) || ''; } catch (e) {}
+  if (loadSession()) startApp();
+  else document.getElementById('login-screen').style.display = 'flex';
+})();
 </script>
 </body>
 </html>
