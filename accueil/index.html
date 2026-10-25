@@ -1,1 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0D0D0D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OC International">
+<title>Outils du réseau international</title>
+<link rel="manifest" href="manifest.json?v=6">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=4">
+<link rel="icon" type="image/png" href="icon-192.png?v=4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D0D0D;--bg2:#161616;--bg3:#1f1f1f;--bg4:#2a2a2a;
+  --red:#E2231A;--red2:rgba(226,35,26,0.14);--rose:#FCEBEA;
+  --text:#F5F5F5;--muted:#8a8a8a;--border:rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:'Montserrat','Heebo',sans-serif}
+body{background:radial-gradient(120% 60% at 50% -10%,#241414 0%,#0D0D0D 55%) fixed;padding-bottom:env(safe-area-inset-bottom)}
+/* Filigrane Optical Center (fichier logo-filigrane.png, à remplacer seul quand le logo groupe changera) */
+body::before{content:'';position:fixed;top:55%;left:50%;transform:translate(-50%,-50%);width:min(80vw,520px);height:min(56vw,300px);
+  background:url('logo-filigrane.png') center/contain no-repeat;mix-blend-mode:screen;opacity:.07;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 16px 48px}
 
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:28px}
+.brand small{display:block;font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--red);text-transform:uppercase;margin-bottom:6px}
+.brand h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.3px;line-height:1.1}
+.brand p{margin:6px 0 0;font-size:12px;color:var(--muted)}
+.user{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding-top:4px}
+.user-name{font-size:12px;font-weight:600}
+.chip{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:6px 12px;font:500 11px 'Montserrat',sans-serif;cursor:pointer}
+.chip:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.chip.primary{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+
+section{margin-bottom:30px}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.sec-head h2{margin:0;font-size:13px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
+.sec-head h2::before{content:'';display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--red);margin-inline-end:8px;vertical-align:1px}
+.sec-head span{font-size:11px;color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 14px}
+@media (min-width:640px){.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
+.ico-wrap{position:relative;width:100%;max-width:120px}
+.ico-wrap .icon{width:100%;height:auto;aspect-ratio:1;border-radius:24%}
+.ico-wrap .icon .mono{font-size:36px}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:var(--text);
+  -webkit-touch-callout:none;-webkit-user-select:none;user-select:none;padding:4px 0}
+.icon{width:84px;height:84px;border-radius:21px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#2a2a2a,#171717);border:1px solid var(--border);box-shadow:0 6px 18px rgba(0,0,0,.45);
+  transition:transform .15s ease,box-shadow .15s ease}
+.icon img{width:100%;height:100%;object-fit:cover;display:block}
+.icon .mono{font-size:29px;font-weight:800;color:var(--red);letter-spacing:-.5px}
+.tile:hover .icon{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.55),0 0 0 1px rgba(226,35,26,.35)}
+.tile:active .icon{transform:scale(.94)}
+.tile .label{font-size:12.5px;font-weight:600;text-align:center;line-height:1.25;max-width:100%}
+.info-btn{position:absolute;top:-7px;inset-inline-end:-7px;width:26px;height:26px;border-radius:50%;border:none;
+  background:var(--bg4);color:var(--text);font:700 13px Georgia,serif;font-style:italic;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.5)}
+.info-btn:hover{background:var(--red)}
+
+.locked{background:rgba(22,22,22,.85);border:1px dashed rgba(255,255,255,.14);border-radius:14px;padding:18px;display:flex;
+  align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.locked b{display:block;font-size:13px;margin-bottom:4px}
+.locked span{font-size:11px;color:var(--muted);line-height:1.5}
+.empty{font-size:12px;color:var(--muted);padding:6px 0}
+
+footer{text-align:center;font-size:11px;color:var(--muted);margin-top:40px;letter-spacing:.3px}
+footer b{color:var(--text);font-weight:700}
+
+/* Fiche au survol (ordinateur) */
+.pop{position:fixed;z-index:40;width:290px;background:var(--bg2);border:1px solid rgba(255,255,255,.12);border-radius:14px;
+  padding:14px 16px;box-shadow:0 18px 40px rgba(0,0,0,.6);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
+.pop.show{opacity:1;transform:none}
+.fiche h3{margin:0 0 10px;font-size:15px;font-weight:700}
+.fiche .row{margin-bottom:10px}
+.fiche .row:last-child{margin-bottom:0}
+.fiche .k{font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--red);margin-bottom:3px}
+.fiche .v{font-size:12px;line-height:1.5;color:#ddd}
+
+/* Feuille (téléphone) et connexion */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+@media (min-width:640px){.overlay{align-items:center}}
+.sheet{width:100%;max-width:440px;background:var(--bg2);border:1px solid rgba(255,255,255,.1);border-radius:20px 20px 0 0;
+  padding:20px 20px calc(20px + env(safe-area-inset-bottom));animation:up .2s ease}
+@media (min-width:640px){.sheet{border-radius:18px}}
+@keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+.sheet-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sheet-top .icon{width:48px;height:48px;border-radius:12px;flex-shrink:0}
+.sheet-top .icon .mono{font-size:17px}
+.sheet-top h3{margin:0;font-size:17px;font-weight:700}
+.btn{display:block;width:100%;border:none;border-radius:12px;padding:14px;font:600 14px 'Montserrat',sans-serif;cursor:pointer;text-align:center;text-decoration:none}
+.btn-red{background:var(--red);color:#fff}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);margin-top:8px}
+label{display:block;font-size:10.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin:12px 0 6px}
+input{width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:12px;font:500 15px 'Montserrat',sans-serif;color:var(--text)}
+input:focus{outline:none;border-color:var(--red)}
+.err{color:#ff6b63;font-size:12px;min-height:16px;margin:10px 0}
+.hint{font-size:11px;color:var(--muted);line-height:1.5;margin:0 0 4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <small data-i18n="brand">Optical Center · Réseau international</small>
+      <h1 data-i18n="titre">Les outils du réseau</h1>
+      <p id="subtitle" data-i18n="sous_titre">Toutes les applis, au même endroit.</p>
+    </div>
+    <div class="user" id="user-box"></div>
+  </header>
+  <main id="main"></main>
+  <footer>Voir et entendre uniquement le <b>BIEN.</b></footer>
+</div>
+
+<div class="pop fiche" id="pop"></div>
+
+<div class="overlay" id="ov-fiche"><div class="sheet fiche" id="sheet-fiche"></div></div>
+
+<div class="overlay" id="ov-login">
+  <div class="sheet">
+    <div class="sheet-top"><h3 data-i18n="connexion">Connexion</h3></div>
+    <p class="hint" data-i18n="connexion_hint">Avec votre identifiant et votre mot de passe Zimbra. Une seule connexion débloque toutes les sections auxquelles vous avez accès.</p>
+    <form id="login-form" autocomplete="on">
+      <label for="l-user" data-i18n="identifiant">Identifiant Zimbra</label>
+      <input id="l-user" type="email" autocomplete="username" placeholder="prenom.nom@optical-center.com" required>
+      <label for="l-pass" data-i18n="mdp">Mot de passe</label>
+      <input id="l-pass" type="password" autocomplete="current-password" required>
+      <div class="err" id="l-err"></div>
+      <button class="btn btn-red" type="submit" id="l-submit" data-i18n="se_connecter">Se connecter</button>
+      <button class="btn btn-ghost" type="button" data-close="ov-login" data-i18n="annuler">Annuler</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const APP_VERSION = '2026.10.25-1';
+const WORKER = 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
+const K_SESSION = 'accueil_session', K_CACHE = 'accueil_apps_cache', K_USER = 'accueil_last_user', K_LANG = 'accueil_lang';
+// Sections internationales (pas de section Formation tant qu'Accompagnement
+// Manager est hors périmètre). Les droits sont calculés par le Worker.
+const ORDRE = ['tous', 'animateurs', 'direction', 'admin'];
+
+// ── Traductions (FR/EN/ES/NL ; HE préparé : bascule RTL automatique, textes à venir) ──
+const I18N = {
+  FR: { brand: 'Optical Center · Réseau international', titre: 'Les outils du réseau', sous_titre: 'Toutes les applis, au même endroit.',
+    connexion: 'Connexion', connexion_hint: 'Avec votre identifiant et votre mot de passe Zimbra. Une seule connexion débloque toutes les sections auxquelles vous avez accès.',
+    identifiant: 'Identifiant Zimbra', mdp: 'Mot de passe', se_connecter: 'Se connecter', se_deconnecter: 'Se déconnecter', annuler: 'Annuler', connexion_en_cours: 'Connexion…',
+    sec_tous: 'Pour tous', sec_tous_sous: 'Magasins, managers et animateurs', sec_animateurs: 'Animateurs et directeurs pays', sec_animateurs_sous: 'Visites et suivi du périmètre',
+    sec_direction: 'Direction internationale', sec_direction_sous: 'Pilotage du réseau', sec_admin: 'Administration', sec_admin_sous: 'Accès réseau complet',
+    a_quoi: 'À quoi ça sert', comment: 'Comment l’utiliser', frequence: 'Fréquence', pas_description: 'Pas encore de description.', aucune_appli: 'Aucune appli pour le moment.',
+    verrou_titre: 'Animateurs · Directeurs pays · Direction', verrou_texte: 'Ces applis s’affichent après connexion avec votre identifiant Zimbra.',
+    a_propos: 'À propos de', ouvrir: 'Ouvrir', fermer: 'Fermer', reseau_ko: 'Réseau indisponible, réessayez.', chargement_ko: 'Impossible de charger les applis. Vérifiez la connexion puis rechargez la page.',
+    connexion_ko: 'Connexion impossible', langue: 'Langue' },
+  EN: { brand: 'Optical Center · International network', titre: 'Network tools', sous_titre: 'All the apps, in one place.',
+    connexion: 'Log in', connexion_hint: 'With your Zimbra username and password. A single login unlocks every section you have access to.',
+    identifiant: 'Zimbra username', mdp: 'Password', se_connecter: 'Log in', se_deconnecter: 'Log out', annuler: 'Cancel', connexion_en_cours: 'Logging in…',
+    sec_tous: 'For everyone', sec_tous_sous: 'Stores, managers and animators', sec_animateurs: 'Animators and country directors', sec_animateurs_sous: 'Visits and follow-up of your scope',
+    sec_direction: 'International management', sec_direction_sous: 'Network steering', sec_admin: 'Administration', sec_admin_sous: 'Full network access',
+    a_quoi: 'What it is for', comment: 'How to use it', frequence: 'Frequency', pas_description: 'No description yet.', aucune_appli: 'No app yet.',
+    verrou_titre: 'Animators · Country directors · Management', verrou_texte: 'These apps appear once you log in with your Zimbra username.',
+    a_propos: 'About', ouvrir: 'Open', fermer: 'Close', reseau_ko: 'Network unavailable, please try again.', chargement_ko: 'Unable to load the apps. Check your connection and reload the page.',
+    connexion_ko: 'Login failed', langue: 'Language' },
+  ES: { brand: 'Optical Center · Red internacional', titre: 'Las herramientas de la red', sous_titre: 'Todas las apps en un mismo lugar.',
+    connexion: 'Iniciar sesión', connexion_hint: 'Con tu usuario y contraseña de Zimbra. Un solo inicio de sesión desbloquea todas las secciones a las que tienes acceso.',
+    identifiant: 'Usuario de Zimbra', mdp: 'Contraseña', se_connecter: 'Iniciar sesión', se_deconnecter: 'Cerrar sesión', annuler: 'Cancelar', connexion_en_cours: 'Conectando…',
+    sec_tous: 'Para todos', sec_tous_sous: 'Tiendas, managers y animadores', sec_animateurs: 'Animadores y directores de país', sec_animateurs_sous: 'Visitas y seguimiento del perímetro',
+    sec_direction: 'Dirección internacional', sec_direction_sous: 'Pilotaje de la red', sec_admin: 'Administración', sec_admin_sous: 'Acceso completo a la red',
+    a_quoi: 'Para qué sirve', comment: 'Cómo usarla', frequence: 'Frecuencia', pas_description: 'Aún sin descripción.', aucune_appli: 'Todavía no hay apps.',
+    verrou_titre: 'Animadores · Directores de país · Dirección', verrou_texte: 'Estas apps aparecen tras iniciar sesión con tu usuario de Zimbra.',
+    a_propos: 'Acerca de', ouvrir: 'Abrir', fermer: 'Cerrar', reseau_ko: 'Red no disponible, inténtalo de nuevo.', chargement_ko: 'No se pueden cargar las apps. Comprueba la conexión y recarga la página.',
+    connexion_ko: 'Inicio de sesión imposible', langue: 'Idioma' },
+  NL: { brand: 'Optical Center · Internationaal netwerk', titre: 'De netwerktools', sous_titre: 'Alle apps op één plek.',
+    connexion: 'Aanmelden', connexion_hint: 'Met je Zimbra-gebruikersnaam en -wachtwoord. Eén aanmelding ontgrendelt alle secties waartoe je toegang hebt.',
+    identifiant: 'Zimbra-gebruikersnaam', mdp: 'Wachtwoord', se_connecter: 'Aanmelden', se_deconnecter: 'Afmelden', annuler: 'Annuleren', connexion_en_cours: 'Aanmelden…',
+    sec_tous: 'Voor iedereen', sec_tous_sous: 'Winkels, managers en animators', sec_animateurs: 'Animators en landdirecteurs', sec_animateurs_sous: 'Bezoeken en opvolging van je perimeter',
+    sec_direction: 'Internationale directie', sec_direction_sous: 'Sturing van het netwerk', sec_admin: 'Beheer', sec_admin_sous: 'Volledige netwerktoegang',
+    a_quoi: 'Waarvoor dient het', comment: 'Hoe gebruik je het', frequence: 'Frequentie', pas_description: 'Nog geen beschrijving.', aucune_appli: 'Nog geen apps.',
+    verrou_titre: 'Animators · Landdirecteurs · Directie', verrou_texte: 'Deze apps verschijnen na aanmelding met je Zimbra-gebruikersnaam.',
+    a_propos: 'Over', ouvrir: 'Openen', fermer: 'Sluiten', reseau_ko: 'Netwerk niet beschikbaar, probeer opnieuw.', chargement_ko: 'Kan de apps niet laden. Controleer de verbinding en herlaad de pagina.',
+    connexion_ko: 'Aanmelden mislukt', langue: 'Taal' },
+  HE: {},
+};
+const LANGUES = ['FR', 'EN', 'ES', 'NL', 'HE'];
+function langueInitiale() {
+  try { const l = localStorage.getItem(K_LANG); if (l && LANGUES.includes(l)) return l; } catch (e) {}
+  const nav = String(navigator.language || 'fr').slice(0, 2).toUpperCase();
+  return LANGUES.includes(nav) ? nav : 'FR';
+}
+let LANG = langueInitiale();
+function t(k) { return (I18N[LANG] && I18N[LANG][k]) || I18N.FR[k] || k; }
+function appliquerLangue(l) {
+  if (l && LANGUES.includes(String(l).toUpperCase().split('-')[0])) LANG = String(l).toUpperCase().split('-')[0];
+  try { localStorage.setItem(K_LANG, LANG); } catch (e) {}
+  document.documentElement.lang = LANG.toLowerCase();
+  document.documentElement.dir = LANG === 'HE' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+}
+function sectionTitre(key) { return { titre: t('sec_' + key), sous: t('sec_' + key + '_sous') }; }
+
+function lsGet(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]); }
+
+function getSession() {
+  const s = lsGet(K_SESSION);
+  if (!s || !s.token || !s.exp || s.exp < Date.now()) return null;
+  return s;
+}
+
+const MOTS_VIDES = ['de', 'du', 'des', 'le', 'la', 'les', 'dans', 'être', 'et', 'au', 'aux', 'en'];
+function monogramme(nom) {
+  const mots = String(nom).split(/[\s'’\-]+/).filter(Boolean);
+  const utiles = mots.filter(m => !MOTS_VIDES.includes(m.toLowerCase()));
+  const base = utiles.length ? utiles : mots;
+  return (base.length > 1 ? base[0][0] + base[base.length - 1][0] : base[0].slice(0, 2)).toUpperCase();
+}
+function iconHtml(app) {
+  if (app.icone) return `<div class="icon"><img src="${esc(app.icone)}" alt=""></div>`;
+  return `<div class="icon"><span class="mono">${esc(monogramme(app.nom))}</span></div>`;
+}
+function ficheHtml(app) {
+  const rows = [[t('a_quoi'), app.description], [t('comment'), app.usage], [t('frequence'), app.frequence]]
+    .filter(r => r[1]).map(r => `<div class="row"><div class="k">${r[0]}</div><div class="v">${esc(r[1])}</div></div>`).join('');
+  return rows || `<div class="row"><div class="v">${t('pas_description')}</div></div>`;
+}
+
+let APPS = [], ALLOWED = ['tous'];
+
+function render() {
+  const session = getSession();
+  const userBox = document.getElementById('user-box');
+  userBox.innerHTML = session
+    ? `<span class="user-name">${esc(session.nom || '')}</span><button class="chip" id="btn-logout">${t('se_deconnecter')}</button>${selecteurLangue()}`
+    : `<button class="chip primary" id="btn-login">${t('se_connecter')}</button>${selecteurLangue()}`;
+
+  const main = document.getElementById('main');
+  let html = '';
+  for (const key of ORDRE) {
+    if (!ALLOWED.includes(key)) continue;
+    const apps = APPS.filter(a => a.section === key);
+    const sec = sectionTitre(key);
+    html += `<section><div class="sec-head"><h2>${sec.titre}</h2><span>${sec.sous}</span></div>`;
+    html += apps.length
+      ? `<div class="grid">${apps.map(a => `
+          <a class="tile" href="${esc(a.url)}" data-id="${a.id}">
+            <span class="ico-wrap">${iconHtml(a)}
+            <button class="info-btn" type="button" data-info="${a.id}" aria-label="${t('a_propos')} ${esc(a.nom)}">i</button></span>
+            <span class="label">${esc(a.nom)}</span>
+          </a>`).join('')}</div>`
+      : `<div class="empty">${t('aucune_appli')}</div>`;
+    html += `</section>`;
+  }
+  if (!session) {
+    html += `<section><div class="locked">
+      <div><b>${t('verrou_titre')}</b><span>${t('verrou_texte')}</span></div>
+      <button class="chip primary" data-open-login>${t('se_connecter')}</button></div></section>`;
+  }
+  main.innerHTML = html;
+}
+
+async function loadApps() {
+  const session = getSession();
+  const headers = {};
+  if (session) headers['X-Accueil-Session'] = session.token;
+  const resp = await fetch(WORKER + '/accueil-apps', { headers, cache: 'no-store' });
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data.error || 'Erreur');
+  if (session && !data.sessionValide) lsDel(K_SESSION);
+  APPS = data.apps || [];
+  ALLOWED = data.sections || ['tous'];
+  lsSet(K_CACHE, { apps: APPS, sections: ALLOWED, user: session ? session.email : null });
+  render();
+}
+
+// Session AR standard déposée pour que Bilan de Passage, le Dashboard et la
+// page d'import soient déjà connectés (même domaine). On n'écrase jamais
+// une session encore valide… sauf si elle est au nom de quelqu'un d'autre
+// (03/10 : sessions « tout le réseau » délivrées à tort avant le correctif).
+function deposerSessionAr(arSession) {
+  if (!arSession || !arSession.token) return;
+  const obj = { token: arSession.token, ar: arSession.ar, exp: Date.now() + (arSession.expiresInMs || 12 * 3600 * 1000) };
+  const cles = ['bilan_ar_session'];
+  if (arSession.ar === 'ALL') cles.push('rh_import_ar_session');
+  for (const k of cles) {
+    const exist = lsGet(k);
+    if (!exist || !exist.exp || exist.exp < Date.now() || exist.ar !== obj.ar) lsSet(k, obj);
+  }
+}
+
+async function login(e) {
+  e.preventDefault();
+  const user = document.getElementById('l-user').value.trim();
+  const pass = document.getElementById('l-pass').value;
+  const err = document.getElementById('l-err'), btn = document.getElementById('l-submit');
+  err.textContent = ''; btn.disabled = true; btn.textContent = t('connexion_en_cours');
+  try {
+    const resp = await fetch(WORKER + '/accueil-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ zimbraUser: user, zimbraPass: pass }),
+    });
+    const data = await resp.json();
+    if (!resp.ok || !data.ok) throw new Error(data.error || t('connexion_ko'));
+    if (data.langueUI && !localStorage.getItem(K_LANG + '_choisie')) appliquerLangue(data.langueUI);
+    lsSet(K_SESSION, { token: data.token, nom: data.nom, email: user.toLowerCase(), sections: data.sections, exp: Date.now() + data.expiresInMs });
+    try { localStorage.setItem(K_USER, user); } catch (_) {}
+    deposerSessionAr(data.arSession);
+    document.getElementById('l-pass').value = '';
+    closeOv('ov-login');
+    await loadApps();
+  } catch (ex) {
+    err.textContent = ex.message === 'Failed to fetch' ? t('reseau_ko') : ex.message;
+  } finally {
+    btn.disabled = false; btn.textContent = t('se_connecter');
+  }
+}
+
+function openOv(id) { document.getElementById(id).classList.add('show'); }
+function closeOv(id) { document.getElementById(id).classList.remove('show'); }
+function openLogin() {
+  const last = localStorage.getItem(K_USER);
+  if (last) document.getElementById('l-user').value = last;
+  document.getElementById('l-err').textContent = '';
+  openOv('ov-login');
+  setTimeout(() => document.getElementById(last ? 'l-pass' : 'l-user').focus(), 50);
+}
+function openFiche(app) {
+  hidePop();
+  document.getElementById('sheet-fiche').innerHTML = `
+    <div class="sheet-top">${iconHtml(app)}<h3>${esc(app.nom)}</h3></div>
+    ${ficheHtml(app)}
+    <a class="btn btn-red" style="margin-top:16px" href="${esc(app.url)}">${t('ouvrir')}</a>
+    <button class="btn btn-ghost" type="button" data-close="ov-fiche">${t('fermer')}</button>`;
+  openOv('ov-fiche');
+}
+const appById = id => APPS.find(a => String(a.id) === String(id));
+
+// ── Fiche au survol (souris uniquement) ──
+const pop = document.getElementById('pop');
+const souris = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+let popTimer = null;
+function hidePop() { clearTimeout(popTimer); pop.classList.remove('show'); }
+if (souris) {
+  document.addEventListener('mouseover', e => {
+    const tile = e.target.closest('.tile');
+    if (!tile || tile.contains(e.relatedTarget)) return;
+    clearTimeout(popTimer);
+    popTimer = setTimeout(() => {
+      const app = appById(tile.dataset.id); if (!app) return;
+      pop.innerHTML = `<h3>${esc(app.nom)}</h3>${ficheHtml(app)}`;
+      const r = tile.getBoundingClientRect();
+      const w = 290, h = pop.offsetHeight || 220;
+      let left = Math.min(Math.max(12, r.left + r.width / 2 - w / 2), window.innerWidth - w - 12);
+      let top = r.bottom + 8;
+      if (top + h > window.innerHeight - 12) top = Math.max(12, r.top - h - 8);
+      pop.style.left = left + 'px'; pop.style.top = top + 'px';
+      pop.classList.add('show');
+    }, 350);
+  });
+  document.addEventListener('mouseout', e => {
+    const tile = e.target.closest('.tile');
+    if (tile && !tile.contains(e.relatedTarget)) hidePop();
+  });
+}
+
+// ── Appui long (tactile) : ouvre la fiche au lieu de lancer l'appli ──
+let pressTimer = null, pressed = false, pressStart = null;
+document.addEventListener('touchstart', e => {
+  const tile = e.target.closest('.tile');
+  if (!tile || e.target.closest('.info-btn')) return;
+  pressed = false; pressStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  pressTimer = setTimeout(() => {
+    pressed = true;
+    const app = appById(tile.dataset.id);
+    if (app) { if (navigator.vibrate) navigator.vibrate(10); openFiche(app); }
+  }, 450);
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (!pressStart) return;
+  const t = e.touches[0];
+  if (Math.abs(t.clientX - pressStart.x) > 10 || Math.abs(t.clientY - pressStart.y) > 10) clearTimeout(pressTimer);
+}, { passive: true });
+document.addEventListener('touchend', () => { clearTimeout(pressTimer); pressStart = null; }, { passive: true });
+document.addEventListener('contextmenu', e => { if (e.target.closest('.tile')) e.preventDefault(); });
+
+document.addEventListener('click', e => {
+  const info = e.target.closest('[data-info]');
+  if (info) { e.preventDefault(); e.stopPropagation(); const app = appById(info.dataset.info); if (app) openFiche(app); return; }
+  const tile = e.target.closest('.tile');
+  if (tile && pressed) { e.preventDefault(); pressed = false; return; }
+  if (e.target.closest('[data-open-login]') || e.target.id === 'btn-login') { openLogin(); return; }
+  if (e.target.id === 'btn-logout') { lsDel(K_SESSION); ALLOWED = ['tous']; loadApps().catch(() => render()); return; }
+  const close = e.target.closest('[data-close]');
+  if (close) { closeOv(close.dataset.close); return; }
+  if (e.target.classList.contains('overlay')) e.target.classList.remove('show');
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeOv('ov-fiche'); closeOv('ov-login'); } });
+document.getElementById('login-form').addEventListener('submit', login);
+
+// Affichage immédiat depuis le cache, puis rafraîchissement réseau.
+function selecteurLangue() {
+  return `<select class="chip" id="sel-lang" aria-label="${t('langue')}">${['FR', 'EN', 'ES', 'NL'].map(l => `<option value="${l}"${l === LANG ? ' selected' : ''}>${l}</option>`).join('')}</select>`;
+}
+document.addEventListener('change', e => {
+  if (e.target.id === 'sel-lang') {
+    try { localStorage.setItem(K_LANG + '_choisie', '1'); } catch (_) {}
+    appliquerLangue(e.target.value); render();
+  }
+});
+
+(function init() {
+  appliquerLangue(LANG);
+  const session = getSession();
+  const cache = lsGet(K_CACHE);
+  if (cache && (cache.user || null) === (session ? session.email : null)) { APPS = cache.apps || []; ALLOWED = cache.sections || ['tous']; }
+  else if (!session) ALLOWED = ['tous'];
+  render();
+  loadApps().catch(() => {
+    if (!APPS.length) document.getElementById('main').innerHTML = `<div class="empty">${t('chargement_ko')}</div>`;
+  });
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+})();
+</script>
+</body>
+</html>
