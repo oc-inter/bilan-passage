@@ -13,22 +13,22 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Bilan de passage">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
   --bg:#0D0D0D;--bg2:#1a1a1a;--bg3:#222;--bg4:#2a2a2a;
-  --red:#CC1719;--red2:rgba(204,23,25,0.15);--red3:rgba(204,23,25,0.3);
-  --text:#F0EDE6;--muted:#888;--border:rgba(255,255,255,0.08);
+  --red:#E2231A;--red2:rgba(226,35,26,0.15);--red3:rgba(226,35,26,0.3);
+  --text:#F5F5F5;--muted:#888;--border:rgba(255,255,255,0.08);
   --green:#2d9e2d;--orange:#d4820a;
 }
-html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#111010 70%,#0A0A0A 100%);background-attachment:fixed;color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;overflow-x:hidden}
+html,body{height:100%;background:linear-gradient(160deg,#171717 0%,#0D0D0D 40%,#101010 70%,#0A0A0A 100%);background-attachment:fixed;color:var(--text);font-family:'Montserrat',sans-serif;font-size:15px;overflow-x:hidden}
 /* ── NAV ── */
-#app-header{background:rgba(10,8,8,0.92);border-bottom:1px solid rgba(204,23,25,0.25);backdrop-filter:blur(8px);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px;position:sticky;top:0;z-index:100}
+#app-header{background:rgba(10,8,8,0.92);border-bottom:1px solid rgba(226,35,26,0.25);backdrop-filter:blur(8px);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px;position:sticky;top:0;z-index:100}
 #app-header img{height:28px;width:auto;mix-blend-mode:screen}
-#app-header .title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;color:var(--text);letter-spacing:.5px;flex:1}
+#app-header .title{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:600;color:var(--text);letter-spacing:.5px;flex:1}
 #app-header .badge-passage{background:var(--red);color:#fff;font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px}
 /* ── SCREENS ── */
 .screen{display:none;min-height:calc(100vh - 52px);flex-direction:column}
@@ -44,15 +44,15 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .magasin-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .magasin-field{display:flex;flex-direction:column;gap:3px}
 .magasin-field label{font-size:10px;color:var(--muted)}
-.magasin-field input{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:12px;color:var(--text);font-family:'Barlow',sans-serif;width:100%}
+.magasin-field input{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:12px;color:var(--text);font-family:'Montserrat',sans-serif;width:100%}
 .magasin-note{font-size:10px;color:var(--muted);font-style:italic}
-.btn-primary{background:var(--red);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:600;font-family:'Barlow',sans-serif;width:100%;cursor:pointer;letter-spacing:.3px;margin-top:4px}
+.btn-primary{background:var(--red);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:600;font-family:'Montserrat',sans-serif;width:100%;cursor:pointer;letter-spacing:.3px;margin-top:4px}
 .btn-primary:active{opacity:.85}
-.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:14px;font-weight:500;font-family:'Barlow',sans-serif;width:100%;cursor:pointer}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:14px;font-weight:500;font-family:'Montserrat',sans-serif;width:100%;cursor:pointer}
 /* ── ÉCRAN 2 : SAISIE ── */
 #screen-saisie{padding-bottom:170px}
-.saisie-header{background:linear-gradient(135deg,#A01215 0%,#CC1719 50%,#8B1012 100%);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
-.saisie-mag{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:.5px}
+.saisie-header{background:linear-gradient(135deg,#B5141A 0%,#E2231A 50%,#8B1012 100%);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.saisie-mag{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:.5px}
 .saisie-date{font-size:12px;color:rgba(255,255,255,0.8)}
 .bloc-accordion{border-bottom:1px solid var(--border);background:rgba(13,13,13,0.7)}
 .bloc-head{display:flex;align-items:center;padding:14px 16px;cursor:pointer;user-select:none;gap:10px}
@@ -64,7 +64,7 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .bloc-body.open{display:flex}
 .field-group{display:flex;flex-direction:column;gap:4px}
 .field-group label{font-size:11px;color:var(--muted);font-weight:500}
-.field-group input,.field-group textarea,.field-group select{background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text);font-family:'Barlow',sans-serif;width:100%;resize:none}
+.field-group input,.field-group textarea,.field-group select{background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text);font-family:'Montserrat',sans-serif;width:100%;resize:none}
 .field-group input::placeholder,.field-group textarea::placeholder{color:var(--muted)}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
@@ -72,12 +72,12 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .kpi-add-row{display:flex;gap:8px;align-items:flex-end}
 .kpi-add-row select{flex:1}
 .kpi-add-row input{width:80px;flex-shrink:0}
-.btn-add{background:var(--red2);border:1px solid var(--red3);color:var(--red);border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600;font-family:'Barlow',sans-serif;cursor:pointer;white-space:nowrap}
+.btn-add{background:var(--red2);border:1px solid var(--red3);color:var(--red);border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;white-space:nowrap}
 .kpi-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .kpi-chip{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid}
 .kpi-chip.ok{background:rgba(45,158,45,0.15);border-color:rgba(45,158,45,0.3);color:var(--green)}
 .kpi-chip.warn{background:rgba(212,130,10,0.15);border-color:rgba(212,130,10,0.3);color:var(--orange)}
-.kpi-chip.bad{background:rgba(204,23,25,0.15);border-color:rgba(204,23,25,0.3);color:var(--red)}
+.kpi-chip.bad{background:rgba(226,35,26,0.15);border-color:rgba(226,35,26,0.3);color:var(--red)}
 .kpi-chip.neutral{background:var(--bg4);border-color:var(--border);color:var(--text)}
 .kpi-chip-del{cursor:pointer;opacity:.6;font-size:10px}
 /* Actions */
@@ -89,7 +89,7 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .action-item-meta{display:flex;gap:8px;font-size:11px;color:var(--muted)}
 .action-item-del{cursor:pointer;color:var(--muted);font-size:12px;padding:2px}
 /* ── CHECKLIST DE PASSAGE (reprise France 24/09, ajout Inter 29/09) ── */
-#checklist-fab{position:fixed;right:16px;bottom:136px;z-index:160;display:none;align-items:center;gap:6px;background:var(--red);color:#fff;border:none;border-radius:22px;padding:10px 16px;font-family:'Barlow',sans-serif;font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.45);cursor:pointer}
+#checklist-fab{position:fixed;right:16px;bottom:136px;z-index:160;display:none;align-items:center;gap:6px;background:var(--red);color:#fff;border:none;border-radius:22px;padding:10px 16px;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.45);cursor:pointer}
 #checklist-fab.complete{background:#1a7a45}
 .ckl-item{display:flex;align-items:center;gap:8px;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text)}
 .ckl-item .ckl-texte{flex:1;line-height:1.35}
@@ -100,7 +100,7 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .ckl-check{display:flex;align-items:flex-start;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text);cursor:pointer}
 .ckl-check input{width:20px;height:20px;margin:0;flex-shrink:0;accent-color:var(--red)}
 .ckl-check.done .ckl-texte{color:var(--muted);text-decoration:line-through}
-.ckl-input{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif}
+.ckl-input{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif}
 #home-checklist-link{font-size:13px;color:var(--muted);background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer}
 
 /* Tour de péniches */
@@ -120,7 +120,7 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .peniche-tag.active-positif{background:rgba(42,158,42,0.15);border-color:var(--green);color:var(--green)}
 .peniche-tag.active-vigilance{background:var(--red2);border-color:var(--red3);color:var(--red)}
 .action-add-form{display:flex;flex-direction:column;gap:6px;background:var(--bg3);border-radius:8px;padding:10px}
-.action-add-form input{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;width:100%}
+.action-add-form input{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif;width:100%}
 .action-add-row{display:flex;gap:6px}
 .action-add-row input{flex:1}
 /* Photos */
@@ -133,16 +133,16 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .photo-slot:hover .photo-overlay{display:flex}
 .photo-overlay-btn{background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.3);border-radius:6px;color:#fff;font-size:18px;cursor:pointer;padding:6px}
 .photo-caption{margin-top:4px}
-.photo-caption input{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:11px;color:var(--muted);font-family:'Barlow',sans-serif;width:100%;text-align:center}
+.photo-caption input{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:11px;color:var(--muted);font-family:'Montserrat',sans-serif;width:100%;text-align:center}
 .hidden-input{display:none}
 /* Renta badge */
 .renta-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:600;margin-top:4px}
 /* Barre basse */
-#bottom-bar{position:fixed;bottom:56px;left:0;right:0;background:rgba(10,8,8,0.95);border-top:1px solid rgba(204,23,25,0.2);backdrop-filter:blur(8px);padding:12px 16px;display:flex;gap:8px;z-index:150}
+#bottom-bar{position:fixed;bottom:56px;left:0;right:0;background:rgba(10,8,8,0.95);border-top:1px solid rgba(226,35,26,0.2);backdrop-filter:blur(8px);padding:12px 16px;display:flex;gap:8px;z-index:150}
 /* ── ÉCRAN 3 : HISTORIQUE ── */
 #screen-history{padding:20px 16px;gap:12px}
 .history-header{display:flex;align-items:center;gap:10px}
-.history-header h2{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;flex:1}
+.history-header h2{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;flex:1}
 .history-mag-select{flex:1}
 .history-empty{color:var(--muted);font-size:13px;text-align:center;padding:40px 0}
 .history-item{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer}
@@ -155,15 +155,15 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 /* ── ÉCRAN 4 : PARAMÈTRES ── */
 #screen-params{padding:20px 16px 90px;gap:16px;overflow-y:auto}
 .params-section{display:flex;flex-direction:column;gap:10px}
-.params-section-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.params-section-title{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;padding-bottom:6px;border-bottom:1px solid var(--border)}
 .kpi-param-row{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px}
 .kpi-param-name{flex:1;font-size:13px;color:var(--text)}
 .kpi-param-inputs{display:flex;gap:6px;align-items:center}
-.kpi-param-inputs input{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:12px;color:var(--text);font-family:'Barlow',sans-serif;width:60px;text-align:center}
+.kpi-param-inputs input{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:12px;color:var(--text);font-family:'Montserrat',sans-serif;width:60px;text-align:center}
 .kpi-param-label{font-size:10px;color:var(--muted)}
 /* ── BOTTOM NAV ── */
-#bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,8,8,0.95);border-top:1px solid rgba(204,23,25,0.2);backdrop-filter:blur(8px);display:flex;z-index:200;height:56px}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;color:var(--muted);font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.4px;border:none;background:transparent;font-family:'Barlow',sans-serif}
+#bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,8,8,0.95);border-top:1px solid rgba(226,35,26,0.2);backdrop-filter:blur(8px);display:flex;z-index:200;height:56px}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;color:var(--muted);font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.4px;border:none;background:transparent;font-family:'Montserrat',sans-serif}
 .nav-item.active{color:var(--red)}
 .nav-item-icon{font-size:20px;line-height:1}
 /* ── TOAST ── */
@@ -173,7 +173,7 @@ html,body{height:100%;background:linear-gradient(160deg,#1A1210 0%,#0D0D0D 40%,#
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;align-items:flex-end}
 .modal-overlay.open{display:flex}
 .modal-box{background:var(--bg2);border-radius:16px 16px 0 0;padding:20px 16px 40px;width:100%;max-height:80vh;overflow-y:auto}
-.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px}
+.modal-title{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px}
 .modal-actions{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 /* Crop modal */
 .crop-modal-box{background:var(--bg2);border-radius:16px;padding:16px;width:92vw;max-width:420px;max-height:90vh;display:flex;flex-direction:column;gap:12px}
@@ -199,18 +199,18 @@ input[type=date]{color-scheme:dark}
 .field-row{min-width:0}
 .field-row > .field-group{min-width:0;overflow:hidden}
 .field-group input[type=date],.field-group input[type=number]{width:100%;min-width:0;box-sizing:border-box;font-size:13px;padding:10px 8px;-webkit-appearance:none;appearance:none}
-#f-humeur::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid #CC1719;box-shadow:0 1px 4px rgba(0,0,0,0.25);cursor:pointer;margin-top:-7px}
-#f-humeur::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid #CC1719;box-shadow:0 1px 4px rgba(0,0,0,0.25);cursor:pointer}
+#f-humeur::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid #E2231A;box-shadow:0 1px 4px rgba(0,0,0,0.25);cursor:pointer;margin-top:-7px}
+#f-humeur::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid #E2231A;box-shadow:0 1px 4px rgba(0,0,0,0.25);cursor:pointer}
 #f-humeur::-webkit-slider-runnable-track{height:7px;border-radius:4px;background:transparent}
 #f-humeur::-moz-range-track{height:7px;border-radius:4px;background:transparent}
 /* ── DICTÉE VOCALE ── */
-.mic-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:none;background:rgba(204,23,25,0.08);color:var(--red);font-size:15px;cursor:pointer;flex-shrink:0;transition:background .15s,transform .1s}
+.mic-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:none;background:rgba(226,35,26,0.08);color:var(--red);font-size:15px;cursor:pointer;flex-shrink:0;transition:background .15s,transform .1s}
 .mic-btn:active{transform:scale(0.9)}
 .mic-btn.listening{background:var(--red);color:#fff;animation:mic-pulse 0.8s ease-in-out infinite}
-@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(204,23,25,0.4)}50%{box-shadow:0 0 0 8px rgba(204,23,25,0)}}
+@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(226,35,26,0.4)}50%{box-shadow:0 0 0 8px rgba(226,35,26,0)}}
 .field-label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .field-label-row label{margin-bottom:0}
-#mic-fab{position:fixed;bottom:80px;right:16px;width:48px;height:48px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(204,23,25,0.4);z-index:1000;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+#mic-fab{position:fixed;bottom:80px;right:16px;width:48px;height:48px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(226,35,26,0.4);z-index:1000;display:flex;align-items:center;justify-content:center;transition:transform .15s}
 #mic-fab:active{transform:scale(0.92)}
 #mic-fab.listening{animation:mic-pulse 0.8s ease-in-out infinite;background:#a01215}
 #mic-toast{position:fixed;bottom:140px;right:16px;background:rgba(0,0,0,0.75);color:#fff;font-size:12px;padding:6px 12px;border-radius:20px;z-index:1001;display:none;max-width:200px;text-align:center;line-height:1.4}
@@ -224,15 +224,16 @@ input[type=date]{color-scheme:dark}
 .prev-status-btn.active{opacity:1}
 .prev-status-done{background:#e6f4ea;color:#2d7a3a}
 .prev-status-ongoing{background:#fff3e0;color:#b45000}
-.prev-status-todo{background:#fce8e8;color:#cc1719}
+.prev-status-todo{background:#fce8e8;color:#E2231A}
+select,input,textarea,button{font-family:inherit}
 </style>
 </head>
 <body>
 
 <!-- BANDEAU MISE À JOUR DISPONIBLE -->
-<div id="update-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#0D0D0D;border-bottom:2px solid var(--red);padding:10px 16px;align-items:center;gap:10px;font-family:'Barlow',sans-serif">
-  <span style="flex:1;color:#F0EDE6;font-size:13px">🔄 Nouvelle version de l'application disponible</span>
-  <button onclick="applyUpdate()" style="background:var(--red);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;font-family:'Barlow',sans-serif;cursor:pointer;white-space:nowrap">Mettre à jour</button>
+<div id="update-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#0D0D0D;border-bottom:2px solid var(--red);padding:10px 16px;align-items:center;gap:10px;font-family:'Montserrat',sans-serif">
+  <span style="flex:1;color:#F5F5F5;font-size:13px">🔄 Nouvelle version de l'application disponible</span>
+  <button onclick="applyUpdate()" style="background:var(--red);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;white-space:nowrap">Mettre à jour</button>
 </div>
 
 <!-- HEADER -->
@@ -296,7 +297,7 @@ input[type=date]{color-scheme:dark}
     </div>
   </div>
   <div style="text-align:right;padding:6px 0 0">
-    <button type="button" onclick="resetSaisie()" style="background:rgba(204,23,25,0.08);border:1px solid rgba(204,23,25,0.3);color:var(--red);font-size:12px;font-weight:600;border-radius:8px;cursor:pointer;font-family:'Barlow',sans-serif;padding:6px 12px" data-i18n="btn_reinitialiser">↺ Réinitialiser la saisie</button>
+    <button type="button" onclick="resetSaisie()" style="background:rgba(226,35,26,0.08);border:1px solid rgba(226,35,26,0.3);color:var(--red);font-size:12px;font-weight:600;border-radius:8px;cursor:pointer;font-family:'Montserrat',sans-serif;padding:6px 12px" data-i18n="btn_reinitialiser">↺ Réinitialiser la saisie</button>
   </div>
 
   <!-- Slider humeur -->
@@ -393,7 +394,7 @@ input[type=date]{color-scheme:dark}
       <div class="field-group"><label data-i18n="saisie_rituels">Rituels managériaux observés</label>
         <div id="rituels-list" style="display:flex;flex-direction:column;gap:6px;margin-top:2px"></div>
         <div style="display:flex;gap:6px;margin-top:8px">
-          <input type="text" id="rituel-new" data-i18n-placeholder="saisie_rituel_ph" placeholder="Ajouter un rituel personnalisé..." style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+          <input type="text" id="rituel-new" data-i18n-placeholder="saisie_rituel_ph" placeholder="Ajouter un rituel personnalisé..." style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif">
           <button class="btn-add" onclick="addRituel()" data-i18n="btn_ajouter">+ Ajouter</button>
         </div>
       </div>
@@ -415,15 +416,15 @@ input[type=date]{color-scheme:dark}
           <option value="" data-i18n="saisie_choisir_indicateur">Choisir un indicateur...</option>
         </select>
         <div style="position:relative;display:flex;align-items:center">
-          <input type="text" inputmode="decimal" id="kpi-val" data-i18n-placeholder="saisie_valeur" placeholder="Valeur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px 32px 10px 12px;font-size:14px;color:var(--text);font-family:'Barlow',sans-serif;width:90px">
+          <input type="text" inputmode="decimal" id="kpi-val" data-i18n-placeholder="saisie_valeur" placeholder="Valeur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px 32px 10px 12px;font-size:14px;color:var(--text);font-family:'Montserrat',sans-serif;width:90px">
           <button type="button" onclick="toggleSign('kpi-val')" title="Inverser le signe" style="position:absolute;right:2px;width:26px;height:26px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:14px;font-weight:700;line-height:1;cursor:pointer">±</button>
         </div>
         <button class="btn-add" onclick="addKpi()" data-i18n="btn_ajouter">+ Ajouter</button>
       </div>
       <div style="display:flex;gap:8px;margin-top:6px;align-items:center">
-        <input type="text" id="kpi-custom-name" data-i18n-placeholder="saisie_nouvel_indicateur" placeholder="Nouvel indicateur..." style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;flex:1">
+        <input type="text" id="kpi-custom-name" data-i18n-placeholder="saisie_nouvel_indicateur" placeholder="Nouvel indicateur..." style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif;flex:1">
         <div style="position:relative;display:flex;align-items:center">
-          <input type="text" inputmode="decimal" id="kpi-custom-val" data-i18n-placeholder="saisie_valeur" placeholder="Valeur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 28px 8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;width:80px">
+          <input type="text" inputmode="decimal" id="kpi-custom-val" data-i18n-placeholder="saisie_valeur" placeholder="Valeur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 28px 8px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif;width:80px">
           <button type="button" onclick="toggleSign('kpi-custom-val')" title="Inverser le signe" style="position:absolute;right:2px;width:22px;height:22px;border-radius:5px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:12px;font-weight:700;line-height:1;cursor:pointer">±</button>
         </div>
         <button class="btn-add" style="font-size:12px;padding:8px 10px" onclick="addKpiCustomInline()" data-i18n="btn_creer">+ Créer</button>
@@ -665,10 +666,10 @@ input[type=date]{color-scheme:dark}
     <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
       <div style="font-size:11px;color:var(--muted);margin-bottom:6px" data-i18n="params_ajouter_indicateur">Ajouter un nouvel indicateur</div>
       <div style="display:flex;flex-direction:column;gap:6px">
-        <input type="text" id="new-kpi-name" data-i18n-placeholder="params_nom_indicateur_ph" placeholder="Nom de l'indicateur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+        <input type="text" id="new-kpi-name" data-i18n-placeholder="params_nom_indicateur_ph" placeholder="Nom de l'indicateur" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif">
         <div style="display:flex;gap:6px">
-          <input type="number" id="new-kpi-obj" data-i18n-placeholder="params_objectif_ph" placeholder="Objectif (optionnel)" style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
-          <input type="text" id="new-kpi-unit" data-i18n-placeholder="params_unite_ph" placeholder="Unité (%, €, vide...)" style="width:120px;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+          <input type="number" id="new-kpi-obj" data-i18n-placeholder="params_objectif_ph" placeholder="Objectif (optionnel)" style="flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif">
+          <input type="text" id="new-kpi-unit" data-i18n-placeholder="params_unite_ph" placeholder="Unité (%, €, vide...)" style="width:120px;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif">
         </div>
         <button class="btn-add" style="width:100%;text-align:center" onclick="addNewKpi()" data-i18n="params_ajouter_indicateur_btn">+ Ajouter l'indicateur</button>
       </div>
@@ -702,7 +703,7 @@ input[type=date]{color-scheme:dark}
     <div style="font-size:12px;color:var(--muted)" data-i18n="analyse_login_desc">Connecte-toi avec ton mot de passe Zimbra pour accéder à tes magasins. Rien n'est stocké — seule une session temporaire (12h) est conservée sur ce téléphone.</div>
     <div id="analyse-login-user-display" style="font-size:13px;color:var(--text);background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px"></div>
     <div id="analyse-login-nouser" style="display:none;font-size:12px;color:var(--red)" data-i18n="analyse_login_nouser">Aucun identifiant Zimbra configuré. Va d'abord dans <b>Paramètres → Identifiant Zimbra</b>.</div>
-    <input type="password" id="analyse-login-pass" data-i18n-placeholder="analyse_login_pass_ph" placeholder="Mot de passe Zimbra" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif">
+    <input type="password" id="analyse-login-pass" data-i18n-placeholder="analyse_login_pass_ph" placeholder="Mot de passe Zimbra" style="background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif">
     <button class="btn-primary" id="analyse-login-btn" onclick="doArLogin()" data-i18n="analyse_se_connecter">Se connecter</button>
     <div id="analyse-login-error" style="display:none;color:var(--red);font-size:12px"></div>
   </div>
@@ -736,7 +737,7 @@ input[type=date]{color-scheme:dark}
         <span data-i18n="analyse_etat_magasins">État des magasins — du plus urgent au moins urgent :</span>
         <button type="button" onclick="hcmOpen()" data-i18n-title="analyse_hcm_title" title="Régler les coefficients du score de santé" style="background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 4px;flex-shrink:0">⚖️</button>
       </div>
-      <input type="text" id="analyse-health-search" data-i18n-placeholder="analyse_rechercher_magasin_ph" placeholder="🔎 Rechercher un magasin..." oninput="renderStoreHealthList()" style="width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:9px 10px;font-size:13px;color:var(--text);font-family:'Barlow',sans-serif;margin-bottom:8px">
+      <input type="text" id="analyse-health-search" data-i18n-placeholder="analyse_rechercher_magasin_ph" placeholder="🔎 Rechercher un magasin..." oninput="renderStoreHealthList()" style="width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:9px 10px;font-size:13px;color:var(--text);font-family:'Montserrat',sans-serif;margin-bottom:8px">
       <div id="analyse-health-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
 
       <div style="font-size:12px;color:var(--muted);margin-bottom:6px" data-i18n="analyse_selectionner_magasins">Sélectionne les magasins à inclure dans l'analyse IA de tournée :</div>
@@ -799,7 +800,7 @@ input[type=date]{color-scheme:dark}
     <div id="modal-recipients" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
     <div class="field-group">
       <div class="field-label-row"><label data-i18n="mail_texte_modifiable">Texte du mail (modifiable avant envoi)</label><button type="button" class="mic-btn" onclick="startMicFor('modal-mailbody')" title="Dicter" data-i18n-title="btn_dicter">🎤</button></div>
-      <textarea id="modal-mailbody" rows="10" style="font-family:'Barlow',sans-serif;font-size:12.5px;line-height:1.5"></textarea>
+      <textarea id="modal-mailbody" rows="10" style="font-family:'Montserrat',sans-serif;font-size:12.5px;line-height:1.5"></textarea>
       <div style="display:flex;gap:8px;margin-top:6px">
         <button type="button" class="btn-secondary" style="flex:1;font-size:12px;padding:8px" onclick="resetMailBody()" data-i18n="modal_texte_brut">↺ Texte brut</button>
         <button type="button" class="btn-secondary" style="flex:1;font-size:12px;padding:8px" onclick="regenerateMailBody()" data-i18n="modal_reformuler">✨ Reformuler</button>
@@ -874,7 +875,7 @@ function loadLogo() {
 }
 
 // ── VERSION APP ── (incrémenter à chaque mise à jour notable, pour déclencher l'invite de rechargement)
-const APP_VERSION = '2026.09.29-1';
+const APP_VERSION = '2026.10.25-1';
 
 // ── TRADUCTION (Phase 1 : sélecteur manuel, indépendant du magasin/de la personne connectée) ──
 // Sélecteur manquant en Phase 1 pour un texte donné (traducteur pas encore passé dessus) :
@@ -2864,8 +2865,8 @@ function updateRentaBadge() {
     badge.style.color = 'var(--green)';
     badge.textContent = `✓ ${val}% — ${t('saisie_objectif_atteint')} (${obj}%)`;
   } else {
-    badge.style.background = 'rgba(204,23,25,0.15)';
-    badge.style.border = '1px solid rgba(204,23,25,0.3)';
+    badge.style.background = 'rgba(226,35,26,0.15)';
+    badge.style.border = '1px solid rgba(226,35,26,0.3)';
     badge.style.color = 'var(--red)';
     badge.textContent = `⚠ ${val}% — ${t('saisie_au_dessus_objectif')} (${obj}%)`;
   }
@@ -3049,7 +3050,7 @@ function renderActions() {
     const isPrev = a._fromPrevious;
     row.innerHTML = `<div class="action-item-dot" style="${isPrev ? 'background:var(--muted)' : ''}"></div>
       <div class="action-item-content">
-        <div class="action-item-text">${isPrev ? '<span style="font-size:10px;background:#f0ede6;color:var(--muted);border-radius:4px;padding:1px 5px;margin-right:4px">↩ Report</span>' : ''}${a.text}</div>
+        <div class="action-item-text">${isPrev ? '<span style="font-size:10px;background:#F5F5F5;color:var(--muted);border-radius:4px;padding:1px 5px;margin-right:4px">↩ Report</span>' : ''}${a.text}</div>
         ${a.comment ? `<div class="action-item-comment" style="font-size:11px;color:var(--muted);margin-top:2px">${a.comment}</div>` : ''}
         <div class="action-item-meta">${a.who ? `<span>${a.who}</span>` : ''}<span style="color:var(--red)">${dateStr}</span></div>
       </div>
@@ -3511,7 +3512,7 @@ async function fetchEvalEquipePdfForSend(relay, magasinData, arNom, zimbraUser, 
     return { error: e.message || String(e) };
   }
 }
-const EVAL_PDF_RED = [204, 23, 25];
+const EVAL_PDF_RED = [226, 35, 26];
 const EVAL_PDF_DARK = [13, 13, 13];
 const EVAL_PDF_CREAM = [240, 237, 230];
 const EVAL_PDF_GREEN = [45, 158, 45];
@@ -4597,7 +4598,7 @@ function generateHumeurSliderImage(humeurV) {
       const curX = barX + (humeurV / 4) * barW2;
       ctx.beginPath(); ctx.arc(curX, cy, curR, 0, Math.PI * 2);
       ctx.fillStyle = '#fff'; ctx.fill();
-      ctx.strokeStyle = '#CC1719'; ctx.lineWidth = 2.5; ctx.stroke();
+      ctx.strokeStyle = '#E2231A'; ctx.lineWidth = 2.5; ctx.stroke();
 
       // Mot à droite
       ctx.font = 'bold 18px Arial, sans-serif';
@@ -4657,7 +4658,7 @@ async function generatePDF(data, humeurSliderImg) {
 
   // Header rouge — agrandi pour laisser respirer le logo complet (pictogramme + texte)
   const headerH = 20;
-  doc.setFillColor(204, 23, 25);
+  doc.setFillColor(226, 35, 26);
   doc.rect(0, 0, W, headerH, 'F');
   // Logo — fond noir sur toute la hauteur du bandeau (20mm)
   const logoBoxW = 22;
@@ -4777,7 +4778,7 @@ async function generatePDF(data, humeurSliderImg) {
       doc.setFont('helvetica','normal');
       const lblFit = fitOneLine(l, colW - 2, 6.5, 5);
       doc.text(lblFit.text, shX, headerH + 5);
-      const color = status === 'ok' ? [42,158,42] : status === 'bad' ? [204,23,25] : [40,40,40];
+      const color = status === 'ok' ? [42,158,42] : status === 'bad' ? [226,35,26] : [40,40,40];
       doc.setTextColor(...color);
       doc.setFont('helvetica','bold');
       const valFit = fitOneLine(v, colW - 3, 8.5, 6.5);
@@ -4818,8 +4819,8 @@ async function generatePDF(data, humeurSliderImg) {
   }
 
   function drawBloc(x, yStart, w, title, content, titleColor, bulletLines, forcedLineH, bgColor) {
-    const tColor = titleColor || [204,23,25];
-    const bg = bgColor || [204,23,25];
+    const tColor = titleColor || [226,35,26];
+    const bg = bgColor || [226,35,26];
     const lh = forcedLineH || lineH;
     const lines = getBlocLines(w, content, bulletLines);
     const blocH = 6.5 + (lines.length ? lines.length * lh + 4 : 8);
@@ -5017,7 +5018,7 @@ async function generatePDF(data, humeurSliderImg) {
       const val = parseFloat(k.val);
       const obj = parseFloat(def.obj || 0);
       const ok = def.dir === 'gte' ? val >= obj : (def.dir === 'lte' ? val <= obj : true);
-      const kColor = !def.obj ? [40,40,40] : (ok ? [42,158,42] : [204,23,25]);
+      const kColor = !def.obj ? [40,40,40] : (ok ? [42,158,42] : [226,35,26]);
       doc.setTextColor(140,140,140); doc.setFont('helvetica','normal'); doc.setFontSize(6);
       doc.text(doc.splitTextToSize(kpiLabel(k.name, def), kpiCellW - 4)[0], cx, cy);
       doc.setTextColor(...kColor); doc.setFont('helvetica','bold'); doc.setFontSize(11);
@@ -5077,7 +5078,7 @@ async function generatePDF(data, humeurSliderImg) {
 
   // Dessine une action à la position donnée
   function drawAction(a, ax, ay, colW, fszTitle, fszComment, lhComment) {
-    doc.setFillColor(204,23,25); doc.ellipse(ax+1.5, ay-1.3, 1.5, 1.5, 'F');
+    doc.setFillColor(226,35,26); doc.ellipse(ax+1.5, ay-1.3, 1.5, 1.5, 'F');
     doc.setTextColor(45,45,45); doc.setFont('helvetica','bold'); doc.setFontSize(fszTitle);
     const tLines = doc.splitTextToSize(pdfSafe(a.text), colW - 22);
     tLines.forEach((tl, ti) => doc.text(tl, ax+6, ay + ti*(fszTitle*0.35)));
@@ -5089,7 +5090,7 @@ async function generatePDF(data, humeurSliderImg) {
       ayOff += cl.length * lhComment;
     }
     if (a.who) { doc.setTextColor(130,130,130); doc.setFont('helvetica','italic'); doc.setFontSize(fszComment-0.5); doc.text(pdfSafe(a.who), ax+6, ay+ayOff); }
-    if (a.date) { doc.setTextColor(204,23,25); doc.setFont('helvetica','bold'); doc.setFontSize(fszComment); doc.text(formatDate(a.date), ax+colW-6, ay, {align:'right'}); }
+    if (a.date) { doc.setTextColor(226,35,26); doc.setFont('helvetica','bold'); doc.setFontSize(fszComment); doc.text(formatDate(a.date), ax+colW-6, ay, {align:'right'}); }
   }
 
   // Cadre actions
@@ -5178,33 +5179,33 @@ async function generatePDF(data, humeurSliderImg) {
 
     if (actionsOverflow) {
       // Page 1 : cadre avec renvoi explicite (jamais de contenu tronqué en silence)
-      doc.setFillColor(204, 23, 25);
+      doc.setFillColor(226, 35, 26);
       doc.rect(col1, actY, contentRight - col1, actHeaderH, 'F');
       doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(6.5);
       doc.text(t('pdf_actions_attendues_prochain_passage'), col1+3, actY+5);
       doc.setFillColor(255,255,255);
       doc.rect(col1, actY+actHeaderH, contentRight-col1, actBodyH2, 'F');
-      doc.setDrawColor(204,23,25); doc.setLineWidth(0.5);
+      doc.setDrawColor(226,35,26); doc.setLineWidth(0.5);
       doc.rect(col1, actY, contentRight-col1, actTotalH2, 'S');
       doc.setLineWidth(0.2);
-      doc.setTextColor(204,23,25); doc.setFont('helvetica','bolditalic'); doc.setFontSize(7);
+      doc.setTextColor(226,35,26); doc.setFont('helvetica','bolditalic'); doc.setFontSize(7);
       doc.text('\u2192 Voir page 2 (pas assez de place sur cette page)', col1+4, actY+actHeaderH+8);
 
       // Page 2 : rendu généreux (aucune contrainte de place restante)
       doc.addPage();
-      doc.setFillColor(204, 23, 25);
+      doc.setFillColor(226, 35, 26);
       doc.rect(0, 0, W, 14, 'F');
       doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(11);
       doc.text(`${t('pdf_actions_attendues')} \u2014 ${pdfSafe(mag.libelle)} \u2014 ${t('pdf_passage_n')}${data.passage || '?'}`, mar, 9.5);
       const p2ActY = 20, p2FooterY = H - 9;
       const p2HeaderH = 8;
-      doc.setFillColor(204, 23, 25);
+      doc.setFillColor(226, 35, 26);
       doc.rect(mar, p2ActY, W - 2*mar, p2HeaderH, 'F');
       doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(7);
       doc.text(t('pdf_prochain_passage'), mar+3, p2ActY+5.5);
       doc.setFillColor(255,255,255);
       doc.rect(mar, p2ActY+p2HeaderH, W - 2*mar, p2FooterY - (p2ActY+p2HeaderH), 'F');
-      doc.setDrawColor(204,23,25); doc.setLineWidth(0.5);
+      doc.setDrawColor(226,35,26); doc.setLineWidth(0.5);
       doc.rect(mar, p2ActY, W - 2*mar, p2FooterY - p2ActY, 'S');
       doc.setLineWidth(0.2);
 
@@ -5251,13 +5252,13 @@ async function generatePDF(data, humeurSliderImg) {
       doc.text(t('pdf_page_2_actions'), W/2, H-3, {align:'center'});
     } else {
       // Cas nominal : tout rentre sur la page 1 avec la config choisie
-      doc.setFillColor(204, 23, 25);
+      doc.setFillColor(226, 35, 26);
       doc.rect(col1, actY, contentRight - col1, actHeaderH, 'F');
       doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(6.5);
       doc.text(t('pdf_actions_attendues_prochain_passage'), col1+3, actY+5);
       doc.setFillColor(255,255,255);
       doc.rect(col1, actY+actHeaderH, contentRight-col1, actBodyH2, 'F');
-      doc.setDrawColor(204,23,25); doc.setLineWidth(0.5);
+      doc.setDrawColor(226,35,26); doc.setLineWidth(0.5);
       doc.rect(col1, actY, contentRight-col1, actTotalH2, 'S');
       doc.setLineWidth(0.2);
 
@@ -5277,13 +5278,13 @@ async function generatePDF(data, humeurSliderImg) {
     }
   } else {
     // Cas sans actions : dessiner le cadre maintenant
-    doc.setFillColor(204, 23, 25);
+    doc.setFillColor(226, 35, 26);
     doc.rect(col1, actY, contentRight - col1, actHeaderH, 'F');
     doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(6.5);
     doc.text(t('pdf_actions_attendues_prochain_passage'), col1+3, actY+5);
     doc.setFillColor(255,255,255);
     doc.rect(col1, actY+actHeaderH, contentRight-col1, actBodyH, 'F');
-    doc.setDrawColor(204,23,25); doc.setLineWidth(0.5);
+    doc.setDrawColor(226,35,26); doc.setLineWidth(0.5);
     doc.rect(col1, actY, contentRight-col1, actTotalH, 'S');
     doc.setLineWidth(0.2);
     doc.setTextColor(180,180,180); doc.setFont('helvetica','italic'); doc.setFontSize(6);
@@ -5300,7 +5301,7 @@ async function generatePDF(data, humeurSliderImg) {
   doc.rect(photoCol, py, photoW, 6.5, 'F');
   doc.setDrawColor(220,220,220);
   doc.rect(photoCol, py, photoW, 6.5, 'S');
-  doc.setTextColor(204,23,25); doc.setFont('helvetica','bold'); doc.setFontSize(6);
+  doc.setTextColor(226,35,26); doc.setFont('helvetica','bold'); doc.setFontSize(6);
   doc.text(t('saisie_photos').toUpperCase(), photoCol+3, py+4.5);
   py += 11;
 

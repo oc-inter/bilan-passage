@@ -9,16 +9,16 @@
 <title>Import RH — Optical Center</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
-  *{box-sizing:border-box;font-family:'Barlow',sans-serif}
-  body{background:#0D0D0D;color:#F0EDE6;margin:0;padding:24px;max-width:900px;margin:0 auto}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+  *{box-sizing:border-box;font-family:'Montserrat',sans-serif}
+  body{background:#0D0D0D;color:#F5F5F5;margin:0;padding:24px;max-width:900px;margin:0 auto}
   h1{font-weight:700;margin-bottom:4px}
   p.sub{color:#888780;margin-top:0;margin-bottom:24px}
   .card{background:#161615;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:20px}
   label{display:block;font-size:13px;color:#888780;margin-bottom:6px}
-  input[type=file],input[type=month],input[type=text],input[type=password]{width:100%;background:#0D0D0D;color:#F0EDE6;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+  input[type=file],input[type=month],input[type=text],input[type=password]{width:100%;background:#0D0D0D;color:#F5F5F5;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px}
   .hint{font-size:12px;color:#5F5E5A;margin-top:8px;line-height:1.5}
-  button{background:#CC1719;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px}
+  button{background:#E2231A;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px}
   button:hover{background:#a81315}
   button:disabled{opacity:0.5;cursor:not-allowed}
   table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
@@ -26,10 +26,11 @@
   th{color:#888780;font-weight:600;font-size:11px;text-transform:uppercase}
   .status{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none;white-space:pre-line}
   .status.ok{background:rgba(46,204,113,0.12);color:#2ecc71;display:block}
-  .status.err{background:rgba(204,23,25,0.12);color:#CC1719;display:block}
+  .status.err{background:rgba(226,35,26,0.12);color:#E2231A;display:block}
   #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center;max-width:340px;margin:0 auto}
   #app-wrap{display:none}
-  select{width:100%;background:#0D0D0D;color:#F0EDE6;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+  select{width:100%;background:#0D0D0D;color:#F5F5F5;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+select,input,textarea,button{font-family:inherit}
 </style>
 </head>
 <body>
