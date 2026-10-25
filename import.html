@@ -2,265 +2,695 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Import RH — Optical Center</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Imports — Réseau international</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
-  *{box-sizing:border-box;font-family:'Montserrat',sans-serif}
-  body{background:#0D0D0D;color:#F5F5F5;margin:0;padding:24px;max-width:900px;margin:0 auto}
-  h1{font-weight:700;margin-bottom:4px}
-  p.sub{color:#888780;margin-top:0;margin-bottom:24px}
-  .card{background:#161615;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:20px}
-  label{display:block;font-size:13px;color:#888780;margin-bottom:6px}
-  input[type=file],input[type=month],input[type=text],input[type=password]{width:100%;background:#0D0D0D;color:#F5F5F5;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px}
-  .hint{font-size:12px;color:#5F5E5A;margin-top:8px;line-height:1.5}
-  button{background:#E2231A;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px}
-  button:hover{background:#a81315}
-  button:disabled{opacity:0.5;cursor:not-allowed}
-  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
-  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.08)}
-  th{color:#888780;font-weight:600;font-size:11px;text-transform:uppercase}
-  .status{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none;white-space:pre-line}
-  .status.ok{background:rgba(46,204,113,0.12);color:#2ecc71;display:block}
-  .status.err{background:rgba(226,35,26,0.12);color:#E2231A;display:block}
-  #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center;max-width:340px;margin:0 auto}
-  #app-wrap{display:none}
-  select{width:100%;background:#0D0D0D;color:#F5F5F5;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+:root{
+  --bg:#0D0D0D;--bg2:#1a1a1a;--bg3:#222;--bg4:#2a2a2a;
+  --red:#E2231A;--red2:rgba(226,35,26,0.15);--red3:rgba(226,35,26,0.3);
+  --text:#F5F5F5;--muted:#888;--border:rgba(255,255,255,0.08);
+  --green:#3fae5c;--green2:rgba(63,174,92,0.15);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:linear-gradient(160deg,#171717 0%,#0D0D0D 40%,#101010 70%,#0A0A0A 100%);background-attachment:fixed;color:var(--text);font-family:'Montserrat',sans-serif;font-size:15px}
+.wrap{max-width:520px;margin:0 auto;padding:24px 16px 60px;display:flex;flex-direction:column;gap:16px}
+h1{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:700;margin:0 0 2px;letter-spacing:.3px}
+.subtitle{font-size:12px;color:var(--muted);margin:0 0 8px}
+.card{background:rgba(20,16,16,0.85);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
+label{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+input[type=password],input[type=text],input[type=month]{background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:11px 12px;font-size:14px;color:var(--text);font-family:'Montserrat',sans-serif;width:100%}
+.btn-primary{background:var(--red);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:600;font-family:'Montserrat',sans-serif;width:100%;cursor:pointer;letter-spacing:.3px}
+.btn-primary:disabled{opacity:.5;cursor:default}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:11px;font-size:13px;font-weight:500;font-family:'Montserrat',sans-serif;width:100%;cursor:pointer}
+.error{color:var(--red);font-size:12px}
+.dropzone{border:1.5px dashed var(--border);border-radius:10px;padding:20px 14px;text-align:center;font-size:13px;color:var(--muted);cursor:pointer;transition:border-color .15s,background .15s}
+.dropzone.over{border-color:var(--red);background:var(--red2)}
+.dropzone.filled{border-color:var(--green);background:var(--green2);color:var(--text)}
+.dropzone b{color:var(--text)}
+.dz-filename{font-size:12px;margin-top:4px;color:var(--text);word-break:break-all}
+.hint{font-size:11px;color:var(--muted);line-height:1.5}
+.result{font-size:12px;line-height:1.7;background:var(--bg4);border-radius:8px;padding:12px}
+.result .ok{color:var(--green)}
+.result .warn{color:var(--red)}
+.session-bar{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
+.session-bar button{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 8px;font-size:11px;font-family:'Montserrat',sans-serif;cursor:pointer}
+#screen-login{display:none}
+#screen-main{display:none}
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.label-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.info-btn{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:50%;width:20px;height:20px;min-width:20px;font-size:11px;font-family:'Montserrat',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1}
+.info-btn:hover{border-color:var(--red);color:var(--text)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-card{background:#161212;border:1px solid var(--border);border-radius:12px;padding:18px;max-width:440px;width:100%;max-height:80vh;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+.modal-card h3{font-family:'Montserrat',sans-serif;color:var(--red);font-size:17px;font-weight:700;margin:0;letter-spacing:.3px}
+.modal-card .modal-sub{font-size:11px;color:var(--muted);margin:-6px 0 4px}
+.modal-card h4{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:8px 0 2px}
+.modal-card ul{margin:0;padding-left:18px;font-size:13px;line-height:1.6}
+.modal-card ul.compact li{font-size:12.5px}
+.modal-close{align-self:flex-end;background:var(--red);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;cursor:pointer;margin-top:4px}
+input[type=date],input[type=number]{background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:11px 12px;font-size:14px;color:var(--text);font-family:'Montserrat',sans-serif;width:100%;color-scheme:dark}
+.ferm-grid{display:grid;grid-template-columns:1fr 90px;gap:8px}
+.ferm-list{display:flex;flex-direction:column;gap:6px}
+.ferm-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg4);border-radius:8px;padding:8px 10px;font-size:13px}
+.ferm-item.passee{opacity:.5}
+.ferm-item .ferm-dates{font-size:11px;color:var(--muted)}
+.ferm-item button{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer;font-family:'Montserrat',sans-serif}
+.ferm-item button:hover{border-color:var(--red);color:var(--text)}
 select,input,textarea,button{font-family:inherit}
+/* Page d'accueil — administration (02/10) */
+select,textarea{background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:11px 12px;font-size:14px;color:var(--text);font-family:'Montserrat',sans-serif;width:100%;color-scheme:dark}
+textarea{min-height:64px;resize:vertical;line-height:1.45}
+.acc-sec{font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin:8px 0 2px}
+.acc-app{display:flex;align-items:center;gap:10px;background:var(--bg4);border-radius:10px;padding:8px 10px;font-size:13px}
+.acc-app.off{opacity:.5}
+.acc-app .nm{flex:1;min-width:0}
+.acc-app .nm small{display:block;font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc-ico{width:40px;height:40px;min-width:40px;border-radius:10px;overflow:hidden;background:linear-gradient(145deg,#2a2a2a,#171717);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--red)}
+.acc-ico img{width:100%;height:100%;object-fit:cover}
+.acc-ico.big{width:72px;height:72px;min-width:72px;border-radius:18px;font-size:24px}
+.acc-app button,.acc-row button{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:5px 9px;font-size:12px;cursor:pointer}
+.acc-app button:hover,.acc-row button:hover{border-color:var(--red);color:var(--text)}
+.acc-row{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg4);border-radius:8px;padding:8px 10px;font-size:13px}
+.acc-row small{color:var(--muted);font-size:11px}
+.acc-ico-zone{display:flex;align-items:center;gap:12px}
+.acc-check{display:flex;align-items:center;gap:8px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text)}
+.acc-check input{width:auto}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <div>
+    <h1>Imports — réseau international</h1>
+    <p class="subtitle">RH mensuel, fermetures réseau, page d'accueil</p>
+  </div>
 
-<div id="login-screen">
-  <h1>Import RH</h1>
-  <p class="hint" style="margin-bottom:16px">Réservé aux comptes à accès complet (Cécilia, Olivier).</p>
-  <select id="login-ar-select" onchange="onLoginArChange(this.value)"><option value="">Chargement…</option></select>
-  <input id="login-user" type="text" placeholder="prenom.nom@optical-center.com" style="display:none">
-  <input id="login-pass" type="password" placeholder="Mot de passe Zimbra">
-  <div id="login-error" class="status err" style="display:none"></div>
-  <button id="login-btn" onclick="doLogin()" style="width:100%">Se connecter</button>
+  <div id="screen-login" class="card">
+    <div class="hint">Connexion avec ton identifiant Zimbra (même mécanisme que l'onglet Analyse de Bilan de Passage). Réservé à l'accès réseau complet (Cécilia, Olivier).</div>
+    <div><label>Identifiant Zimbra</label><input type="text" id="login-user" placeholder="prenom.nom@optical-center.com" autocomplete="username"></div>
+    <div><label>Mot de passe Zimbra</label><input type="password" id="login-pass" placeholder="Mot de passe" autocomplete="current-password"></div>
+    <button class="btn-primary" id="login-btn" onclick="doLogin()">Se connecter</button>
+    <div id="login-error" class="error" style="display:none"></div>
+  </div>
+
+  <div id="screen-main" style="display:none;flex-direction:column;gap:16px">
+    <div class="session-bar">
+      <span id="session-info"></span>
+      <button onclick="logout()">Se déconnecter</button>
+    </div>
+
+    <div class="card">
+      <label>Mois concerné</label>
+      <input type="month" id="mois-input">
+      <div class="hint">Import RH mensuel — le mois des 2 exports (agenda validés + effectif). Un import remplace uniquement les données de ce mois — les mois précédents ne sont jamais écrasés. Seuls les salariés rattachés à un magasin de magasins_inter.csv sont enregistrés.</div>
+      <div class="hint" id="mois-existants" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card">
+      <div class="label-row">
+        <label>1. Rapport agenda validés (.xls)</label>
+        <button type="button" class="info-btn" onclick="openColsModal('agenda')" aria-label="Colonnes attendues">i</button>
+      </div>
+      <div class="dropzone" id="dz-agenda" onclick="document.getElementById('file-agenda').click()">
+        📄 Cliquer ou déposer le fichier ici
+        <div class="dz-filename" id="dz-agenda-name"></div>
+      </div>
+      <input type="file" id="file-agenda" accept=".xls,.xlsx" style="display:none">
+    </div>
+
+    <div class="card">
+      <div class="label-row">
+        <label>2. Export effectif / poste / genre (.xls)</label>
+        <button type="button" class="info-btn" onclick="openColsModal('effectif')" aria-label="Colonnes attendues">i</button>
+      </div>
+      <div class="dropzone" id="dz-effectif" onclick="document.getElementById('file-effectif').click()">
+        📄 Cliquer ou déposer le fichier ici
+        <div class="dz-filename" id="dz-effectif-name"></div>
+      </div>
+      <input type="file" id="file-effectif" accept=".xls,.xlsx" style="display:none">
+    </div>
+
+    <button class="btn-primary" id="submit-btn" onclick="lancerImport()" disabled>Importer</button>
+
+    <div id="result" style="display:none"></div>
+
+    <div style="height:8px"></div>
+    <div class="card">
+      <label>Fermetures réseau</label>
+      <div class="hint">Fermeture de tous les magasins d'un pays (ou de tout le réseau international) : Kippour en Israël, jour de fermeture national… Ces jours sont retirés des jours attendus de lancement de journée (score de santé) et du préremplissage des jours ouvrés dans l'Analyse statistique. Les jours de repos hebdomadaire et les jours fériés de chaque pays seront déduits automatiquement — inutile de les saisir.</div>
+      <div><label>Intitulé</label><input type="text" id="ferm-intitule" placeholder="ex. Kippour 2027" maxlength="120"></div>
+      <div><label>Pays concerné</label><select id="ferm-pays"><option value="">Tout le réseau international</option></select></div>
+      <div class="ferm-grid">
+        <div><label>Date de début</label><input type="date" id="ferm-date"></div>
+        <div><label>Nb de jours</label><input type="number" id="ferm-nb" value="1" min="1" max="31"></div>
+      </div>
+      <button class="btn-primary" id="ferm-add-btn" onclick="ajouterFermeture()">Ajouter la fermeture</button>
+      <div id="ferm-error" class="error" style="display:none"></div>
+      <div class="ferm-list" id="ferm-list"><div class="hint">Chargement…</div></div>
+    </div>
+
+    <div style="height:8px"></div>
+    <div class="card">
+      <label>Page d'accueil — applis</label>
+      <div class="hint">Les applis affichées sur <a href="accueil/" style="color:var(--text)">la page d'accueil</a>, par section. Une appli masquée reste enregistrée mais n'apparaît plus.</div>
+      <div id="acc-apps"><div class="hint">Chargement…</div></div>
+      <button class="btn-secondary" onclick="ouvrirAppli(null)">+ Ajouter une appli</button>
+      <div id="acc-error" class="error" style="display:none"></div>
+    </div>
+
+    <div class="card">
+      <label>Page d'accueil — accès nominatifs</label>
+      <div class="hint">L'accès réseau complet (Cécilia, Olivier) voit toutes les sections. Les animateurs et directeurs pays de magasins_inter.csv voient automatiquement « Animateurs et directeurs pays ». Ajoutez ici les autres personnes. La section « Administration » est réservée à l'accès complet et ne peut pas être ouverte à quelqu'un d'autre.</div>
+      <div class="ferm-list" id="acc-acces"></div>
+      <div class="ferm-grid" style="grid-template-columns:1fr 130px">
+        <div><label>Adresse Zimbra</label><input type="text" id="acc-email" placeholder="prenom.nom@optical-center.com"></div>
+        <div><label>Section</label><select id="acc-email-section"><option value="animateurs">Animateurs et directeurs pays</option><option value="direction">Direction internationale</option></select></div>
+      </div>
+      <button class="btn-primary" id="acc-acces-btn" onclick="ajouterAcces()">Donner l'accès</button>
+    </div>
+  </div>
 </div>
 
-<div id="app-wrap">
-  <h1>Import RH — effectif &amp; agenda</h1>
-  <p class="sub">Mêmes libellés de colonnes et mêmes règles de calcul que la France (droit du travail français pour l'instant — à adapter par pays si besoin). Connecté : <span id="session-label"></span> · <a href="#" onclick="logout();return false" style="color:#888780">déconnexion</a></p>
-
-  <div class="card" style="margin-bottom:12px">
-    <label>Mois concerné <span style="color:#5F5E5A;font-weight:400">(commun aux deux imports ci-dessous)</span></label>
-    <input type="month" id="mois-select" style="margin-bottom:0">
-  </div>
-
-  <div class="card">
-    <label>1. Effectif — export "Rapport effectif par site" (.xlsx)</label>
-    <input type="file" id="file-effectif" accept=".xlsx,.xls">
-    <div class="hint">Colonnes attendues : Matricule, Nom, Prénom, Genre, Poste, Codes sites, Noms sites, Date d'entrée, Date de départ. "Codes sites"/"Noms sites" séparés par des virgules si un salarié couvre plusieurs magasins.</div>
-    <button onclick="importerEffectif()" id="btn-effectif">Importer l'effectif</button>
-    <div class="status" id="status-effectif"></div>
-  </div>
-
-  <div class="card">
-    <label>2. Agenda — export "Rapport agenda validés" (.xlsx)</label>
-    <input type="file" id="file-agenda" accept=".xlsx,.xls">
-    <div class="hint">Colonnes attendues : Matricule, Type contrat, Repos hebdomadaire, Férié, Jour de fermeture, + toutes les colonnes d'absence (Absence maladie, Congé maternité, Congés payes, etc. — mêmes libellés que le fichier France).</div>
-    <button onclick="importerAgenda()" id="btn-agenda">Importer l'agenda</button>
-    <div class="status" id="status-agenda"></div>
-  </div>
-
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <label style="margin:0">Mois déjà importés</label>
-      <button onclick="chargerEtat()" style="margin:0;padding:8px 14px;font-size:12px;background:transparent;border:1px solid rgba(255,255,255,0.2)">🔄 Recharger</button>
+<div class="modal-overlay" id="acc-modal" onclick="if(event.target===this) fermerAppli()">
+  <div class="modal-card" style="max-height:90vh">
+    <h3 id="acc-modal-titre">Appli</h3>
+    <div class="acc-ico-zone">
+      <div class="acc-ico big" id="acc-f-preview"></div>
+      <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+        <button type="button" class="btn-secondary" onclick="document.getElementById('acc-f-file').click()">Choisir une icône…</button>
+        <button type="button" class="btn-secondary" onclick="retirerIcone()">Retirer l'icône</button>
+      </div>
+      <input type="file" id="acc-f-file" accept="image/*" style="display:none">
     </div>
-    <div id="etat-wrap"><p class="hint">Chargement...</p></div>
+    <div class="hint">Image carrée de préférence (PNG ou JPG), redimensionnée automatiquement. Sans icône, les initiales s'affichent.</div>
+    <div><label>Nom</label><input type="text" id="acc-f-nom" maxlength="60"></div>
+    <div><label>Lien</label><input type="text" id="acc-f-url" placeholder="https://…"></div>
+    <div class="ferm-grid">
+      <div><label>Section</label><select id="acc-f-section"><option value="tous">Pour tous</option><option value="animateurs">Animateurs et directeurs pays</option><option value="direction">Direction internationale</option><option value="admin">Administration (accès complet)</option></select></div>
+      <div><label>Ordre</label><input type="number" id="acc-f-ordre" min="0" max="99"></div>
+    </div>
+    <div><label>À quoi ça sert</label><textarea id="acc-f-description" maxlength="600"></textarea></div>
+    <div><label>Comment l'utiliser</label><textarea id="acc-f-usage" maxlength="600"></textarea></div>
+    <div><label>Fréquence</label><input type="text" id="acc-f-frequence" maxlength="200" placeholder="ex. Une fois par mois"></div>
+    <label class="acc-check"><input type="checkbox" id="acc-f-actif"> Visible sur la page d'accueil</label>
+    <div id="acc-f-error" class="error" style="display:none"></div>
+    <button class="btn-primary" id="acc-f-save" onclick="enregistrerAppli()">Enregistrer</button>
+    <button class="btn-secondary" id="acc-f-delete" onclick="supprimerAppli()">🗑️ Supprimer l'appli</button>
+    <button class="btn-secondary" onclick="fermerAppli()">Annuler</button>
   </div>
+</div>
+
+<div class="modal-overlay" id="cols-modal-overlay" onclick="if(event.target===this) closeColsModal()">
+  <div class="modal-card" id="cols-modal-card"></div>
 </div>
 
 <script>
 const RELAY = 'https://oc-inter-relay.cecilia-lecomte.workers.dev';
 const MAGASINS_CSV_URL = 'https://raw.githubusercontent.com/oc-inter/bilan-passage/main/magasins_inter.csv';
-var arSession = null;
+const STORE_SECRET = 'OC-bilan-store-2026';
+const SESSION_KEY = 'rh_import_ar_session';
 
-function loadSession(){
-  try{ var raw = localStorage.getItem('rh_ar_session'); if(raw){ var s = JSON.parse(raw); if(s.exp > Date.now()) arSession = s; } }catch(e){}
+let arSession = null;
+let fileAgenda = null;
+let fileEffectif = null;
+
+function loadSession() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+    if (s && s.exp > Date.now() && s.ar === 'ALL') { arSession = s; return s; }
+  } catch(e) {}
+  arSession = null;
+  localStorage.removeItem(SESSION_KEY);
+  return null;
 }
-function logout(){ localStorage.removeItem('rh_ar_session'); location.reload(); }
 
-function parseMagasinsCSV(text){
-  var lines = text.split(/\r?\n/).filter(Boolean);
-  var header = lines[0].split(';');
-  function idx(name){ return header.indexOf(name); }
-  var iAnimateur = idx('animateur'), iAnimateurEmail = idx('animateur_email');
-  return lines.slice(1).map(function(line){
-    var c = line.split(';');
-    return { animateur: (c[iAnimateur]||'').trim(), animateurEmail: (c[iAnimateurEmail]||'').trim() };
-  });
-}
-
-async function populateLoginArSelect(savedUser){
-  var sel = document.getElementById('login-ar-select');
-  try{
-    var r = await fetch(MAGASINS_CSV_URL, {cache:'no-store'});
-    var text = await r.text();
-    var rows = parseMagasinsCSV(text).filter(function(m){ return m.animateur && m.animateurEmail; });
-    var seen = {}, list = [];
-    rows.forEach(function(m){ if(!seen[m.animateur]){ seen[m.animateur]=1; list.push([m.animateur, m.animateurEmail]); } });
-    list.sort(function(a,b){ return a[0].localeCompare(b[0]); });
-    var h = '<option value="">— Choisir —</option>';
-    list.forEach(function(p){ h += '<option value="'+p[1]+'">'+p[0]+'</option>'; });
-    h += '<option value="__manual__">Autre identifiant Zimbra…</option>';
-    sel.innerHTML = h;
-    if(savedUser){ sel.value = list.some(function(p){return p[1]===savedUser;}) ? savedUser : '__manual__'; onLoginArChange(sel.value); }
-  }catch(e){
-    sel.innerHTML = '<option value="__manual__">Identifiant Zimbra…</option>';
-    sel.value = '__manual__'; onLoginArChange('__manual__');
+function showScreen() {
+  if (loadSession()) {
+    document.getElementById('screen-login').style.display = 'none';
+    document.getElementById('screen-main').style.display = 'flex';
+    document.getElementById('session-info').textContent = 'Connecté — session valable jusqu\'à ' + new Date(arSession.exp).toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+    chargerMoisExistants();
+  } else {
+    document.getElementById('screen-login').style.display = 'flex';
+    document.getElementById('screen-main').style.display = 'none';
   }
 }
 
-function onLoginArChange(val){
-  var m = document.getElementById('login-user');
-  if(val === '__manual__'){ m.style.display='block'; if(!m.value||m.value==='__manual__') m.value=''; m.focus(); }
-  else { m.style.display='none'; m.value = val; }
-}
-
-async function doLogin(){
-  var errEl = document.getElementById('login-error');
+async function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
   errEl.style.display = 'none';
-  var zimbraUser = document.getElementById('login-user').value.trim();
-  var zimbraPass = document.getElementById('login-pass').value;
-  var btn = document.getElementById('login-btn');
-  if(!zimbraUser || !zimbraPass){ errEl.textContent = 'Identifiant et mot de passe requis'; errEl.style.display='block'; return; }
-  localStorage.setItem('rh_zimbra_user', zimbraUser);
-  btn.disabled = true; btn.textContent = 'Connexion...';
-  try{
-    var resp = await fetch(RELAY + '/ar-login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({zimbraUser: zimbraUser, zimbraPass: zimbraPass}) });
-    var data = await resp.json();
-    if(!resp.ok || data.error) throw new Error(data.error || ('Erreur '+resp.status));
-    if(data.ar !== 'ALL'){ throw new Error("Ce compte n'a pas les droits complets requis pour importer les donnees RH."); }
-    arSession = {token: data.sessionToken, ar: data.ar, exp: Date.now() + data.expiresInMs};
-    localStorage.setItem('rh_ar_session', JSON.stringify(arSession));
+  if (!user || !pass) { errEl.textContent = 'Identifiant et mot de passe requis'; errEl.style.display = 'block'; return; }
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Connexion...';
+  try {
+    const resp = await fetch(RELAY + '/ar-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET },
+      body: JSON.stringify({ zimbraUser: user, zimbraPass: pass })
+    });
+    const data = await resp.json();
+    if (!resp.ok || !data.ok) throw new Error(data.error || 'Connexion échouée');
+    if (data.ar !== 'ALL') throw new Error('Cette page est réservée à l\'accès réseau complet — identifiants valides mais non autorisés ici.');
+    const session = { token: data.sessionToken, ar: data.ar, exp: Date.now() + (data.expiresInMs || 12*60*60*1000) };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
     document.getElementById('login-pass').value = '';
-    startApp();
-  }catch(e){
-    errEl.textContent = e.message; errEl.style.display = 'block';
-  }finally{
+    showScreen();
+    chargerFermetures();
+    chargerAccueil();
+  } catch(e) {
+    errEl.textContent = e.message || String(e);
+    errEl.style.display = 'block';
+  } finally {
     btn.disabled = false; btn.textContent = 'Se connecter';
   }
 }
 
-function startApp(){
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app-wrap').style.display = 'block';
-  document.getElementById('session-label').textContent = arSession.ar;
-  var d = new Date();
-  document.getElementById('mois-select').value = d.toISOString().slice(0,7);
-  chargerEtat();
+function logout() {
+  localStorage.removeItem(SESSION_KEY);
+  arSession = null;
+  showScreen();
 }
 
-function lireFeuilleExcel(file){
-  return new Promise(function(resolve, reject){
-    var reader = new FileReader();
-    reader.onload = function(e){
-      try{
-        var wb = XLSX.read(e.target.result, {type:'array'});
-        var ws = wb.Sheets[wb.SheetNames[0]];
-        var rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+function defaultMois() {
+  // À partir du 20, l'export porte sur le mois en cours (import de fin de mois) ;
+  // avant le 20, sur le mois qui vient de se terminer. Le 30/09, l'ancienne
+  // règle (toujours le mois précédent) a fait importer septembre sous août.
+  const d = new Date();
+  d.setDate(1);
+  if (new Date().getDate() < 20) d.setMonth(d.getMonth() - 1);
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+}
+
+function libelleMois(ym) {
+  const [y, m] = String(ym || '').split('-');
+  const noms = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  return (noms[+m - 1] || ym) + ' ' + (y || '');
+}
+
+// Mois déjà en base (rafraîchi après chaque import) — sert à demander une
+// confirmation avant d'écraser un mois existant.
+let moisExistants = null;
+async function chargerMoisExistants() {
+  const el = document.getElementById('mois-existants');
+  if (!arSession) return;
+  try {
+    const resp = await fetch(RELAY + '/rh-import/etat', {
+      headers: { 'X-AR-Session': arSession.token }
+    });
+    const data = await resp.json();
+    if (!resp.ok || !data.ok) throw new Error(data.error || resp.status);
+    data.mois = (data.effectifMois || []).map(r => ({ mois: r.mois, nb: r.nb_salaries }));
+    moisExistants = new Map((data.mois || []).map(r => [r.mois, r.nb]));
+    const derniers = (data.mois || []).slice(0, 3).map(r => libelleMois(r.mois) + ' (' + r.nb + ' salariés)');
+    el.textContent = derniers.length ? 'Déjà en base : ' + derniers.join(', ') + (data.mois.length > 3 ? '…' : '') : 'Aucun mois RH en base.';
+  } catch (e) {
+    moisExistants = null;
+    el.textContent = '';
+  }
+}
+
+function setupDropzone(zoneId, inputId, onFile) {
+  const zone = document.getElementById(zoneId);
+  const input = document.getElementById(inputId);
+  input.addEventListener('change', () => { if (input.files[0]) onFile(input.files[0]); });
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('over');
+    if (e.dataTransfer.files[0]) onFile(e.dataTransfer.files[0]);
+  });
+}
+
+function checkReady() {
+  document.getElementById('submit-btn').disabled = !(fileAgenda && fileEffectif && document.getElementById('mois-input').value);
+}
+
+function parseXlsFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const wb = XLSX.read(e.target.result, { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, { defval: null });
         resolve(rows);
-      }catch(err){ reject(err); }
+      } catch(err) { reject(err); }
     };
-    reader.onerror = reject;
+    reader.onerror = () => reject(new Error('Lecture du fichier échouée'));
     reader.readAsArrayBuffer(file);
   });
 }
 
-async function importerEffectif(){
-  var mois = document.getElementById('mois-select').value;
-  var fileInput = document.getElementById('file-effectif');
-  var statusEl = document.getElementById('status-effectif');
-  var btn = document.getElementById('btn-effectif');
-  if(!mois){ statusEl.className='status err'; statusEl.textContent='Choisis un mois.'; return; }
-  if(!fileInput.files.length){ statusEl.className='status err'; statusEl.textContent='Choisis un fichier.'; return; }
-  btn.disabled = true; btn.textContent = 'Import en cours...';
-  try{
-    var rows = await lireFeuilleExcel(fileInput.files[0]);
-    var resp = await fetch(RELAY + '/rh-import/effectif', {
-      method:'POST', headers:{'Content-Type':'application/json','X-AR-Session':arSession.token},
-      body: JSON.stringify({mois: mois, rows: rows}),
+function renderResult(html) {
+  const el = document.getElementById('result');
+  el.style.display = 'block';
+  el.innerHTML = html;
+}
+
+async function lancerImport() {
+  const mois = document.getElementById('mois-input').value;
+  if (!mois || !fileAgenda || !fileEffectif) return;
+  if (moisExistants && moisExistants.has(mois)) {
+    if (!confirm(libelleMois(mois) + ' est déjà importé (' + moisExistants.get(mois) + ' salariés).\n\nLes données de ' + libelleMois(mois) + ' vont être remplacées par ces fichiers. Continuer ?')) return;
+  } else if (!confirm('Importer ces fichiers comme ' + libelleMois(mois).toUpperCase() + ' ?')) {
+    return;
+  }
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Import en cours...';
+  renderResult('<div class="result">Lecture des fichiers…</div>');
+
+  try {
+    const [rowsAgenda, rowsEffectif] = await Promise.all([
+      parseXlsFile(fileAgenda),
+      parseXlsFile(fileEffectif),
+    ]);
+
+    // Effectif d'abord : le Worker s'en sert pour ne garder de l'agenda que
+    // les salariés du réseau.
+    renderResult('<div class="result">Envoi de l\'effectif (' + rowsEffectif.length + ' lignes)…</div>');
+    const respEffectif = await fetch(RELAY + '/rh-import/effectif', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET, 'X-AR-Session': arSession.token },
+      body: JSON.stringify({ mois, rows: rowsEffectif })
     });
-    var data = await resp.json();
-    if(!resp.ok || data.error) throw new Error(data.error || 'Erreur inconnue');
-    statusEl.className = 'status ok';
-    var msg = data.nbSalaries + " salarie(s) importe(s) pour " + data.mois + '.';
-    if(data.nbSansSite) msg += '\n\u26A0\uFE0F ' + data.nbSansSite + " salarie(s) sans site rattache.";
-    if(data.sitesNonReconnus && data.sitesNonReconnus.length) msg += '\n\u26A0\uFE0F Codes site non reconnus : ' + data.sitesNonReconnus.map(function(s){return s.code+' ('+s.nom+')';}).join(', ');
-    statusEl.textContent = msg;
-    chargerEtat();
-  }catch(e){
-    statusEl.className = 'status err'; statusEl.textContent = 'Erreur : ' + e.message;
-  }finally{
-    btn.disabled = false; btn.textContent = "Importer l'effectif";
+    const dataEffectif = await respEffectif.json();
+    if (!respEffectif.ok || !dataEffectif.ok) throw new Error('Effectif : ' + (dataEffectif.error || respEffectif.status));
+
+    renderResult('<div class="result">Envoi de l\'agenda validés (' + rowsAgenda.length + ' lignes)…</div>');
+    const respAgenda = await fetch(RELAY + '/rh-import/agenda', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET, 'X-AR-Session': arSession.token },
+      body: JSON.stringify({ mois, rows: rowsAgenda })
+    });
+    const dataAgenda = await respAgenda.json();
+    if (!respAgenda.ok || !dataAgenda.ok) throw new Error('Agenda validés : ' + (dataAgenda.error || respAgenda.status));
+
+    let html = '<div class="result">';
+    html += '<div class="ok">✓ ' + libelleMois(mois) + ' importé</div>';
+    html += '<div class="ok">✓ Effectif — ' + (dataEffectif.nbImportes ?? dataEffectif.nbSalaries) + ' salariés enregistrés</div>';
+    html += '<div class="ok">✓ Agenda validés — ' + (dataAgenda.nbImportes ?? dataAgenda.nbSalaries) + ' salariés, ' + (dataAgenda.nbLongueDuree || 0) + ' en absence longue durée</div>';
+    if (dataEffectif.nbHorsReseau !== undefined || dataEffectif.nbSansSite) html += '<div class="hint" style="margin-top:6px">' + (dataEffectif.nbHorsReseau !== undefined ? 'Ignorés (hors réseau) : ' + dataEffectif.nbHorsReseau + ' salariés rattachés à d\'autres sites' : '') + (dataEffectif.nbSansSite ? (dataEffectif.nbHorsReseau !== undefined ? ', ' : '') + dataEffectif.nbSansSite + ' sans site renseigné' : '') + '.</div>';
+    if (dataEffectif.sitesNonReconnus && dataEffectif.sitesNonReconnus.length) {
+      html += '<div class="warn" style="margin-top:8px">⚠ Salariés rattachés à des sites absents de magasins_inter.csv (' + dataEffectif.sitesNonReconnus.length + ' sites) :</div>';
+      html += '<div style="margin-top:2px">' + dataEffectif.sitesNonReconnus.map(s => (s.nom || '?') + ' (' + s.code + ')').join(', ') + '</div>';
+    }
+    html += '</div>';
+    renderResult(html);
+    chargerMoisExistants();
+  } catch(e) {
+    renderResult('<div class="result warn">✗ ' + (e.message || String(e)) + '</div>');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Importer';
+    checkReady();
   }
 }
 
-async function importerAgenda(){
-  var mois = document.getElementById('mois-select').value;
-  var fileInput = document.getElementById('file-agenda');
-  var statusEl = document.getElementById('status-agenda');
-  var btn = document.getElementById('btn-agenda');
-  if(!mois){ statusEl.className='status err'; statusEl.textContent='Choisis un mois.'; return; }
-  if(!fileInput.files.length){ statusEl.className='status err'; statusEl.textContent='Choisis un fichier.'; return; }
-  btn.disabled = true; btn.textContent = 'Import en cours...';
-  try{
-    var rows = await lireFeuilleExcel(fileInput.files[0]);
-    var resp = await fetch(RELAY + '/rh-import/agenda', {
-      method:'POST', headers:{'Content-Type':'application/json','X-AR-Session':arSession.token},
-      body: JSON.stringify({mois: mois, rows: rows}),
-    });
-    var data = await resp.json();
-    if(!resp.ok || data.error) throw new Error(data.error || 'Erreur inconnue');
-    statusEl.className = 'status ok';
-    statusEl.textContent = data.nbSalaries + " salarie(s) importe(s) pour " + data.mois + ' (' + data.nbLongueDuree + ' en longue duree).';
-    chargerEtat();
-  }catch(e){
-    statusEl.className = 'status err'; statusEl.textContent = 'Erreur : ' + e.message;
-  }finally{
-    btn.disabled = false; btn.textContent = "Importer l'agenda";
+document.getElementById('mois-input').value = defaultMois();
+document.getElementById('mois-input').addEventListener('change', checkReady);
+
+setupDropzone('dz-agenda', 'file-agenda', file => {
+  fileAgenda = file;
+  document.getElementById('dz-agenda').classList.add('filled');
+  document.getElementById('dz-agenda-name').textContent = file.name;
+  checkReady();
+});
+setupDropzone('dz-effectif', 'file-effectif', file => {
+  fileEffectif = file;
+  document.getElementById('dz-effectif').classList.add('filled');
+  document.getElementById('dz-effectif-name').textContent = file.name;
+  checkReady();
+});
+
+const COLS_INFO = {
+  agenda: {
+    title: 'Rapport agenda validés',
+    sub: 'Export du système de gestion des temps, ~70 colonnes par salarié. Colonne clé de jointure : Matricule.',
+    sections: [
+      { h: 'Dénominateur (jours ouvrés théoriques)', items: ['Jours calendaires du mois : calculé automatiquement par le Worker à partir du mois sélectionné — pas une colonne à chercher dans le fichier', 'Repos hebdomadaire (nom de colonne confirmé dans le Worker)', 'Férié (nom de colonne confirmé dans le Worker)', 'Jour de fermeture (nom de colonne confirmé dans le Worker)'] },
+      { h: 'Groupe A — vraie absence (compte dans le taux)', items: ['Absence maladie (+ variante Alsace-Moselle)', 'Absence Accident Travail (+ variante Alsace-Moselle)', 'Absence non payée', 'Congés non payé', 'Congé maternité / paternité / parental', 'Naissance', 'Mariage / PACS'] },
+      { h: 'Groupe B — congés prévus (exclus du taux, gardés visibles)', items: ['Congés payés', 'Ancienneté', 'Performance', 'Repos anniversaire', 'Récupération', 'Jours fériés', 'Jours de fermeture magasin', 'Repos hebdomadaire', 'Repos temps partiel', 'Déduction entrée / sortie', 'Autres (décès, événement religieux, garde d\'enfants, journée école, temps partiel thérapeutique, congé supplémentaire naissance)'] },
+      { h: 'Autre colonne exploitée', items: ['Type contrat (CDI / CDD / alternance / intérim, nom de colonne confirmé dans le Worker)'] },
+      { h: 'Note', items: ['Les intitulés exacts des colonnes du groupe A/B ci-dessus reprennent la logique métier validée avec Olivier — le nom précis de chaque colonne dans le fichier n\'a pas été revérifié caractère pour caractère dans le code depuis'] },
+    ]
+  },
+  effectif: {
+    title: 'Export effectif / poste / genre',
+    sub: 'Fichier distinct de l\'agenda validés, colonnes attendues telles quelles :',
+    sections: [
+      { h: 'Colonnes', items: ['Matricule (clé de jointure avec l\'agenda validés)', 'Codes sites', 'Noms sites', 'Date d\'entrée', 'Date de départ (souvent vide — voir note)', 'Genre', 'Nom', 'Prénom', 'Poste'] },
+      { h: 'Notes', items: ['Codes sites : une seule ligne par salarié — si multi-site, les codes sont dans la même cellule séparés par une virgule (ex. "001020, 001030"), pareil pour "Noms sites". Confirmé dans le code du Worker (rh-import/effectif, split(\',\'))', 'Poste : mappé en 2 catégories, "audio" (Audioprothésiste, Technicien audio) et "opticien" (Manager, Monteur, Opticien/vendeur, Optométriste/contactologue) — les postes siège (Formateur, Logistique, etc.) sont ignorés', 'Date de départ non exportée pour l\'instant côté RH — les départs sont déduits par comparaison d\'un mois à l\'autre'] },
+    ]
+  },
+  kaizen: {
+    title: 'Historique Kaizen (import ponctuel)',
+    sub: 'Fichier Google Forms/Excel de l\'historique 5S pré-app. Score global uniquement, pas de détail par item.',
+    sections: [
+      { h: 'Colonnes', items: ['Horodateur', 'Date de l\'audit (priorité sur Horodateur si les deux sont présentes)', 'Mon prénom', 'Mon code site', 'Score'] },
+    ]
   }
+};
+
+function openColsModal(key) {
+  const info = COLS_INFO[key];
+  if (!info) return;
+  let html = '<h3>' + info.title + '</h3>';
+  html += '<div class="modal-sub">' + info.sub + '</div>';
+  info.sections.forEach(sec => {
+    html += '<h4>' + sec.h + '</h4>';
+    html += '<ul class="compact">' + sec.items.map(i => '<li>' + i + '</li>').join('') + '</ul>';
+  });
+  html += '<button type="button" class="modal-close" onclick="closeColsModal()">Fermer</button>';
+  document.getElementById('cols-modal-card').innerHTML = html;
+  document.getElementById('cols-modal-overlay').classList.add('open');
 }
 
-async function chargerEtat(){
-  var wrap = document.getElementById('etat-wrap');
-  wrap.innerHTML = '<p class="hint">Chargement...</p>';
-  try{
-    var resp = await fetch(RELAY + '/rh-import/etat', { headers: {'X-AR-Session': arSession ? arSession.token : ''} });
-    var data = await resp.json();
-    if(!resp.ok || data.error) throw new Error(data.error || 'Erreur inconnue');
-    var moisSet = new Set();
-    data.effectifMois.forEach(function(m){ moisSet.add(m.mois); });
-    data.agendaMois.forEach(function(m){ moisSet.add(m.mois); });
-    var moisListe = [...moisSet].sort().reverse();
-    if(!moisListe.length){ wrap.innerHTML = "<p class=\"hint\">Aucune donnee importee pour l'instant.</p>"; return; }
-    var effMap = {}; data.effectifMois.forEach(function(m){ effMap[m.mois] = m.nb_salaries; });
-    var agMap = {}; data.agendaMois.forEach(function(m){ agMap[m.mois] = m.nb_salaries; });
-    var h = '<table><tr><th>Mois</th><th>Effectif</th><th>Agenda</th></tr>';
-    moisListe.forEach(function(mois){
-      h += '<tr><td>'+mois+'</td><td>'+(effMap[mois]!==undefined?effMap[mois]:'—')+'</td><td>'+(agMap[mois]!==undefined?agMap[mois]:'—')+'</td></tr>';
-    });
-    h += '</table>';
-    wrap.innerHTML = h;
-  }catch(e){
-    wrap.innerHTML = '<p class="hint">Erreur de chargement : ' + e.message + '</p>';
-  }
+function closeColsModal() {
+  document.getElementById('cols-modal-overlay').classList.remove('open');
 }
 
-loadSession();
-var savedZimbraUser = localStorage.getItem('rh_zimbra_user') || '';
-document.getElementById('login-user').value = savedZimbraUser;
-populateLoginArSelect(savedZimbraUser);
-if(arSession && arSession.exp > Date.now()){ startApp(); }
+// ── Fermetures réseau (26/09) ──
+function fmtDateFr(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+function escHtml(t) { return String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+function renderFermetures(list) {
+  const el = document.getElementById('ferm-list');
+  if (!list.length) { el.innerHTML = '<div class="hint">Aucune fermeture enregistrée.</div>'; return; }
+  const today = new Date().toISOString().slice(0, 10);
+  el.innerHTML = list.map(f => {
+    const n = parseInt(f.nb_jours, 10) || 1;
+    const [y, m, d] = f.date_debut.split('-').map(Number);
+    const fin = new Date(Date.UTC(y, m - 1, d + n - 1)).toISOString().slice(0, 10);
+    const dates = n > 1 ? 'du ' + fmtDateFr(f.date_debut) + ' au ' + fmtDateFr(fin) + ' (' + n + ' j)' : fmtDateFr(f.date_debut);
+    const portee = f.pays ? f.pays : 'tout le réseau';
+    return '<div class="ferm-item' + (fin < today ? ' passee' : '') + '"><div><div>' + escHtml(f.intitule) + ' <span class="ferm-dates">· ' + escHtml(portee) + '</span></div><div class="ferm-dates">' + dates + '</div></div>'
+      + '<button type="button" onclick="supprimerFermeture(' + f.id + ')" aria-label="Supprimer">🗑️</button></div>';
+  }).join('');
+}
+
+async function appelFermetures(body) {
+  const resp = await fetch(RELAY + '/fermetures-reseau', {
+    method: body ? 'POST' : 'GET',
+    headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET, 'X-AR-Session': arSession.token },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const data = await resp.json();
+  if (!resp.ok || !data.ok) throw new Error(data.error || ('Erreur ' + resp.status));
+  renderFermetures(data.fermetures || []);
+}
+
+function afficherErreurFermeture(msg) {
+  const e = document.getElementById('ferm-error');
+  e.textContent = msg || ''; e.style.display = msg ? 'block' : 'none';
+}
+
+// Liste des pays du référentiel pour la portée d'une fermeture.
+let paysCharges = false;
+async function chargerPays() {
+  if (paysCharges) return;
+  try {
+    const txt = await (await fetch(MAGASINS_CSV_URL + '?v=' + Date.now(), { cache: 'no-store' })).text();
+    const lignes = txt.replace(/^\uFEFF/, '').split(/\r?\n/).filter(Boolean);
+    const iPays = lignes[0].split(';').map(h => h.trim()).indexOf('pays');
+    const pays = [...new Set(lignes.slice(1).map(l => (l.split(';')[iPays] || '').trim()).filter(Boolean))].sort();
+    const sel = document.getElementById('ferm-pays');
+    pays.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; sel.appendChild(o); });
+    paysCharges = true;
+  } catch (e) { console.warn('Liste des pays indisponible', e); }
+}
+
+async function chargerFermetures() {
+  if (!arSession) return;
+  chargerPays();
+  try { afficherErreurFermeture(''); await appelFermetures(null); }
+  catch (e) { document.getElementById('ferm-list').innerHTML = ''; afficherErreurFermeture(e.message || String(e)); }
+}
+
+async function ajouterFermeture() {
+  const intitule = document.getElementById('ferm-intitule').value.trim();
+  const date_debut = document.getElementById('ferm-date').value;
+  const nb_jours = parseInt(document.getElementById('ferm-nb').value, 10);
+  const pays = document.getElementById('ferm-pays').value;
+  if (!intitule) return afficherErreurFermeture('Intitulé requis');
+  if (!date_debut) return afficherErreurFermeture('Date de début requise');
+  if (!(nb_jours >= 1 && nb_jours <= 31)) return afficherErreurFermeture('Nombre de jours entre 1 et 31');
+  const btn = document.getElementById('ferm-add-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Ajout…';
+  try {
+    afficherErreurFermeture('');
+    await appelFermetures({ intitule, date_debut, nb_jours, pays });
+    document.getElementById('ferm-intitule').value = '';
+    document.getElementById('ferm-date').value = '';
+    document.getElementById('ferm-nb').value = '1';
+  } catch (e) { afficherErreurFermeture(e.message || String(e)); }
+  finally { btn.disabled = false; btn.textContent = 'Ajouter la fermeture'; }
+}
+
+async function supprimerFermeture(id) {
+  if (!confirm('Supprimer cette fermeture ? Les jours seront de nouveau comptés comme attendus.')) return;
+  try { afficherErreurFermeture(''); await appelFermetures({ deleteId: id }); }
+  catch (e) { afficherErreurFermeture(e.message || String(e)); }
+}
+
+// ── Page d'accueil — administration (02/10) ──
+const ACC_SECTIONS = { tous: 'Pour tous', animateurs: 'Animateurs et directeurs pays', direction: 'Direction internationale', admin: 'Administration' };
+let accApps = [], accEdit = null, accIcone = '';
+
+function accMono(nom) {
+  const vides = ['de','du','des','le','la','les','dans','être','et','au','aux','en'];
+  const mots = String(nom || '?').split(/[\s'’\-]+/).filter(Boolean);
+  const u = mots.filter(m => !vides.includes(m.toLowerCase())); const b = u.length ? u : mots;
+  return (b.length > 1 ? b[0][0] + b[b.length - 1][0] : (b[0] || '?').slice(0, 2)).toUpperCase();
+}
+function accIco(icone, nom) { return icone ? '<img src="' + escHtml(icone) + '" alt="">' : escHtml(accMono(nom)); }
+function accErreur(id, msg) { const e = document.getElementById(id); e.textContent = msg || ''; e.style.display = msg ? 'block' : 'none'; }
+
+async function appelAccueil(body) {
+  const resp = await fetch(RELAY + '/accueil-admin', {
+    method: body ? 'POST' : 'GET',
+    headers: { 'Content-Type': 'application/json', 'X-Store-Token': STORE_SECRET, 'X-AR-Session': arSession.token },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const data = await resp.json();
+  if (!resp.ok || !data.ok) throw new Error(data.error || ('Erreur ' + resp.status));
+  accApps = data.apps || [];
+  renderAccueil(data.acces || []);
+}
+
+function renderAccueil(acces) {
+  const el = document.getElementById('acc-apps');
+  el.innerHTML = Object.keys(ACC_SECTIONS).map(sec => {
+    const apps = accApps.filter(a => a.section === sec);
+    return '<div class="acc-sec">' + ACC_SECTIONS[sec] + '</div><div class="ferm-list">' + (apps.length ? apps.map(a =>
+      '<div class="acc-app' + (a.actif ? '' : ' off') + '"><div class="acc-ico">' + accIco(a.icone, a.nom) + '</div>'
+      + '<div class="nm">' + escHtml(a.nom) + (a.actif ? '' : ' · <em>masquée</em>') + '<small>' + escHtml(a.url) + '</small></div>'
+      + '<button type="button" onclick="ouvrirAppli(' + a.id + ')">Modifier</button></div>').join('')
+      : '<div class="hint">Aucune appli.</div>') + '</div>';
+  }).join('');
+  document.getElementById('acc-acces').innerHTML = acces.length ? acces.map(a =>
+    '<div class="acc-row"><div>' + escHtml(a.email) + '<br><small>' + (ACC_SECTIONS[a.section] || a.section) + '</small></div>'
+    + '<button type="button" onclick="retirerAcces(' + a.id + ')" aria-label="Retirer">🗑️</button></div>').join('')
+    : '<div class="hint">Aucun accès nominatif.</div>';
+}
+
+async function chargerAccueil() {
+  if (!arSession) return;
+  try { accErreur('acc-error', ''); await appelAccueil(null); }
+  catch (e) { document.getElementById('acc-apps').innerHTML = ''; accErreur('acc-error', e.message || String(e)); }
+}
+
+function majApercuIcone() {
+  document.getElementById('acc-f-preview').innerHTML = accIco(accIcone, document.getElementById('acc-f-nom').value);
+}
+function ouvrirAppli(id) {
+  accEdit = id ? accApps.find(a => a.id === id) : null;
+  const a = accEdit || { nom: '', url: 'https://', section: 'tous', ordre: (accApps.length + 1), description: '', usage: '', frequence: '', actif: 1, icone: '' };
+  document.getElementById('acc-modal-titre').textContent = accEdit ? 'Modifier l\'appli' : 'Nouvelle appli';
+  for (const k of ['nom', 'url', 'section', 'ordre', 'description', 'usage', 'frequence']) document.getElementById('acc-f-' + k).value = a[k] ?? '';
+  document.getElementById('acc-f-actif').checked = !!a.actif;
+  document.getElementById('acc-f-delete').style.display = accEdit ? '' : 'none';
+  accIcone = a.icone || '';
+  majApercuIcone(); accErreur('acc-f-error', '');
+  document.getElementById('acc-modal').classList.add('open');
+}
+function fermerAppli() { document.getElementById('acc-modal').classList.remove('open'); }
+function retirerIcone() { accIcone = ''; majApercuIcone(); }
+
+// Icône recadrée en carré et réduite à 256 px dans le navigateur (reste sous la limite du Worker).
+function preparerIcone(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Lecture du fichier impossible'));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('Image non reconnue'));
+      img.onload = () => {
+        const T = 256, c = document.createElement('canvas'); c.width = T; c.height = T;
+        const side = Math.min(img.naturalWidth || T, img.naturalHeight || T);
+        const sx = ((img.naturalWidth || T) - side) / 2, sy = ((img.naturalHeight || T) - side) / 2;
+        c.getContext('2d').drawImage(img, sx, sy, side, side, 0, 0, T, T);
+        let url = c.toDataURL('image/png');
+        if (url.length > 300000) url = c.toDataURL('image/jpeg', 0.88);
+        resolve(url);
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+document.getElementById('acc-f-file').addEventListener('change', async e => {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  try { accIcone = await preparerIcone(f); majApercuIcone(); accErreur('acc-f-error', ''); }
+  catch (err) { accErreur('acc-f-error', err.message); }
+});
+document.getElementById('acc-f-nom').addEventListener('input', () => { if (!accIcone) majApercuIcone(); });
+
+async function enregistrerAppli() {
+  const g = k => document.getElementById('acc-f-' + k).value;
+  const app = { nom: g('nom').trim(), url: g('url').trim(), section: g('section'), ordre: parseInt(g('ordre'), 10) || 0,
+    description: g('description').trim(), usage: g('usage').trim(), frequence: g('frequence').trim(),
+    actif: document.getElementById('acc-f-actif').checked ? 1 : 0, icone: accIcone };
+  if (accEdit) app.id = accEdit.id;
+  if (!app.nom) return accErreur('acc-f-error', 'Nom requis');
+  if (!/^https:\/\/\S+$/.test(app.url)) return accErreur('acc-f-error', 'Le lien doit commencer par https://');
+  const btn = document.getElementById('acc-f-save');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Enregistrement…';
+  try { await appelAccueil({ action: 'app-save', app }); fermerAppli(); }
+  catch (e) { accErreur('acc-f-error', e.message || String(e)); }
+  finally { btn.disabled = false; btn.textContent = 'Enregistrer'; }
+}
+async function supprimerAppli() {
+  if (!accEdit || !confirm('Supprimer définitivement « ' + accEdit.nom + ' » de la page d\'accueil ? (Pour la retirer temporairement, décochez plutôt « Visible ».)')) return;
+  try { await appelAccueil({ action: 'app-delete', id: accEdit.id }); fermerAppli(); }
+  catch (e) { accErreur('acc-f-error', e.message || String(e)); }
+}
+async function ajouterAcces() {
+  const email = document.getElementById('acc-email').value.trim();
+  const section = document.getElementById('acc-email-section').value;
+  if (!email) return accErreur('acc-error', 'Adresse requise');
+  try { accErreur('acc-error', ''); await appelAccueil({ action: 'acces-add', email, section }); document.getElementById('acc-email').value = ''; }
+  catch (e) { accErreur('acc-error', e.message || String(e)); }
+}
+async function retirerAcces(id) {
+  if (!confirm('Retirer cet accès ?')) return;
+  try { accErreur('acc-error', ''); await appelAccueil({ action: 'acces-delete', id }); }
+  catch (e) { accErreur('acc-error', e.message || String(e)); }
+}
+
+showScreen();
+chargerFermetures();
+chargerAccueil();
 </script>
 </body>
 </html>
